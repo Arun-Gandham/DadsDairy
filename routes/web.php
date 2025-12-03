@@ -51,6 +51,10 @@ Route::post('/logout', [AuthController::class, 'logout'])
 // Dashboard Route
 Route::get('/dashboard', function () {
     $user = auth()->user();
+    $role = $user->role;
+    if ($role && !empty($role->redirect_url)) {
+        return redirect($role->redirect_url);
+    }
     if ($user->hasRole('admin')) {
         return redirect()->route('admin.dashboard');
     } elseif ($user->hasRole('delivery_agent')) {

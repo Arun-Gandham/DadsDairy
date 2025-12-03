@@ -27,9 +27,10 @@ class RoleController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name'        => 'required|string|max:255',
-            'slug'        => 'required|string|max:255|unique:roles,slug',
-            'description' => 'nullable|string',
+            'name'         => 'required|string|max:255',
+            'slug'         => 'required|string|max:255|unique:roles,slug',
+            'description'  => 'nullable|string',
+            'redirect_url' => 'nullable|string',
         ]);
         $validated['is_active'] = true;
         Role::create($validated);
@@ -44,9 +45,10 @@ class RoleController extends Controller
     public function update(Request $request, Role $role)
     {
         $validated = $request->validate([
-            'name'        => 'required|string|max:255',
-            'slug'        => 'required|string|max:255|unique:roles,slug,' . $role->id,
-            'description' => 'nullable|string',
+            'name'         => 'required|string|max:255',
+            'slug'         => 'required|string|max:255|unique:roles,slug,' . $role->id,
+            'description'  => 'nullable|string',
+            'redirect_url' => 'nullable|string',
         ]);
         $role->update($validated);
         return redirect()->route('admin.roles.index')->with('success', 'Role updated successfully!');

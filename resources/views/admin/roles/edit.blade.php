@@ -19,6 +19,10 @@
         <label for="description" class="form-label">Description</label>
         <textarea class="form-control" id="description" name="description">{{ $role->description }}</textarea>
     </div>
+    <div class="mb-3">
+        <label for="redirect_url" class="form-label">Dashboard Redirect URL</label>
+        <input type="text" class="form-control" id="redirect_url" name="redirect_url" value="{{ $role->redirect_url }}" placeholder="/admin/dashboard or /customer/dashboard">
+    </div>
     <button type="submit" class="btn btn-primary">Update Role</button>
 </form>
 @endsection
