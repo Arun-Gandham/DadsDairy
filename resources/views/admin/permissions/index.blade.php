@@ -14,6 +14,27 @@
         </div>
     </div>
 
+    <!-- <div class="row mb-4">
+        <div class="col-md-12">
+            <form action="{{ route('admin.permissions.store') }}" method="POST" class="card card-body shadow-sm mb-4">
+                @csrf
+                <h5 class="mb-3">Add New Permission</h5>
+                <div class="mb-3">
+                    <label for="name" class="form-label">Permission Name</label>
+                    <input type="text" class="form-control" id="name" name="name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="slug" class="form-label">Permission Slug</label>
+                    <input type="text" class="form-control" id="slug" name="slug" required>
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea class="form-control" id="description" name="description"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Permission</button>
+            </form>
+        </div>
+    </div> -->
     @if($roles->isEmpty())
         <div class="alert alert-info" role="alert">
             <i class="fas fa-info-circle"></i> No roles found in the system.

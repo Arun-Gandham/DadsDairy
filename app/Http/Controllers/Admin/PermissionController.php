@@ -43,4 +43,15 @@ class PermissionController extends Controller
 
         return redirect()->back()->with('success', 'Permission updated successfully!');
     }
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'name'        => 'required|string|max:255',
+            'slug'        => 'required|string|max:255|unique:permissions,slug',
+            'description' => 'nullable|string',
+        ]);
+        Permission::create($validated);
+        return redirect()->route('admin.permissions.index')->with('success', 'Permission added successfully!');
+    }
 }

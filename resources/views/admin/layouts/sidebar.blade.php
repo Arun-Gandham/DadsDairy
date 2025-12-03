@@ -16,12 +16,13 @@
         </a>
     @endif
     
+
     @if(auth()->user()->hasPermission('manage_coupons') || auth()->user()->hasPermission('view_coupons'))
         <a href="{{ route('admin.coupons.index') }}" class="{{ request()->is('admin/coupons*') ? 'active' : '' }}">
             <i class="fas fa-ticket-alt"></i> Coupons
         </a>
     @endif
-
+    
     @if(auth()->user()->hasPermission('manage_products'))
         <a href="{{ route('admin.products') }}" class="{{ request()->is('admin/products*') ? 'active' : '' }}">
             <i class="fas fa-box"></i> Products
@@ -46,7 +47,13 @@
         </a>
     @endif
 
+
     @if(auth()->user()->hasPermission('manage_roles'))
+        <a href="{{ route('admin.roles.index') }}" class="{{ request()->is('admin/roles*') ? 'active' : '' }}">
+            <i class="fas fa-user-shield"></i> Roles
+        </a>
+    @endif
+    @if(auth()->user()->hasPermission('manage_roles') || auth()->user()->hasPermission('manage_permissions'))
         <a href="{{ route('admin.permissions.index') }}" class="{{ request()->is('admin/permissions*') ? 'active' : '' }}">
             <i class="fas fa-lock"></i> Permissions
         </a>

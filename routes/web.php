@@ -61,6 +61,14 @@ Route::get('/dashboard', function () {
 
 // Admin Routes
 Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
+        // Roles
+        Route::get('/roles', [\App\Http\Controllers\Admin\RoleController::class, 'index'])->name('admin.roles.index');
+        Route::get('/roles/create', [\App\Http\Controllers\Admin\RoleController::class, 'create'])->name('admin.roles.create');
+        Route::post('/roles', [\App\Http\Controllers\Admin\RoleController::class, 'store'])->name('admin.roles.store');
+        Route::get('/roles/{role}/edit', [\App\Http\Controllers\Admin\RoleController::class, 'edit'])->name('admin.roles.edit');
+        Route::put('/roles/{role}', [\App\Http\Controllers\Admin\RoleController::class, 'update'])->name('admin.roles.update');
+        Route::delete('/roles/{role}', [\App\Http\Controllers\Admin\RoleController::class, 'destroy'])->name('admin.roles.destroy');
+        Route::post('/roles/{role}/toggle', [\App\Http\Controllers\Admin\RoleController::class, 'toggle'])->name('admin.roles.toggle');
     Route::get('/dashboard', [AdminDashboardController::class, 'dashboard'])->name('admin.dashboard');
 
     // Products
@@ -97,6 +105,7 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
 
     // Permissions
     Route::get('/permissions', [PermissionController::class, 'index'])->name('admin.permissions.index');
+    Route::post('/permissions', [PermissionController::class, 'store'])->name('admin.permissions.store');
     Route::post('/permissions/{role}', [PermissionController::class, 'assignPermissions'])->name('admin.permissions.assign');
 
     // Subscriptions

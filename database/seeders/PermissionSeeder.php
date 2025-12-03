@@ -47,6 +47,16 @@ class PermissionSeeder extends Seeder
             \App\Models\Permission::firstOrCreate(['slug' => $permission['slug']], $permission);
         }
 
+        // Ensure core roles exist
+        $roles = [
+            ['name' => 'Admin', 'slug' => 'admin', 'description' => 'Administrator', 'is_active' => true],
+            ['name' => 'Customer', 'slug' => 'customer', 'description' => 'Customer', 'is_active' => true],
+            ['name' => 'Delivery Agent', 'slug' => 'delivery_agent', 'description' => 'Delivery Agent', 'is_active' => true],
+        ];
+        foreach ($roles as $role) {
+            \App\Models\Role::firstOrCreate(['slug' => $role['slug']], $role);
+        }
+
         // Assign permissions to roles
         $this->assignPermissionsToRoles();
     }

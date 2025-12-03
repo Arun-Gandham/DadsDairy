@@ -8,7 +8,7 @@ class Role extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'slug', 'description'];
+    protected $fillable = ['name', 'slug', 'description', 'is_active'];
 
     /**
      * Get all permissions for this role
