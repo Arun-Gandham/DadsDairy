@@ -15,6 +15,7 @@
                     <th>Phone</th>
                     <th>Address</th>
                     <th>Role</th>
+                    <th>Status</th>
                     <th>Joined</th>
                     <th>Actions</th>
                 </tr>
@@ -28,6 +29,13 @@
                     <td>{{ $user->address }}</td>
                     <td>
                         <span class="badge bg-info">{{ $user->role->name ?? 'N/A' }}</span>
+                    </td>
+                    <td>
+                        @if($user->is_active)
+                            <span class="badge bg-success">Active</span>
+                        @else
+                            <span class="badge bg-danger">Inactive</span>
+                        @endif
                     </td>
                     <td>{{ $user->created_at->format('M d, Y') }}</td>
                     <td>

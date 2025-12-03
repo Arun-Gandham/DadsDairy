@@ -36,4 +36,11 @@
         </select>
     </div>
     <button type="submit" class="btn btn-primary">Update User</button>
+</form>
+<form action="{{ route('admin.users.toggle', $user->id) }}" method="POST" style="display:inline-block; margin-left:10px;">
+    @csrf
+    <button type="submit" class="btn btn-secondary">
+        {{ $user->is_active ? 'Deactivate' : 'Activate' }}
+    </button>
+</form>
 @endsection

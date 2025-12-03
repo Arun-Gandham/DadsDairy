@@ -13,8 +13,6 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->foreignId('role_id')->nullable()->constrained()->onDelete('set null');
-            $table->string('phone')->nullable();
-            $table->text('address')->nullable();
         });
     }
 
@@ -25,8 +23,6 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropForeignIdFor(\App\Models\Role::class);
-            $table->dropColumn('phone');
-            $table->dropColumn('address');
         });
     }
 };

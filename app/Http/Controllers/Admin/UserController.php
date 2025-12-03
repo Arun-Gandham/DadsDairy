@@ -9,6 +9,12 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    public function toggle(User $user)
+    {
+        $user->is_active = !$user->is_active;
+        $user->save();
+        return redirect()->route('admin.users')->with('success', 'User status updated!');
+    }
     public function index()
     {
         $users = User::with('role')->paginate(15);
