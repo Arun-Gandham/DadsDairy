@@ -21,6 +21,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        \Illuminate\Support\Facades\Gate::define('manage_settings', function ($user) {
+            return $user->hasPermission('manage_settings');
+        });
     }
 }

@@ -1,4 +1,3 @@
-
 <div class="sidebar">
     @if(auth()->user()->hasPermission('view_admin_dashboard'))
         <a href="{{ route('admin.dashboard') }}" class="{{ request()->is('admin/dashboard') ? 'active' : '' }}">
@@ -44,6 +43,12 @@
     @if(auth()->user()->hasPermission('manage_roles'))
         <a href="{{ route('admin.permissions.index') }}" class="{{ request()->is('admin/permissions*') ? 'active' : '' }}">
             <i class="fas fa-lock"></i> Permissions
+        </a>
+    @endif
+
+    @if(auth()->user()->hasPermission('manage_settings'))
+        <a href="{{ route('admin.settings.index') }}" class="{{ request()->is('admin/settings*') ? 'active' : '' }}">
+            <i class="fas fa-cog"></i> Settings
         </a>
     @endif
 </div>

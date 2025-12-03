@@ -14,6 +14,7 @@ use App\Http\Controllers\Delivery\DeliveryDashboardController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubscriptionController;
+use App\Http\Controllers\Admin\SettingController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -160,4 +161,13 @@ Route::prefix('delivery')->middleware(['auth', 'role:delivery_agent'])->group(fu
     Route::get('/deliveries/{order}', [DeliveryController::class, 'show'])->name('delivery.deliveries.show');
     Route::put('/deliveries/{order}', [DeliveryController::class, 'update'])->name('delivery.deliveries.update');
 });
+
+    // Settings
+        Route::get('/settings', [SettingController::class, 'index'])
+            ->middleware('can:manage_settings')
+            ->name('admin.settings.index');
+        Route::post('/settings', [SettingController::class, 'update'])
+            ->middleware('can:manage_settings')
+            ->name('admin.settings.update');
+
 
