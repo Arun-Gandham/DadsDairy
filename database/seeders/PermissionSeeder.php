@@ -38,6 +38,9 @@ class PermissionSeeder extends Seeder
             ['name' => 'View Reports', 'slug' => 'view_reports', 'description' => 'View sales and analytics reports'],
             // Settings Permission
             ['name' => 'Manage Settings', 'slug' => 'manage_settings', 'description' => 'Manage site/company settings'],
+            // Coupon Permissions
+            ['name' => 'Manage Coupons', 'slug' => 'manage_coupons', 'description' => 'Create, edit, delete coupons'],
+            ['name' => 'View Coupons', 'slug' => 'view_coupons', 'description' => 'View all coupons'],
         ];
 
         foreach ($permissions as $permission) {

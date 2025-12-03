@@ -30,6 +30,8 @@ class ProductController extends Controller
     {
         $validated = $request->validate([
             'name'        => 'required|string|max:255',
+            'slug'        => 'required|string|max:255|unique:products,slug',
+            'type'        => 'required|in:buy,subscribe,both',
             'description' => 'nullable|string',
             'price'       => 'required|numeric|min:0',
             'quantity'    => 'required|integer|min:0',

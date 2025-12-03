@@ -15,6 +15,12 @@
             <i class="fas fa-chart-bar"></i> Reports
         </a>
     @endif
+    
+    @if(auth()->user()->hasPermission('manage_coupons') || auth()->user()->hasPermission('view_coupons'))
+        <a href="{{ route('admin.coupons.index') }}" class="{{ request()->is('admin/coupons*') ? 'active' : '' }}">
+            <i class="fas fa-ticket-alt"></i> Coupons
+        </a>
+    @endif
 
     @if(auth()->user()->hasPermission('manage_products'))
         <a href="{{ route('admin.products') }}" class="{{ request()->is('admin/products*') ? 'active' : '' }}">
