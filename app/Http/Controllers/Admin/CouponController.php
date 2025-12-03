@@ -48,6 +48,11 @@ class CouponController extends Controller
             ? $request->applicable_product_ids
             : null;
 
+        // Ensure min_order_value is never null
+        if (!isset($validated['min_order_value']) || $validated['min_order_value'] === null) {
+            $validated['min_order_value'] = 0;
+        }
+
         Coupon::create($validated);
 
         return redirect()->route('admin.coupons.index')->with('success', 'Coupon created successfully!');
