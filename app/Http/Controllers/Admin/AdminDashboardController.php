@@ -21,6 +21,45 @@ class AdminDashboardController extends Controller
         $totalCategories = Category::count();
         $totalRevenue    = Order::where('status', 'delivered')->sum('total_amount');
 
+        // Revenue and sales analytics
+        $now = now();
+        $monthStart = $now->copy()->startOfMonth();
+        $yearStart = $now->copy()->startOfYear();
+
+        $monthlyRevenue = Order::where('status', 'delivered')
+            ->whereBetween('created_at', [$monthStart, $now])
+            ->sum('total_amount');
+
+        $yearlyRevenue = Order::where('status', 'delivered')
+            ->whereBetween('created_at', [$yearStart, $now])
+            ->sum('total_amount');
+
+        $monthlyOrders = Order::where('status', 'delivered')
+            ->whereBetween('created_at', [$monthStart, $now])
+            ->count();
+
+        $yearlyOrders = Order::where('status', 'delivered')
+            ->whereBetween('created_at', [$yearStart, $now])
+            ->count();
+
+        // Per-product analytics: total sold quantity and revenue
+        $productAnalytics = Product::with(['orderItems' => function($q) {
+            $q->whereHas('order', function($oq) {
+                $oq->where('status', 'delivered');
+            });
+        }])->get()->map(function($product) {
+            $soldQty = $product->orderItems->sum('quantity');
+            $revenue = $product->orderItems->sum(function($item) {
+                return $item->quantity * $item->price;
+            });
+            return [
+                'id' => $product->id,
+                'name' => $product->name,
+                'soldQty' => $soldQty,
+                'revenue' => $revenue,
+            ];
+        });
+
         $recentOrders = Order::with('user', 'items.product')
             ->latest()
             ->limit(10)
@@ -37,6 +76,11 @@ class AdminDashboardController extends Controller
             'totalOrders',
             'totalCategories',
             'totalRevenue',
+            'monthlyRevenue',
+            'yearlyRevenue',
+            'monthlyOrders',
+            'yearlyOrders',
+            'productAnalytics',
             'recentOrders',
             'topProducts'
         ));
