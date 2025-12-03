@@ -100,9 +100,9 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/permissions/{role}', [PermissionController::class, 'assignPermissions'])->name('admin.permissions.assign');
 
     // Subscriptions
-    Route::get('/subscriptions', function() {
-        return view('admin.subscriptions.index');
-    })->name('admin.subscriptions.index');
+    Route::get('/subscriptions', [\App\Http\Controllers\Admin\SubscriptionController::class, 'index'])->name('admin.subscriptions.index');
+    Route::get('/subscriptions/{subscription}', [\App\Http\Controllers\Admin\SubscriptionController::class, 'show'])->name('admin.subscriptions.show');
+    Route::put('/subscriptions/{subscription}', [\App\Http\Controllers\Admin\SubscriptionController::class, 'update'])->name('admin.subscriptions.update');
 
     // Reports
     Route::get('/reports', function() {

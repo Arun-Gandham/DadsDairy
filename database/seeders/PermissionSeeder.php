@@ -36,6 +36,8 @@ class PermissionSeeder extends Seeder
             ['name' => 'Manage Roles', 'slug' => 'manage_roles', 'description' => 'Manage roles and permissions'],
             ['name' => 'View Admin Dashboard', 'slug' => 'view_admin_dashboard', 'description' => 'Access admin dashboard'],
             ['name' => 'View Reports', 'slug' => 'view_reports', 'description' => 'View sales and analytics reports'],
+            // Settings Permission
+            ['name' => 'Manage Settings', 'slug' => 'manage_settings', 'description' => 'Manage site/company settings'],
         ];
 
         foreach ($permissions as $permission) {

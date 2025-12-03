@@ -90,6 +90,9 @@
 
         <div class="register-link">
             Don't have an account? <a href="{{ route('register') }}">Register here</a>
+            <p>admin@example.com, password123</p>
+            <p>customer@example.com, password123</p>
+            <p>user@example.com, password123</p>
         </div>
     </div>
 

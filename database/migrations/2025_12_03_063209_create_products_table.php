@@ -21,7 +21,8 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->foreignId('category_id')->constrained();
             $table->boolean('is_active')->default(true);
-            $table->timestamps();
+              $table->string('type')->default('both');
+              $table->timestamps();
         });
     }
 
