@@ -98,6 +98,16 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/permissions', [PermissionController::class, 'index'])->name('admin.permissions.index');
     Route::post('/permissions/{role}', [PermissionController::class, 'assignPermissions'])->name('admin.permissions.assign');
 
+    // Subscriptions
+    Route::get('/subscriptions', function() {
+        return view('admin.subscriptions.index');
+    })->name('admin.subscriptions.index');
+
+    // Reports
+    Route::get('/reports', function() {
+        return view('admin.reports.index');
+    })->name('admin.reports.index');
+
 });
 
 // Customer Routes
@@ -150,3 +160,4 @@ Route::prefix('delivery')->middleware(['auth', 'role:delivery_agent'])->group(fu
     Route::get('/deliveries/{order}', [DeliveryController::class, 'show'])->name('delivery.deliveries.show');
     Route::put('/deliveries/{order}', [DeliveryController::class, 'update'])->name('delivery.deliveries.update');
 });
+
