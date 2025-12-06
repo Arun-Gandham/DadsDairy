@@ -2,8 +2,8 @@
 // Variables
 return [
   "creatorName" => "Arun Sai Gandham",
-  "creatorUrl" => "https://pixinvent.com",
-  "templateName" => "Shuddh",
+  "creatorUrl" => "https://GooShuddh.com/creator/arun-sai-gandham",
+  "templateName" => "GooShuddh",
   "templateSuffix" => "Bootstrap Admin Template",
   "templateVersion" => "1.0.0",
   "templateFree" => true,
