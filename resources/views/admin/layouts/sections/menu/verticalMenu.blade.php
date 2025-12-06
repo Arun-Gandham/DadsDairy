@@ -14,7 +14,12 @@ $configData = Helper::appClasses();
   <div class="app-brand demo">
     <a href="{{url('/')}}" class="app-brand-link">
       <span class="app-brand-logo demo">
-        @include('_partials.macros',["height"=>20])
+        @php $settings = \App\Models\Setting::first(); @endphp
+        @if(!empty($settings?->logo))
+          <img src="{{ asset('storage/' . $settings->logo) }}" alt="Logo" style="max-height:32px;">
+        @else
+          @include('_partials.macros',["height"=>20])
+        @endif
       </span>
       <span class="app-brand-text demo menu-text fw-bold">{{config('variables.templateName')}}</span>
     </a>

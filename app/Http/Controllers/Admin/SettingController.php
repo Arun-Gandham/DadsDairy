@@ -28,7 +28,7 @@ class SettingController extends Controller
             'owner_name'     => 'nullable|string|max:255',
             'locations'      => 'nullable|string',
             'logo'           => 'nullable|image|max:2048',
-            'favicon'        => 'nullable|image|max:1024',
+            'favicon'        => 'nullable|mimes:jpeg,png,jpg,gif,ico|max:1024',
             'contact_email'  => 'nullable|email',
             'contact_phone'  => 'nullable|string|max:50',
             'address'        => 'nullable|string|max:500',

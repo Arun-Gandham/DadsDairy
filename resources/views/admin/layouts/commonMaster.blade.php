@@ -23,7 +23,11 @@ $contentLayout = (isset($container) ? (($container === 'container-xxl') ? "layou
   <!-- Canonical SEO -->
   <link rel="canonical" href="{{ config('variables.productPage') ? config('variables.productPage') : '' }}">
   <!-- Favicon -->
-  <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon/favicon.ico') }}" />
+  @php
+    $settings = \App\Models\Setting::first();
+    $faviconPath = !empty($settings?->favicon) ? asset('storage/' . $settings->favicon) : asset('assets/img/favicon/favicon.ico');
+  @endphp
+  <link rel="icon" type="image/x-icon" href="{{ $faviconPath }}" />
 
   
 
