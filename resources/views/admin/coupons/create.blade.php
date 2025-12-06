@@ -202,7 +202,6 @@
     </div>
 </div>
 
-@vite(['resources/js/app.js'])
 <script>
     const applicableTo = document.getElementById('applicable_to');
     const specificProductsContainer = document.getElementById('specific_products_container');
