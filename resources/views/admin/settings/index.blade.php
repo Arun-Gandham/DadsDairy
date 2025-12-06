@@ -83,7 +83,7 @@
             <input type="file" name="favicon" class="form-control" id="faviconInput">
             <div id="faviconPreviewWrapper">
                 @if(!empty($setting->favicon))
-                    <img id="faviconPreview" src="{{ asset('storage/' . $setting->favicon) }}" alt="Favicon" class="img-thumbnail mt-2" style="max-height:32px;">
+                    <img id="faviconPreview" src="{{ asset($setting->favicon) }}" alt="Favicon" class="img-thumbnail mt-2" style="max-height:32px;">
                 @else
                     <img id="faviconPreview" src="#" alt="Favicon Preview" class="img-thumbnail mt-2 d-none" style="max-height:32px;">
                 @endif
