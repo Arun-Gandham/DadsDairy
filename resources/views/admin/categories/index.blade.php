@@ -26,13 +26,13 @@
                 <div class="card category-card h-100">
                     <div class="card-body">
                         <h5 class="card-title">{{ $category->name }}</h5>
-                        <p class="card-text">{{ $category->description ?? 'No description' }}</p>
+                        <p class="card-text">{!! $category->description ?? 'No description' !!}</p>
                         <div class="mb-3">
                             <span class="badge-count">
                                 <i class="fas fa-box"></i> {{ $category->products->count() }} Products
                             </span>
                         </div>
-                        <div class="btn-group w-100">
+                        <div class="btn-group w-100 mb-2">
                             <a href="{{ route('admin.categories.edit', $category) }}" class="btn btn-sm btn-warning">
                                 <i class="fas fa-edit"></i> Edit
                             </a>
@@ -44,6 +44,19 @@
                                 </button>
                             </form>
                         </div>
+                        @if($category->products->count())
+                        <div class="mt-2">
+                            <strong>Products in this category:</strong>
+                            <ul class="list-group list-group-flush">
+                                @foreach($category->products as $product)
+                                    <li class="list-group-item d-flex justify-content-between align-items-center px-0 py-1">
+                                        <span>{{ $product->name }}</span>
+                                        <a href="{{ route('admin.products.edit', $product) }}" class="btn btn-xs btn-outline-primary">Edit</a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        @endif
                     </div>
                 </div>
             </div>
