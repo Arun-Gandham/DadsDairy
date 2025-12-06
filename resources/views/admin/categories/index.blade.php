@@ -5,9 +5,6 @@
 @section('content')
 <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
-        <a href="{{ route('admin.dashboard') }}" class="btn btn-outline-secondary btn-sm">
-            <i class="fas fa-arrow-left"></i> Back
-        </a>
         <h1 class="d-inline-block ms-3 page-title">Categories</h1>
     </div>
     <a href="{{ route('admin.categories.create') }}" class="btn btn-gradient">

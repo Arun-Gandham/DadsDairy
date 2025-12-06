@@ -10,9 +10,6 @@
             <a href="{{ route('admin.coupons.create') }}" class="btn btn-primary">
                 <i class="fas fa-plus"></i> Add New Coupon
             </a>
-            <a href="{{ route('admin.dashboard') }}" class="btn btn-secondary">
-                <i class="fas fa-arrow-left"></i> Back
-            </a>
         </div>
     </div>
 

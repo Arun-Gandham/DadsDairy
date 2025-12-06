@@ -8,9 +8,6 @@
             <small class="text-muted">Manage role-based permissions</small>
         </div>
         <div class="col-md-4 text-end">
-            <a href="{{ route('admin.dashboard') }}" class="btn btn-secondary">
-                <i class="fas fa-arrow-left"></i> Back
-            </a>
         </div>
     </div>
 

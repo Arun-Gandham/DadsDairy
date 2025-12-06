@@ -29,8 +29,13 @@
         <small class="text-muted">Choose if this product can be bought, subscribed, or both.</small>
     </div>
     <div class="mb-3">
-        <label for="description" class="form-label">Description</label>
-        <textarea class="form-control" id="description" name="description" rows="3">{{ old('description') }}</textarea>
+        <label for="description" class="form-label">Short Description</label>
+        <textarea class="form-control" id="description" name="description" rows="2">{{ old('description') }}</textarea>
+    </div>
+    <div class="mb-3">
+        <label for="details" class="form-label">Dairy Product Details</label>
+        <textarea class="form-control" id="details" name="details" rows="4">{{ old('details') }}</textarea>
+        <small class="text-muted">Add more information about the product, benefits, nutrition, etc.</small>
     </div>
     <div class="row">
         <div class="col-md-6">
@@ -56,8 +61,38 @@
         </select>
     </div>
     <div class="mb-3">
-        <label for="image" class="form-label">Product Image</label>
+        <label for="image" class="form-label">Main Product Image</label>
         <input type="file" class="form-control" id="image" name="image" accept="image/*">
+    </div>
+    <div class="mb-3">
+        <label for="images" class="form-label">Additional Images</label>
+        <input type="file" class="form-control" id="images" name="images[]" accept="image/*" multiple onchange="previewImages(this)">
+        <small class="text-muted">You can upload multiple images. Main image will be shown everywhere, sub images will be scrollable on product page.</small>
+        <div id="imagePreviewContainer" class="d-flex flex-row flex-wrap mt-2" style="gap:16px;align-items:center;"></div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+    <script>
+        function previewImages(input) {
+            const container = document.getElementById('imagePreviewContainer');
+            container.innerHTML = '';
+            if (input.files) {
+                Array.from(input.files).forEach((file, idx) => {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const div = document.createElement('div');
+                        div.className = 'position-relative d-flex flex-column align-items-center justify-content-center';
+                        div.style.width = '90px';
+                        div.innerHTML = `<img src='${e.target.result}' class='img-thumbnail mb-1' style='max-width:80px;max-height:80px;object-fit:cover;'>`;
+                        container.appendChild(div);
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            Sortable.create(imagePreviewContainer, { animation: 150 });
+        });
+    </script>
     </div>
     <div class="mb-3">
         <div class="form-check">

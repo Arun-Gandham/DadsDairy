@@ -5,9 +5,6 @@
 @section('content')
 <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
-        <a href="{{ route('admin.dashboard') }}" class="btn btn-outline-secondary btn-sm">
-            <i class="fas fa-arrow-left"></i> Back
-        </a>
         <h1 class="d-inline-block ms-3">Products</h1>
     </div>
     <a href="{{ route('admin.products.create') }}" class="btn btn-primary">
@@ -23,9 +20,18 @@
     @forelse ($products as $product)
         <div class="col-md-4 mb-4">
             <div class="card h-100">
-                 <img src="{{ $product->image ? asset('storage/' . $product->image) : asset('images/default-product.png') }}"
-                     class="card-img-top" alt="{{ $product->name }}" style="max-height:180px;object-fit:cover;"
-                     onerror="this.onerror=null;this.src='https://via.placeholder.com/300x180?text=No+Image';">
+                <div class="text-center pt-2 pb-1">
+                    <img src="{{ $product->image ? asset('storage/' . $product->image) : asset('images/default-product.png') }}"
+                        class="card-img-top mb-2" alt="{{ $product->name }}" style="max-height:140px;max-width:90%;object-fit:cover;border-radius:8px;"
+                        onerror="this.onerror=null;this.src='https://via.placeholder.com/300x140?text=No+Image';">
+                    @if ($product->images && is_array($product->images) && count($product->images))
+                        <div class="d-flex flex-row flex-wrap overflow-auto justify-content-center" style="gap:10px;max-width:100%;">
+                            @foreach ($product->images as $img)
+                                <img src="{{ asset('storage/' . $img) }}" alt="Sub Image" class="img-thumbnail" style="max-width:48px;max-height:48px;object-fit:cover;">
+                            @endforeach
+                        </div>
+                    @endif
+                </div>
                 <div class="card-body">
                     <h5 class="card-title">{{ $product->name }}</h5>
                     <p class="card-text mb-1"><strong>Category:</strong> {{ $product->category->name }}</p>
@@ -41,14 +47,6 @@
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-sm btn-danger">Delete</button>
-                    </form>
-                    <form action="{{ route('admin.products.update', $product) }}" method="POST" style="display:inline;">
-                        @csrf
-                        @method('PUT')
-                        <input type="hidden" name="is_active" value="{{ $product->is_active ? 0 : 1 }}">
-                        <button type="submit" class="btn btn-sm btn-secondary">
-                            {{ $product->is_active ? 'Deactivate' : 'Activate' }}
-                        </button>
                     </form>
                 </div>
             </div>

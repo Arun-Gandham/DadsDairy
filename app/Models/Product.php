@@ -8,11 +8,12 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'slug', 'description', 'price', 'quantity', 'image', 'category_id', 'is_active', 'type'];
+    protected $fillable = ['name', 'slug', 'description', 'details', 'price', 'quantity', 'image', 'images', 'category_id', 'is_active', 'type'];
 
     protected $casts = [
         'price'     => 'decimal:2',
         'is_active' => 'boolean',
+        'images'    => 'array',
     ];
 
     /**

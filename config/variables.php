@@ -3,7 +3,7 @@
 return [
   "creatorName" => "Arun Sai Gandham",
   "creatorUrl" => "https://pixinvent.com",
-  "templateName" => "DadsDairy",
+  "templateName" => "Shuddh",
   "templateSuffix" => "Bootstrap Admin Template",
   "templateVersion" => "1.0.0",
   "templateFree" => true,

@@ -16,13 +16,15 @@ return new class extends Migration
             $table->string('name');
             $table->string('slug')->unique();
             $table->text('description')->nullable();
+            $table->text('details')->nullable(); // Dairy product details section
             $table->decimal('price', 8, 2);
             $table->integer('quantity')->default(0);
-            $table->string('image')->nullable();
+            $table->string('image')->nullable(); // Main image
+            $table->json('images')->nullable(); // Multiple images
             $table->foreignId('category_id')->constrained();
             $table->boolean('is_active')->default(true);
-              $table->string('type')->default('both');
-              $table->timestamps();
+            $table->string('type')->default('both');
+            $table->timestamps();
         });
     }
 

@@ -25,5 +25,4 @@
     </div>
     <button type="submit" class="btn btn-primary">Update Status</button>
 </form>
-<a href="{{ route('admin.subscriptions.index') }}" class="btn btn-secondary mt-3">Back to Subscriptions</a>
 @endsection
