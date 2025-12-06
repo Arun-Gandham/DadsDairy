@@ -25,7 +25,9 @@ $contentLayout = (isset($container) ? (($container === 'container-xxl') ? "layou
   <!-- Favicon -->
   @php
     $settings = \App\Models\Setting::first();
-    $faviconPath = !empty($settings?->favicon) ? asset('storage/' . $settings->favicon) : asset('assets/img/favicon/favicon.ico');
+    $faviconPath = !empty($settings?->favicon) && $settings->favicon === 'favicon.ico'
+      ? asset('favicon.ico')
+      : (!empty($settings?->favicon) ? asset('storage/' . $settings->favicon) : asset('assets/img/favicon/favicon.ico'));
   @endphp
   <link rel="icon" type="image/x-icon" href="{{ $faviconPath }}" />
 

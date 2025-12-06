@@ -47,7 +47,15 @@ class SettingController extends Controller
         }
 
         if ($request->hasFile('favicon') && $request->file('favicon')->isValid()) {
-            $validated['favicon'] = $request->file('favicon')->store('settings', 'public');
+            // Remove old favicon if it exists in public folder
+            $publicFaviconPath = public_path('favicon.ico');
+            if (file_exists($publicFaviconPath)) {
+                @unlink($publicFaviconPath);
+            }
+            // Store new favicon as public/favicon.ico
+            $faviconFile = $request->file('favicon');
+            $faviconFile->move(public_path(), 'favicon.ico');
+            $validated['favicon'] = 'favicon.ico';
         } else if ($setting->favicon) {
             $validated['favicon'] = $setting->favicon;
         }
