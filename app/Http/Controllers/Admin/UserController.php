@@ -17,8 +17,19 @@ class UserController extends Controller
     }
     public function index()
     {
-        $users = User::with('role')->paginate(15);
-        return view('admin.users.index', compact('users'));
+                $query = User::with('role');
+                if (request()->filled('search')) {
+                        $search = request('search');
+                        $query->where(function($q) use ($search) {
+                                $q->where('name', 'like', "%$search%")
+                                    ->orWhere('email', 'like', "%$search%")
+                                    ->orWhere('phone', 'like', "%$search%")
+                                    ->orWhere('address', 'like', "%$search%")
+                                ;
+                        });
+                }
+                $users = $query->orderBy('created_at', 'desc')->paginate(15)->appends(request()->all());
+                return view('admin.users.index', compact('users'));
     }
     public function __construct()
     {

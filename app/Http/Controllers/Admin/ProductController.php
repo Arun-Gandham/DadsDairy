@@ -16,7 +16,7 @@ class ProductController extends Controller
 
     public function index()
     {
-        $products = Product::paginate(10);
+        $products = Product::orderBy('created_at', 'desc')->paginate(10);
         return view('admin.products.index', compact('products'));
     }
 
@@ -102,25 +102,31 @@ class ProductController extends Controller
             $images = array_values($images);
         }
         // Add new images
+        $newImages = [];
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $img) {
-                $images[] = $img->store('products', 'public');
+                $newImages[] = $img->store('products', 'public');
             }
         }
+        $images = array_merge($images, $newImages);
         // Reorder images if order is provided
         if ($request->filled('images_order')) {
             $order = json_decode($request->input('images_order'), true);
             if (is_array($order)) {
                 // Only keep images that exist in $images and in the order provided
-                $images = array_values(array_filter($order, function($img) use ($images) {
-                    return in_array($img, $images);
-                }));
-                // Add any images not in the order to the end
-                foreach ($images as $img) {
-                    if (!in_array($img, $order)) {
-                        $images[] = $img;
+                $ordered = [];
+                foreach ($order as $img) {
+                    if (in_array($img, $images)) {
+                        $ordered[] = $img;
                     }
                 }
+                // Add any images not in the order to the end
+                foreach ($images as $img) {
+                    if (!in_array($img, $ordered)) {
+                        $ordered[] = $img;
+                    }
+                }
+                $images = $ordered;
             }
         }
         $validated['images'] = $images;

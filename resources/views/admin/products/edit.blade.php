@@ -22,20 +22,53 @@
             @csrf
             @method('PUT')
 
+
             <div class="mb-3">
                 <label for="name" class="form-label">Product Name</label>
                 <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $product->name) }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="slug" class="form-label">Product Slug</label>
+                <input type="text" class="form-control" id="slug" name="slug" value="{{ old('slug', $product->slug) }}" required>
+                <small class="text-muted">Unique identifier, e.g. 'full-cream-milk-1l'</small>
+            </div>
+            <div class="mb-3">
+                <label for="type" class="form-label">Product Type</label>
+                <select class="form-select" id="type" name="type" required>
+                    <option value="buy" @if(old('type', $product->type)=='buy') selected @endif>Buy Only</option>
+                    <option value="subscribe" @if(old('type', $product->type)=='subscribe') selected @endif>Subscribe Only</option>
+                    <option value="both" @if(old('type', $product->type)=='both') selected @endif>Both</option>
+                </select>
+                <small class="text-muted">Choose if this product can be bought, subscribed, or both.</small>
             </div>
 
             <div class="mb-3">
                 <label for="description" class="form-label">Short Description</label>
                 <textarea class="form-control" id="description" name="description" rows="2">{{ old('description', $product->description) }}</textarea>
             </div>
+            <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+            <script>
+                ClassicEditor.create(document.querySelector('#description'), {
+                    toolbar: [
+                        'heading', '|', 'bold', 'italic', 'underline', 'fontSize', 'fontColor', 'fontBackgroundColor',
+                        '|', 'bulletedList', 'numberedList', 'blockQuote', '|', 'link', 'insertTable', 'undo', 'redo'
+                    ]
+                }).catch(error => { console.error(error); });
+            </script>
             <div class="mb-3">
                 <label for="details" class="form-label">Dairy Product Details</label>
                 <textarea class="form-control" id="details" name="details" rows="4">{{ old('details', $product->details) }}</textarea>
                 <small class="text-muted">Add more information about the product, benefits, nutrition, etc.</small>
             </div>
+            <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+            <script>
+                ClassicEditor.create(document.querySelector('#details'), {
+                    toolbar: [
+                        'heading', '|', 'bold', 'italic', 'underline', 'fontSize', 'fontColor', 'fontBackgroundColor',
+                        '|', 'bulletedList', 'numberedList', 'blockQuote', '|', 'link', 'insertTable', 'undo', 'redo'
+                    ]
+                }).catch(error => { console.error(error); });
+            </script>
 
             <div class="row">
                 <div class="col-md-6">
@@ -65,13 +98,26 @@
 
             <div class="mb-3">
                 <label for="image" class="form-label">Main Product Image</label>
-                <input type="file" class="form-control" id="image" name="image" accept="image/*">
-                @if ($product->image)
-                    <div class="mb-2">
-                        <img src="{{ asset('storage/' . $product->image) }}" alt="Main Image" class="img-thumbnail" style="max-width:120px;">
-                    </div>
-                @endif
+                <input type="file" class="form-control" id="image" name="image" accept="image/*" onchange="previewMainImage(this)">
+                <div id="mainImagePreview" class="mt-2">
+                    @if ($product->image)
+                        <img src="{{ asset('storage/' . $product->image) }}" alt="Main Image" class="img-thumbnail" style="max-width:120px;max-height:120px;object-fit:cover;">
+                    @endif
+                </div>
             </div>
+            <script>
+                function previewMainImage(input) {
+                    const container = document.getElementById('mainImagePreview');
+                    container.innerHTML = '';
+                    if (input.files && input.files[0]) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            container.innerHTML = `<img src='${e.target.result}' class='img-thumbnail' style='max-width:120px;max-height:120px;object-fit:cover;'>`;
+                        };
+                        reader.readAsDataURL(input.files[0]);
+                    }
+                }
+            </script>
             <div class="mb-3">
                 <label for="images" class="form-label">Additional Images</label>
                 <input type="file" class="form-control" id="images" name="images[]" accept="image/*" multiple>

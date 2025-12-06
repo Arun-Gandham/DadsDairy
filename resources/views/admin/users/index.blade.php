@@ -4,6 +4,17 @@
 
 @section('content')
 <h1 class="mb-4">Users Management</h1>
+<form method="GET" action="{{ route('admin.users') }}" class="row g-2 mb-3">
+    <div class="col-md-4">
+        <input type="text" name="search" class="form-control" placeholder="Search by name or email" value="{{ request('search') }}">
+    </div>
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-primary w-100">Search</button>
+    </div>
+    <div class="col-md-2">
+        <a href="{{ route('admin.users') }}" class="btn btn-outline-secondary w-100">Reset</a>
+    </div>
+</form>
 <a href="{{ route('admin.users.create') }}" class="btn btn-primary mb-3">Add New User</a>
 <div class="card">
     <div class="card-body">

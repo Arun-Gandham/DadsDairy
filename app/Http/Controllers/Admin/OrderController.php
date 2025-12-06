@@ -15,7 +15,25 @@ class OrderController extends Controller
 
     public function index()
     {
-        $orders = Order::with('user', 'items')->paginate(10);
+        $query = Order::with(['user', 'items.product']);
+        if (request()->filled('order_search')) {
+            $search = request('order_search');
+            $query->where(function($q) use ($search) {
+                $q->where('order_number', 'like', "%$search%")
+                  ->orWhereHas('user', function($uq) use ($search) {
+                      $uq->where('name', 'like', "%$search%")
+                         ->orWhere('email', 'like', "%$search%")
+                         ->orWhere('phone', 'like', "%$search%")
+                         ;
+                  })
+                  ->orWhereHas('items.product', function($pq) use ($search) {
+                      $pq->where('name', 'like', "%$search%")
+                         ->orWhere('slug', 'like', "%$search%")
+                         ;
+                  });
+            });
+        }
+        $orders = $query->orderBy('created_at', 'desc')->paginate(10)->appends(request()->all());
         return view('admin.orders.index', compact('orders'));
     }
 

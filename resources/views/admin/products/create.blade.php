@@ -32,11 +32,29 @@
         <label for="description" class="form-label">Short Description</label>
         <textarea class="form-control" id="description" name="description" rows="2">{{ old('description') }}</textarea>
     </div>
+    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+    <script>
+        ClassicEditor.create(document.querySelector('#description'), {
+            toolbar: [
+                'heading', '|', 'bold', 'italic', 'underline', 'fontSize', 'fontColor', 'fontBackgroundColor',
+                '|', 'bulletedList', 'numberedList', 'blockQuote', '|', 'link', 'insertTable', 'undo', 'redo'
+            ]
+        }).catch(error => { console.error(error); });
+    </script>
     <div class="mb-3">
         <label for="details" class="form-label">Dairy Product Details</label>
         <textarea class="form-control" id="details" name="details" rows="4">{{ old('details') }}</textarea>
         <small class="text-muted">Add more information about the product, benefits, nutrition, etc.</small>
     </div>
+    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+    <script>
+        ClassicEditor.create(document.querySelector('#details'), {
+            toolbar: [
+                'heading', '|', 'bold', 'italic', 'underline', 'fontSize', 'fontColor', 'fontBackgroundColor',
+                '|', 'bulletedList', 'numberedList', 'blockQuote', '|', 'link', 'insertTable', 'undo', 'redo'
+            ]
+        }).catch(error => { console.error(error); });
+    </script>
     <div class="row">
         <div class="col-md-6">
             <div class="mb-3">
@@ -62,8 +80,22 @@
     </div>
     <div class="mb-3">
         <label for="image" class="form-label">Main Product Image</label>
-        <input type="file" class="form-control" id="image" name="image" accept="image/*">
+        <input type="file" class="form-control" id="image" name="image" accept="image/*" onchange="previewMainImage(this)">
+        <div id="mainImagePreview" class="mt-2"></div>
     </div>
+    <script>
+        function previewMainImage(input) {
+            const container = document.getElementById('mainImagePreview');
+            container.innerHTML = '';
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    container.innerHTML = `<img src='${e.target.result}' class='img-thumbnail' style='max-width:120px;max-height:120px;object-fit:cover;'>`;
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
     <div class="mb-3">
         <label for="images" class="form-label">Additional Images</label>
         <input type="file" class="form-control" id="images" name="images[]" accept="image/*" multiple onchange="previewImages(this)">

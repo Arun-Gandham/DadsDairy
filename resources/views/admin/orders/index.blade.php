@@ -3,11 +3,23 @@
 @section('title', 'Orders')
 
 @section('content')
+
 <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
         <h1 class="d-inline-block ms-3">Orders</h1>
     </div>
 </div>
+<form method="GET" action="{{ route('admin.orders') }}" class="row g-2 mb-3">
+    <div class="col-md-3">
+        <input type="text" name="order_search" class="form-control" placeholder="Order ID, Customer, Product Name" value="{{ request('order_search') }}">
+    </div>
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-primary w-100">Search</button>
+    </div>
+    <div class="col-md-2">
+        <a href="{{ route('admin.orders') }}" class="btn btn-outline-secondary w-100">Reset</a>
+    </div>
+</form>
 
 @if (session('success'))
     <div class="alert alert-success">{{ session('success') }}</div>
