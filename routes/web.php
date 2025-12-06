@@ -127,6 +127,15 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
         return view('admin.reports.index');
     })->name('admin.reports.index');
 
+    
+    // Settings
+        Route::get('/settings', [SettingController::class, 'index'])
+            ->middleware('can:manage_settings')
+            ->name('admin.settings.index');
+        Route::post('/settings', [SettingController::class, 'update'])
+            ->middleware('can:manage_settings')
+            ->name('admin.settings.update');
+
 });
 
 // Customer Routes
@@ -179,13 +188,5 @@ Route::prefix('delivery')->middleware(['auth', 'role:delivery_agent'])->group(fu
     Route::get('/deliveries/{order}', [DeliveryController::class, 'show'])->name('delivery.deliveries.show');
     Route::put('/deliveries/{order}', [DeliveryController::class, 'update'])->name('delivery.deliveries.update');
 });
-
-    // Settings
-        Route::get('/settings', [SettingController::class, 'index'])
-            ->middleware('can:manage_settings')
-            ->name('admin.settings.index');
-        Route::post('/settings', [SettingController::class, 'update'])
-            ->middleware('can:manage_settings')
-            ->name('admin.settings.update');
 
 
