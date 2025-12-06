@@ -11,6 +11,14 @@ class Category extends Model
     protected $fillable = ['name', 'slug', 'description'];
 
     /**
+     * The users this category is applicable to
+     */
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
+
+    /**
      * Get all products in this category
      */
     public function products()

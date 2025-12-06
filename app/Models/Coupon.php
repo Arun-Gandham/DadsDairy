@@ -8,6 +8,7 @@ class Coupon extends Model
 {
     use HasFactory;
 
+
     protected $fillable = [
         'code',
         'description',
@@ -23,6 +24,14 @@ class Coupon extends Model
         'min_order_value',
         'is_active',
     ];
+
+    /**
+     * The users this coupon is applicable to
+     */
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
 
     protected $casts = [
         'discount_value'         => 'decimal:2',

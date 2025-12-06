@@ -12,6 +12,22 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
 
     /**
+     * The coupons this user is applicable to
+     */
+    public function coupons()
+    {
+        return $this->belongsToMany(Coupon::class);
+    }
+
+    /**
+     * The categories this user is applicable to
+     */
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class);
+    }
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>

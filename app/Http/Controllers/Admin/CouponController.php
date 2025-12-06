@@ -23,7 +23,8 @@ class CouponController extends Controller
     public function create()
     {
         $products = Product::all();
-        return view('admin.coupons.create', compact('products'));
+        $users = \App\Models\User::all();
+        return view('admin.coupons.create', compact('products', 'users'));
     }
 
     public function store(Request $request)
@@ -35,7 +36,7 @@ class CouponController extends Controller
             'discount_value'         => 'required|numeric|min:0',
             'max_uses'               => 'nullable|integer|min:1',
             'usage_per_user'         => 'required|integer|min:1',
-            'applicable_to'          => 'required|in:all,first_order_only,subscription_only,specific_products',
+            'applicable_to'          => 'required|in:all,first_order_only,subscription_only,specific_products,special_users',
             'applicable_product_ids' => 'nullable|array',
             'valid_from'             => 'nullable|date',
             'valid_till'             => 'nullable|date|after_or_equal:valid_from',
@@ -53,15 +54,20 @@ class CouponController extends Controller
             $validated['min_order_value'] = 0;
         }
 
-        Coupon::create($validated);
-
+        $coupon = Coupon::create($validated);
+        // Sync users if provided
+        if ($request->has('user_ids')) {
+            $coupon->users()->sync($request->user_ids);
+        }
         return redirect()->route('admin.coupons.index')->with('success', 'Coupon created successfully!');
     }
 
     public function edit(Coupon $coupon)
     {
         $products = Product::all();
-        return view('admin.coupons.edit', compact('coupon', 'products'));
+        $users = \App\Models\User::all();
+        $selectedUserIds = $coupon->users()->pluck('user_id')->toArray();
+        return view('admin.coupons.edit', compact('coupon', 'products', 'users', 'selectedUserIds'));
     }
 
     public function update(Request $request, Coupon $coupon)
@@ -73,7 +79,7 @@ class CouponController extends Controller
             'discount_value'         => 'required|numeric|min:0',
             'max_uses'               => 'nullable|integer|min:1',
             'usage_per_user'         => 'required|integer|min:1',
-            'applicable_to'          => 'required|in:all,first_order_only,subscription_only,specific_products',
+            'applicable_to'          => 'required|in:all,first_order_only,subscription_only,specific_products,special_users',
             'applicable_product_ids' => 'nullable|array',
             'valid_from'             => 'nullable|date',
             'valid_till'             => 'nullable|date|after_or_equal:valid_from',
@@ -87,7 +93,12 @@ class CouponController extends Controller
             : null;
 
         $coupon->update($validated);
-
+        // Sync users if provided
+        if ($request->has('user_ids')) {
+            $coupon->users()->sync($request->user_ids);
+        } else {
+            $coupon->users()->sync([]);
+        }
         return redirect()->route('admin.coupons.index')->with('success', 'Coupon updated successfully!');
     }
 

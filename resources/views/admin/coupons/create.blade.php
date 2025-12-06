@@ -66,6 +66,7 @@
                                 <option value="first_order_only" @selected(old('applicable_to') === 'first_order_only')>First Order Only</option>
                                 <option value="subscription_only" @selected(old('applicable_to') === 'subscription_only')>Subscriptions Only</option>
                                 <option value="specific_products" @selected(old('applicable_to') === 'specific_products')>Specific Products</option>
+                                <option value="special_users" @selected(old('applicable_to') === 'special_users')>Special Users Only</option>
                             </select>
                             @error('applicable_to')
                                 <div class="invalid-feedback d-block">{{ $message }}</div>
@@ -136,6 +137,16 @@
                             @enderror
                         </div>
 
+                        <!-- Applicable Users -->
+                        <div class="mb-3" id="special_users_container" style="display: none;">
+                            <label for="user_ids" class="form-label fw-bold">Applicable Users</label>
+                            <select class="form-select" id="user_ids" name="user_ids[]" multiple>
+                                @foreach($users as $user)
+                                    <option value="{{ $user->id }}" {{ (collect(old('user_ids'))->contains($user->id)) ? 'selected' : '' }}>{{ $user->name }} ({{ $user->email }})</option>
+                                @endforeach
+                            </select>
+                            <small class="text-muted">Hold Ctrl/Cmd to select multiple users.</small>
+                        </div>
                         <!-- Active Status -->
                         <div class="mb-3">
                             <div class="form-check">
@@ -182,6 +193,7 @@
                             <li><strong>First Order:</strong> New customers only</li>
                             <li><strong>Subscriptions:</strong> Subscription items only</li>
                             <li><strong>Specific:</strong> Selected products only</li>
+                            <li><strong>Special Users:</strong> Only for selected users (assign below)</li>
                         </ul>
                     </div>
                 </div>
@@ -190,23 +202,40 @@
     </div>
 </div>
 
+@vite(['resources/js/app.js'])
 <script>
     const applicableTo = document.getElementById('applicable_to');
     const specificProductsContainer = document.getElementById('specific_products_container');
+    const specialUsersContainer = document.getElementById('special_users_container');
+    const userSelect = document.getElementById('user_ids');
 
-    // Toggle specific products input based on selection
+    function toggleSpecialUsers() {
+        if (applicableTo.value === 'special_users') {
+            specialUsersContainer.style.display = 'block';
+        } else {
+            specialUsersContainer.style.display = 'none';
+            // Deselect all users if not special_users
+            if (userSelect) {
+                for (let i = 0; i < userSelect.options.length; i++) {
+                    userSelect.options[i].selected = false;
+                }
+            }
+        }
+    }
+
     applicableTo.addEventListener('change', function() {
         if (this.value === 'specific_products') {
             specificProductsContainer.style.display = 'block';
         } else {
             specificProductsContainer.style.display = 'none';
         }
+        toggleSpecialUsers();
     });
 
-    // Trigger on page load if value is set
     if (applicableTo.value === 'specific_products') {
         specificProductsContainer.style.display = 'block';
     }
+    toggleSpecialUsers();
 </script>
 
 <style>
