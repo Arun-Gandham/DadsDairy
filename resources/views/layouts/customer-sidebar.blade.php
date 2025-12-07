@@ -1,8 +1,5 @@
 {{-- resources/views/layouts/customer-sidebar.blade.php --}}
 <div class="sidebar">
-    <a href="{{ route('customer.dashboard') }}">
-        <i class="fas fa-home"></i> Dashboard
-    </a>
     <a href="{{ route('customer.products') }}">
         <i class="fas fa-shopping-bag"></i> Shop
     </a>

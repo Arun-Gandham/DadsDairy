@@ -105,6 +105,6 @@ class AuthController extends Controller
             return route('delivery.dashboard');
         }
 
-        return route('customer.dashboard');
+        return route('customer.products');
     }
 }

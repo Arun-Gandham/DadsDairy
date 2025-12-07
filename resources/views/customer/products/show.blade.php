@@ -51,7 +51,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="{{ route('customer.dashboard') }}">🥛 Dad's Dairy</a>
+            <a class="navbar-brand" href="#">🥛 Dad's Dairy</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -84,9 +84,6 @@
         <!-- Sidebar -->
         <div class="col-md-2">
             <div class="sidebar">
-                <a href="{{ route('customer.dashboard') }}">
-                    <i class="fas fa-home"></i> Dashboard
-                </a>
                 <a href="{{ route('customer.products') }}" class="active">
                     <i class="fas fa-shopping-bag"></i> Shop
                 </a>

@@ -10,29 +10,6 @@ use Illuminate\Support\Facades\Auth;
 class CustomerDashboardController extends Controller
 {
     /**
-     * Show customer dashboard
-     */
-    public function dashboard()
-    {
-        $user                = Auth::user();
-        $totalOrders         = $user->orders()->count();
-        $totalSpent          = $user->orders()->where('status', 'delivered')->sum('total_amount');
-        $activeSubscriptions = $user->subscriptions()->where('status', 'active')->count();
-        $cartCount           = $user->cartItems()->count();
-
-        $recentOrders        = $user->orders()->latest()->limit(5)->get();
-        $activeSubscriptions = $user->subscriptions()->where('status', 'active')->get();
-
-        return view('customer.dashboard', compact(
-            'totalOrders',
-            'totalSpent',
-            'activeSubscriptions',
-            'cartCount',
-            'recentOrders'
-        ));
-    }
-
-    /**
      * Show products list
      */
     public function products()

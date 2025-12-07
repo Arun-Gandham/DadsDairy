@@ -23,7 +23,6 @@
                 <div class="card-body">
                     <h6 class="fw-bold mb-3">Quick Links</h6>
                     <ul class="list-unstyled">
-                        <li><a href="{{ route('customer.dashboard') }}" class="text-decoration-none"><i class="fas fa-home"></i> Dashboard</a></li>
                         <li class="mt-2"><a href="{{ route('customer.orders') }}" class="text-decoration-none"><i class="fas fa-list"></i> My Orders</a></li>
                         <li class="mt-2"><a href="{{ route('customer.cart') }}" class="text-decoration-none"><i class="fas fa-shopping-cart"></i> Cart</a></li>
                         <li class="mt-2"><a href="{{ route('customer.subscriptions.index') }}" class="text-decoration-none"><i class="fas fa-sync"></i> Subscriptions</a></li>
@@ -127,8 +126,8 @@
                         <a href="{{ route('customer.profile.edit') }}" class="btn btn-primary">
                             <i class="fas fa-edit"></i> Edit Profile
                         </a>
-                        <a href="{{ route('customer.dashboard') }}" class="btn btn-secondary">
-                            <i class="fas fa-arrow-left"></i> Back to Dashboard
+                        <a href="{{ route('customer.products') }}" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left"></i> Back to Products
                         </a>
                     </div>
                 </div>

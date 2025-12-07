@@ -61,7 +61,7 @@ Route::get('/dashboard', function () {
     } elseif ($user->hasRole('delivery_agent')) {
         return redirect()->route('delivery.dashboard');
     }
-    return redirect()->route('customer.dashboard');
+    return redirect()->route('customer.products');
 })->middleware('auth')->name('dashboard');
 
 // Admin Routes
@@ -148,7 +148,7 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
 
 // Customer Routes
 Route::prefix('customer')->middleware(['auth', 'role:customer'])->group(function () {
-    Route::get('/dashboard', [CustomerDashboardController::class, 'dashboard'])->name('customer.dashboard');
+    // Route::get('/dashboard', [CustomerDashboardController::class, 'dashboard'])->name('customer.dashboard'); // Customer dashboard removed
 
     // Profile
     Route::get('/profile', [ProfileController::class, 'show'])->name('customer.profile.show');
