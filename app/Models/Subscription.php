@@ -20,6 +20,15 @@ class Subscription extends Model
         'end_date',
         'notes',
         'cancelled_at',
+        'address',
+        'latitude',
+        'longitude',
+        'door_number',
+        'street',
+        'area',
+        'city',
+        'state',
+        'pin_code',
     ];
 
     protected $casts = [
@@ -43,5 +52,13 @@ class Subscription extends Model
     public function product()
     {
         return $this->belongsTo(Product::class);
+    }
+
+    /**
+     * Get the subscription plan for this subscription
+     */
+    public function subscriptionPlan()
+    {
+        return $this->belongsTo(SubscriptionPlan::class);
     }
 }

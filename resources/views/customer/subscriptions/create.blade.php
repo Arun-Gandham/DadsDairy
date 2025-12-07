@@ -86,23 +86,65 @@
 
                 <div class="row">
                     <div class="col-md-8">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title mb-4">Subscription Details</h5>
-
-                                @if ($errors->any())
-                                    <div class="alert alert-danger">
-                                        <ul>
-                                            @foreach ($errors->all() as $error)
-                                                <li>{{ $error }}</li>
-                                            @endforeach
-                                        </ul>
+                        <form action="{{ route('customer.subscriptions.store', $product) }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                            <!-- Delivery Location Card -->
+                            <div class="card mb-4">
+                                <div class="card-header bg-primary text-white">
+                                    <strong>Delivery Location</strong>
+                                </div>
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <label for="door_number" class="form-label">Door Number</label>
+                                        <input type="text" class="form-control" id="door_number" name="door_number" maxlength="20" required placeholder="Enter door number">
                                     </div>
-                                @endif
+                                    <div class="mb-3">
+                                        <label for="street" class="form-label">Street</label>
+                                        <input type="text" class="form-control" id="street" name="street" maxlength="50" required placeholder="Enter street">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="area" class="form-label">Area</label>
+                                        <input type="text" class="form-control" id="area" name="area" maxlength="50" required placeholder="Enter area">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="city" class="form-label">City</label>
+                                        <input type="text" class="form-control" id="city" name="city" maxlength="50" required placeholder="Enter city">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="state" class="form-label">State</label>
+                                        <input type="text" class="form-control" id="state" name="state" maxlength="50" required placeholder="Enter state">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="pin_code" class="form-label">Pin Code</label>
+                                        <input type="text" class="form-control" id="pin_code" name="pin_code" maxlength="10" required placeholder="Enter pin code">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Pick Location on Map</label>
+                                        <div id="map" style="height: 300px; width: 100%;"></div>
+                                        <div class="input-group mt-2">
+                                            <input type="text" class="form-control" name="latitude" id="latitude" placeholder="Latitude" required readonly>
+                                            <input type="text" class="form-control" name="longitude" id="longitude" placeholder="Longitude" required readonly>
+                                        </div>
+                                        <small class="text-muted">Click on the map to select your delivery location.</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Subscription Details Card -->
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title mb-4">Subscription Details</h5>
 
-                                <form action="{{ route('customer.subscriptions.store', $product) }}" method="POST">
-                                    @csrf
-                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                    @if ($errors->any())
+                                        <div class="alert alert-danger">
+                                            <ul>
+                                                @foreach ($errors->all() as $error)
+                                                    <li>{{ $error }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    @endif
+
                                     @if($plan)
                                         <input type="hidden" name="subscription_plan_id" value="{{ $plan->id }}">
                                     @endif
@@ -155,9 +197,33 @@
                                     <button type="submit" class="btn btn-gradient btn-lg w-100">
                                         <i class="fas fa-check"></i> Start Subscription
                                     </button>
-                                </form>
+                                </div>
                             </div>
-                        </div>
+                        </form>
+                        <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY"></script>
+                        <script>
+                        let map, marker;
+                        function initMap() {
+                            map = new google.maps.Map(document.getElementById('map'), {
+                                center: { lat: 20.5937, lng: 78.9629 }, // Center on India
+                                zoom: 5
+                            });
+                            map.addListener('click', function(e) {
+                                placeMarker(e.latLng);
+                            });
+                        }
+                        function placeMarker(location) {
+                            if (marker) marker.setMap(null);
+                            marker = new google.maps.Marker({
+                                position: location,
+                                map: map
+                            });
+                            document.getElementById('latitude').value = location.lat();
+                            document.getElementById('longitude').value = location.lng();
+                        }
+                        window.initMap = initMap;
+                        </script>
+                        <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&callback=initMap"></script>
                     </div>
 
                     <div class="col-md-4">

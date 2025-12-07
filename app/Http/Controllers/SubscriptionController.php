@@ -43,16 +43,17 @@ class SubscriptionController extends Controller
             'quantity'           => 'required|integer|min:1',
             'frequency'          => 'required|in:daily,weekly,monthly',
             'next_delivery_date' => 'required|date|after_or_equal:today',
+            'address'            => 'required|string|max:255',
+            'latitude'           => 'required|numeric',
+            'longitude'          => 'required|numeric',
+            'door_number'        => 'required|string|max:20',
+            'street'             => 'required|string|max:50',
+            'area'               => 'required|string|max:50',
+            'city'               => 'required|string|max:50',
+            'state'              => 'required|string|max:50',
+            'pin_code'           => 'required|string|max:10',
         ]);
 
-        $existingSubscription = Subscription::where('user_id', Auth::id())
-            ->where('product_id', $product->id)
-            ->where('status', 'active')
-            ->first();
-
-        if ($existingSubscription) {
-            return redirect()->back()->with('error', 'You already have an active subscription for this product');
-        }
 
         Subscription::create([
             'user_id'              => Auth::id(),
@@ -63,6 +64,15 @@ class SubscriptionController extends Controller
             'next_delivery_date'   => $validated['next_delivery_date'],
             'status'               => 'active',
             'start_date'           => now(),
+            'address'              => $validated['address'],
+            'latitude'             => $validated['latitude'],
+            'longitude'            => $validated['longitude'],
+            'door_number'          => $validated['door_number'],
+            'street'               => $validated['street'],
+            'area'                 => $validated['area'],
+            'city'                 => $validated['city'],
+            'state'                => $validated['state'],
+            'pin_code'             => $validated['pin_code'],
         ]);
         
         return redirect()->route('customer.subscriptions.index')->with('success', 'Subscription created successfully');

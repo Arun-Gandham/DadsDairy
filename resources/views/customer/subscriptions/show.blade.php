@@ -105,6 +105,38 @@
                                             <strong>Price per Unit:</strong> <br>
                                             ₹{{ number_format($subscription->product->price, 2) }}
                                         </p>
+                                        <hr>
+                                        <div class="card mb-2">
+                                            <div class="card-header bg-primary text-white">
+                                                <strong>Delivery Address Details</strong>
+                                            </div>
+                                            <div class="card-body">
+                                                <strong>Door Number:</strong> {{ $subscription->door_number }}<br>
+                                                <strong>Street:</strong> {{ $subscription->street }}<br>
+                                                <strong>Area:</strong> {{ $subscription->area }}<br>
+                                                <strong>City:</strong> {{ $subscription->city }}<br>
+                                                <strong>State:</strong> {{ $subscription->state }}<br>
+                                                <strong>Pin Code:</strong> {{ $subscription->pin_code }}<br>
+                                                <strong>Full Address:</strong> {{ $subscription->address }}<br>
+                                                <strong>Location Coordinates:</strong> <br>
+                                                Latitude: {{ $subscription->latitude }}<br>
+                                                Longitude: {{ $subscription->longitude }}
+                                            </div>
+                                        </div>
+                                        @if($subscription->subscription_plan_id && $subscription->subscriptionPlan)
+                                        <hr>
+                                        <div class="card mb-2">
+                                            <div class="card-header bg-primary text-white">
+                                                <strong>Subscription Plan Details</strong>
+                                            </div>
+                                            <div class="card-body">
+                                                <strong>{{ $subscription->subscriptionPlan->name }}</strong><br>
+                                                Duration: {{ $subscription->subscriptionPlan->duration_days }} days<br>
+                                                Quantity: {{ $subscription->subscriptionPlan->ml }}<br>
+                                                Price per unit: ₹{{ number_format($subscription->subscriptionPlan->price_per_unit, 2) }}
+                                            </div>
+                                        </div>
+                                        @endif
                                     </div>
                                     <div class="col-md-6">
                                         <p>
