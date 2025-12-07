@@ -12,10 +12,12 @@ class SubscriptionSeeder extends Seeder
     {
         $user = User::first();
         $product = Product::first();
-        if ($user && $product) {
+        $plan = $product ? $product->subscriptionPlans()->first() : null;
+        if ($user && $product && $plan) {
             Subscription::create([
                 'user_id' => $user->id,
                 'product_id' => $product->id,
+                'subscription_plan_id' => $plan->id,
                 'start_date' => now()->toDateString(),
                 'frequency' => 'daily',
                 'status' => 'active',

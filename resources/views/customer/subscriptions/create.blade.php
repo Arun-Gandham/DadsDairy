@@ -102,6 +102,10 @@
 
                                 <form action="{{ route('customer.subscriptions.store', $product) }}" method="POST">
                                     @csrf
+                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                    @if($plan)
+                                        <input type="hidden" name="subscription_plan_id" value="{{ $plan->id }}">
+                                    @endif
 
                                     <div class="mb-3">
                                         <label for="quantity" class="form-label">Quantity per Delivery</label>
@@ -133,6 +137,20 @@
                                         <label for="next_delivery_date" class="form-label">First Delivery Date</label>
                                         <input type="date" class="form-control" id="next_delivery_date" name="next_delivery_date" min="{{ \Carbon\Carbon::tomorrow()->format('Y-m-d') }}" required>
                                     </div>
+
+                                    @if($plan)
+                                    <div class="mb-4">
+                                        <label class="form-label">Selected Plan</label>
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <strong>{{ $plan->name }}</strong><br>
+                                                Duration: {{ $plan->duration_days }} days<br>
+                                                Quantity: {{ $plan->ml }}<br>
+                                                Price per unit: ₹{{ number_format($plan->price_per_unit, 2) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @endif
 
                                     <button type="submit" class="btn btn-gradient btn-lg w-100">
                                         <i class="fas fa-check"></i> Start Subscription

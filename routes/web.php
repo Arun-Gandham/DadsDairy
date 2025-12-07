@@ -15,6 +15,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\SubscriptionPlanController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -136,6 +137,13 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
             ->middleware('can:manage_settings')
             ->name('admin.settings.update');
 
+    // Subscription Plans
+    Route::get('/subscription_plans', [SubscriptionPlanController::class, 'index'])->name('admin.subscription_plans.index');
+    Route::get('/subscription_plans/create', [SubscriptionPlanController::class, 'create'])->name('admin.subscription_plans.create');
+    Route::post('/subscription_plans', [SubscriptionPlanController::class, 'store'])->name('admin.subscription_plans.store');
+    Route::get('/subscription_plans/{subscription_plan}/edit', [SubscriptionPlanController::class, 'edit'])->name('admin.subscription_plans.edit');
+    Route::put('/subscription_plans/{subscription_plan}', [SubscriptionPlanController::class, 'update'])->name('admin.subscription_plans.update');
+    Route::delete('/subscription_plans/{subscription_plan}', [SubscriptionPlanController::class, 'destroy'])->name('admin.subscription_plans.destroy');
 });
 
 // Customer Routes

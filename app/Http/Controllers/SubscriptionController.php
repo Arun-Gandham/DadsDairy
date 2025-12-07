@@ -20,9 +20,17 @@ class SubscriptionController extends Controller
     /**
      * Show create subscription form
      */
-    public function create(Product $product)
+    public function create(Product $product, Request $request)
     {
-        return view('customer.subscriptions.create', compact('product'));
+        $plan = null;
+        if ($request->has('subscription_plan_id')) {
+            $plan = $product->subscriptionPlans()->where('id', $request->subscription_plan_id)->where('active', 1)->first();
+        }
+        // If no plan is selected, redirect back to product page with error
+        if (!$plan) {
+            return redirect()->route('customer.products.show', $product)->with('error', 'Please select a subscription plan to continue.');
+        }
+        return view('customer.subscriptions.create', compact('product', 'plan'));
     }
 
     /**
@@ -31,6 +39,7 @@ class SubscriptionController extends Controller
     public function store(Product $product, Request $request)
     {
         $validated = $request->validate([
+            'subscription_plan_id' => 'required|exists:subscription_plans,id',
             'quantity'           => 'required|integer|min:1',
             'frequency'          => 'required|in:daily,weekly,monthly',
             'next_delivery_date' => 'required|date|after_or_equal:today',
@@ -46,13 +55,14 @@ class SubscriptionController extends Controller
         }
 
         Subscription::create([
-            'user_id'            => Auth::id(),
-            'product_id'         => $product->id,
-            'quantity'           => $validated['quantity'],
-            'frequency'          => $validated['frequency'],
-            'next_delivery_date' => $validated['next_delivery_date'],
-            'status'             => 'active',
-            'start_date'         => now(),
+            'user_id'              => Auth::id(),
+            'product_id'           => $request->input('product_id', $product->id),
+            'subscription_plan_id' => $validated['subscription_plan_id'],
+            'quantity'             => $validated['quantity'],
+            'frequency'            => $validated['frequency'],
+            'next_delivery_date'   => $validated['next_delivery_date'],
+            'status'               => 'active',
+            'start_date'           => now(),
         ]);
         
         return redirect()->route('customer.subscriptions.index')->with('success', 'Subscription created successfully');

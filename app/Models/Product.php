@@ -47,4 +47,12 @@ class Product extends Model
     {
         return $this->hasMany(Subscription::class);
     }
+
+    /**
+     * Get all subscription plans for this product
+     */
+    public function subscriptionPlans()
+    {
+        return $this->hasMany(SubscriptionPlan::class);
+    }
 }

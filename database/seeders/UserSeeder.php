@@ -15,36 +15,42 @@ class UserSeeder extends Seeder
     {
         // Create Admin user
         $adminRole = Role::where('slug', 'admin')->first();
-        User::create([
-            'name'     => 'Admin User',
-            'email'    => 'admin@example.com',
-            'password' => Hash::make('password123'),
-            'role_id'  => $adminRole->id,
-            'phone'    => '9876543210',
-            'address'  => '123 Admin Street, City',
-        ]);
+        User::updateOrCreate(
+            ['email' => 'admin@example.com'],
+            [
+                'name'     => 'Admin User',
+                'password' => Hash::make('password123'),
+                'role_id'  => $adminRole->id,
+                'phone'    => '9876543210',
+                'address'  => '123 Admin Street, City',
+            ]
+        );
 
         // Create Customer user
         $customerRole = Role::where('slug', 'customer')->first();
-        User::create([
-            'name'     => 'John Customer',
-            'email'    => 'customer@example.com',
-            'password' => Hash::make('password123'),
-            'role_id'  => $customerRole->id,
-            'phone'    => '9876543211',
-            'address'  => '456 Customer Lane, City',
-        ]);
+        User::updateOrCreate(
+            ['email' => 'customer@example.com'],
+            [
+                'name'     => 'John Customer',
+                'password' => Hash::make('password123'),
+                'role_id'  => $customerRole->id,
+                'phone'    => '9876543211',
+                'address'  => '456 Customer Lane, City',
+            ]
+        );
 
         // Create Delivery Agent user
         $deliveryRole = Role::where('slug', 'delivery_agent')->first();
-        User::create([
-            'name'     => 'Delivery Agent',
-            'email'    => 'delivery@example.com',
-            'password' => Hash::make('password123'),
-            'role_id'  => $deliveryRole->id,
-            'phone'    => '9876543212',
-            'address'  => '789 Delivery Avenue, City',
-        ]);
+        User::updateOrCreate(
+            ['email' => 'delivery@example.com'],
+            [
+                'name'     => 'Delivery Agent',
+                'password' => Hash::make('password123'),
+                'role_id'  => $deliveryRole->id,
+                'phone'    => '9876543212',
+                'address'  => '789 Delivery Avenue, City',
+            ]
+        );
 
         // Create some sample categories
         $categories = [
@@ -55,7 +61,13 @@ class UserSeeder extends Seeder
         ];
 
         foreach ($categories as $cat) {
-            \App\Models\Category::create($cat);
+            \App\Models\Category::updateOrCreate(
+                ['name' => $cat['name']],
+                [
+                    'slug' => $cat['slug'],
+                    'description' => $cat['description'],
+                ]
+            );
         }
 
         // Create sample products
@@ -108,12 +120,15 @@ class UserSeeder extends Seeder
                 'quantity'    => 60,
                 'category_id' => 4,
                 'is_active'   => true,
-                'type'        => 'both',
+                'type'        => 'buy',
             ],
         ];
 
-        foreach ($products as $product) {
-            \App\Models\Product::create($product);
+        foreach ($products as $prod) {
+            \App\Models\Product::updateOrCreate(
+                ['slug' => $prod['slug']],
+                $prod
+            );
         }
     }
 }

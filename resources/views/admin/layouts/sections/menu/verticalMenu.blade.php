@@ -51,6 +51,13 @@ $configData = Helper::appClasses();
         </a>
       </li>
     @endif
+    @if(auth()->user()->hasPermission('manage_subscription_plans'))
+      <li class="menu-item {{ request()->is('admin/subscription_plans*') ? 'active' : '' }}">
+        <a href="{{ route('admin.subscription_plans.index') }}" class="menu-link">
+          <i class="fas fa-calendar-alt"></i>
+          <div style="display:inline-block;">Subscription Plans</div>
+        </a>
+    @endif
     @if(auth()->user()->hasPermission('view_reports'))
       <li class="menu-item {{ request()->is('admin/reports*') ? 'active' : '' }}">
         <a href="{{ route('admin.reports.index') }}" class="menu-link">

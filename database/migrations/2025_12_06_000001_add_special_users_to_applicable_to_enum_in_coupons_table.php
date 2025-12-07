@@ -21,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
+        // Update any 'special_users' values to 'all' before reverting ENUM
+        DB::table('coupons')->where('applicable_to', 'special_users')->update(['applicable_to' => 'all']);
         // Revert ENUM to previous values (without 'special_users')
         DB::statement("ALTER TABLE coupons MODIFY applicable_to ENUM('all','first_order_only','subscription_only','specific_products') DEFAULT 'all'");
     }

@@ -109,6 +109,9 @@
                     <a href="{{ route('customer.products') }}" class="btn btn-outline-secondary">
                         <i class="fas fa-arrow-left"></i> Back to Products
                     </a>
+                    @if(session('error'))
+                        <div class="alert alert-danger mt-3">{{ session('error') }}</div>
+                    @endif
                 </div>
 
                 <div class="row">
@@ -142,10 +145,46 @@
 
                         @if ($product->quantity > 0)
                         <div class="mb-4">
-                            @if ($product->type === 'subscribe')
-                                <a href="{{ route('customer.subscriptions.create', $product) }}" class="btn btn-gradient btn-lg w-100">
-                                    <i class="fas fa-sync"></i> Subscribe Now
-                                </a>
+                            @if ($product->type === 'subscribe' || $product->type === 'both')
+                                @if($subscriptionPlans->count())
+                                    <form id="planSelectForm" action="{{ route('customer.subscriptions.create', $product) }}" method="GET" class="mb-2">
+                                        <label class="form-label mb-3">Select a Subscription Plan</label>
+                                        <div class="row g-3">
+                                            @foreach($subscriptionPlans as $plan)
+                                                <div class="col-md-6">
+                                                    <label for="plan_{{ $plan->id }}" class="w-100">
+                                                        <input class="form-check-input me-2" type="radio" name="subscription_plan_id" id="plan_{{ $plan->id }}" value="{{ $plan->id }}" required @if($loop->first) checked @endif>
+                                                        <div class="card h-100 mb-2 plan-card @if($loop->first) border-primary @endif" style="cursor:pointer;">
+                                                            <div class="card-body">
+                                                                <strong>{{ $plan->name }}</strong><br>
+                                                                <span>Duration: {{ $plan->duration_days }} days</span><br>
+                                                                <span>Quantity: {{ $plan->ml }}</span><br>
+                                                                <span>Price per unit: ₹{{ number_format($plan->price_per_unit, 2) }}</span>
+                                                            </div>
+                                                        </div>
+                                                    </label>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                        <button type="submit" class="btn btn-gradient btn-lg w-100 mt-3">
+                                            <i class="fas fa-sync"></i> Subscribe Now
+                                        </button>
+                                    </form>
+                                    <script>
+                                    // Highlight selected card
+                                    document.querySelectorAll('.plan-card').forEach(function(card) {
+                                        card.addEventListener('click', function() {
+                                            card.querySelector('input[type=radio]').checked = true;
+                                            document.querySelectorAll('.plan-card').forEach(function(c) {
+                                                c.classList.remove('border-primary');
+                                            });
+                                            card.classList.add('border-primary');
+                                        });
+                                    });
+                                    </script>
+                                @else
+                                    <div class="alert alert-info">No subscription plans available for this product.</div>
+                                @endif
                             @elseif ($product->type === 'buy')
                                 @if ($inCart)
                                     <div class="alert alert-info mb-3">

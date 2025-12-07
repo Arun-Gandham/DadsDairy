@@ -47,11 +47,13 @@ class CustomerDashboardController extends Controller
      */
     public function showProduct(Product $product)
     {
+        $product->load('category');
+        $subscriptionPlans = $product->subscriptionPlans()->where('active', 1)->get();
         $inCart = Cart::where('user_id', Auth::id())
             ->where('product_id', $product->id)
             ->first();
-
-        return view('customer.products.show', compact('product', 'inCart'));
+            
+        return view('customer.products.show', compact('product', 'inCart', 'subscriptionPlans'));
     }
 
     /**
