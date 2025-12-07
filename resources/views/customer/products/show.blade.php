@@ -113,7 +113,81 @@
 
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="product-image">🥛</div>
+                        @php
+                            $images = [];
+                            if (!empty($product->image)) $images[] = $product->image;
+                            if (!empty($product->images) && is_array($product->images)) {
+                                foreach ($product->images as $img) {
+                                    if ($img && $img !== $product->image) $images[] = $img;
+                                }
+                            }
+                            $defaultImage = asset('assets/img/default-product.png'); // Change path if needed
+                            if (empty($images)) {
+                                $images[] = $defaultImage;
+                            }
+                        @endphp
+                        <div id="productImageCarousel" class="carousel slide mb-3" data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                @foreach($images as $idx => $img)
+                                    <div class="carousel-item @if($idx === 0) active @endif">
+                                        <img src="{{ Str::startsWith($img, 'http') ? $img : (file_exists(public_path('storage/' . $img)) ? asset('storage/' . $img) : $img) }}" class="d-block w-100" style="height:400px;object-fit:cover;border-radius:8px;" alt="Product Image">
+                                    </div>
+                                @endforeach
+                            </div>
+                            @if(count($images) > 1)
+                                <button class="carousel-control-prev" type="button" data-bs-target="#productImageCarousel" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#productImageCarousel" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                            @endif
+                        </div>
+                        @if(count($images) > 1)
+                        <div class="d-flex justify-content-center gap-2" id="carouselThumbnails">
+                            @foreach($images as $idx => $img)
+                                <img src="{{ Str::startsWith($img, 'http') ? $img : (file_exists(public_path('storage/' . $img)) ? asset('storage/' . $img) : $img) }}" class="img-thumbnail carousel-thumb @if($idx === 0) border-primary thumb-active @endif" style="width:60px;height:60px;object-fit:cover;cursor:pointer;" data-bs-target="#productImageCarousel" data-bs-slide-to="{{ $idx }}">
+                            @endforeach
+                        </div>
+                        <style>
+                        .carousel-thumb.thumb-active {
+                            border: 2px solid #667eea;
+                            box-shadow: 0 0 8px #667eea;
+                        }
+                        </style>
+                        <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            var carouselEl = document.getElementById('productImageCarousel');
+                            var thumbs = document.querySelectorAll('.carousel-thumb');
+                            if (carouselEl && thumbs.length) {
+                                carouselEl.addEventListener('slid.bs.carousel', function (e) {
+                                    thumbs.forEach(function(thumb, idx) {
+                                        thumb.classList.remove('border-primary', 'thumb-active');
+                                    });
+                                    var activeIdx = e.to;
+                                    if (typeof activeIdx === 'undefined') {
+                                        // fallback for Bootstrap 5.3
+                                        activeIdx = Array.from(carouselEl.querySelectorAll('.carousel-item')).findIndex(function(item){
+                                            return item.classList.contains('active');
+                                        });
+                                    }
+                                    if (activeIdx >= 0 && thumbs[activeIdx]) {
+                                        thumbs[activeIdx].classList.add('border-primary', 'thumb-active');
+                                    }
+                                });
+                                // Also allow clicking thumbnail to activate
+                                thumbs.forEach(function(thumb, idx) {
+                                    thumb.addEventListener('click', function() {
+                                        thumbs.forEach(function(t) { t.classList.remove('border-primary', 'thumb-active'); });
+                                        thumb.classList.add('border-primary', 'thumb-active');
+                                    });
+                                });
+                            }
+                        });
+                        </script>
+                        @endif
                     </div>
 
                     <div class="col-md-6">
@@ -131,13 +205,8 @@
                             </p>
                         </div>
 
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <h5 class="mb-0">Description</h5>
-                            </div>
-                            <div class="card-body">
-                                <p>{{ $product->description }}</p>
-                            </div>
+                        <div class="mb-4">
+                            {!! $product->description !!}
                         </div>
 
                         @if ($product->quantity > 0)
@@ -187,6 +256,17 @@
                                             card.classList.add('border-primary');
                                             card.querySelector('input[type=radio]').checked = true;
                                         });
+                                    });
+                                    </script>
+                                    <script>
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        var carouselEl = document.getElementById('productImageCarousel');
+                                        if (carouselEl) {
+                                            var carousel = new bootstrap.Carousel(carouselEl, {
+                                                interval: 2000,
+                                                ride: 'carousel'
+                                            });
+                                        }
                                     });
                                     </script>
                                 @else
