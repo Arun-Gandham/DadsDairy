@@ -76,36 +76,205 @@
                             <h5 class="card-title mb-4">Order Details</h5>
 
                             <form action="{{ route('customer.orders.store') }}" method="POST" id="checkoutForm">
+                                                                                                <input type="hidden" name="delivery_address" id="delivery_address">
+                                                                @if ($errors->any())
+                                                                    <div class="alert alert-danger">
+                                                                        <ul class="mb-0">
+                                                                            @foreach ($errors->all() as $error)
+                                                                                <li>{{ $error }}</li>
+                                                                            @endforeach
+                                                                        </ul>
+                                                                    </div>
+                                                                @endif
                                 @csrf
 
+                                <div class="row mb-3">
+                                    <div class="col-md-6 mb-2">
+                                        <label for="phone" class="form-label">Phone</label>
+                                        <input type="text" class="form-control" id="phone" name="phone" maxlength="20" placeholder="Enter phone number" value="{{ Auth::user()->phone ?? '' }}" required>
+                                    </div>
+                                    <div class="col-md-6 mb-2">
+                                        <label for="email" class="form-label">Email</label>
+                                        <input type="email" class="form-control" id="email" name="email" maxlength="100" placeholder="Enter email address" value="{{ Auth::user()->email ?? '' }}" required>
+                                    </div>
+                                </div>
                                 <div class="mb-4">
                                     <h6>Delivery Information</h6>
                                     <div class="form-check mb-3">
-                                        <input type="radio" name="delivery_type" value="home_delivery" id="home_delivery" class="form-check-input" required onchange="toggleAddress()">
+                                        <input type="radio" name="delivery_type" value="home_delivery" id="home_delivery" class="form-check-input" required onchange="toggleAddress()" checked>
                                         <label for="home_delivery" class="form-check-label">
                                             Home Delivery
-                                        </label>
-                                    </div>
-                                    <div class="form-check mb-3">
-                                        <input type="radio" name="delivery_type" value="pickup" id="pickup" class="form-check-input" required onchange="toggleAddress()">
-                                        <label for="pickup" class="form-check-label">
-                                            Pickup from Store
                                         </label>
                                     </div>
                                 </div>
 
                                 <div class="mb-3" id="address_section" style="display: none;">
-                                    <label for="delivery_address" class="form-label">Delivery Address</label>
-                                    <textarea name="delivery_address" id="delivery_address" class="form-control" rows="3" placeholder="Enter your delivery address">{{ Auth::user()->address }}</textarea>
-                                    @error('delivery_address')
-                                        <div class="text-danger small mt-1">{{ $message }}</div>
-                                    @enderror
+                                    <div class="row g-2">
+                                        <div class="col-md-4 mb-2">
+                                            <label for="door_number" class="form-label">Door Number</label>
+                                            <input type="text" class="form-control" id="door_number" name="door_number" maxlength="20" placeholder="Enter door number">
+                                        </div>
+                                        <div class="col-md-8 mb-2">
+                                            <label for="street" class="form-label">Street</label>
+                                            <input type="text" class="form-control" id="street" name="street" maxlength="50" placeholder="Enter street">
+                                        </div>
+                                        <div class="col-md-6 mb-2">
+                                            <label for="area" class="form-label">Area</label>
+                                            <input type="text" class="form-control" id="area" name="area" maxlength="50" placeholder="Enter area">
+                                        </div>
+                                        <div class="col-md-6 mb-2">
+                                            <label for="city" class="form-label">City</label>
+                                            <input type="text" class="form-control" id="city" name="city" maxlength="50" placeholder="Enter city">
+                                        </div>
+                                        <div class="col-md-6 mb-2">
+                                            <label for="state" class="form-label">State</label>
+                                            <input type="text" class="form-control" id="state" name="state" maxlength="50" placeholder="Enter state">
+                                        </div>
+                                        <div class="col-md-6 mb-2">
+                                            <label for="pin_code" class="form-label">Pin Code</label>
+                                            <input type="text" class="form-control" id="pin_code" name="pin_code" maxlength="10" placeholder="Enter pin code">
+                                        </div>
+                                        <div class="col-md-6 mb-2">
+                                            <label for="latitude" class="form-label">Latitude</label>
+                                            <input type="text" class="form-control" id="latitude" name="latitude" placeholder="Latitude" readonly>
+                                        </div>
+                                        <div class="col-md-6 mb-2">
+                                            <label for="longitude" class="form-label">Longitude</label>
+                                            <input type="text" class="form-control" id="longitude" name="longitude" placeholder="Longitude" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="mb-2">
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <label class="form-label mb-0">Pick Location on Map</label>
+                                            <button type="button" class="btn btn-outline-primary btn-sm" id="locateMeBtn" style="font-weight:600;">
+                                                <i class="fas fa-crosshairs"></i> Locate Me
+                                            </button>
+                                        </div>
+                                        <div id="map" style="height: 220px; width: 100%;"></div>
+                                        <small class="text-muted">Click on the map or use the <b>Locate Me</b> button to select your delivery location.</small>
+                                    </div>
+                                    <script>
+                                    let map, marker;
+                                    function initMap() {
+                                        map = new google.maps.Map(document.getElementById('map'), {
+                                            center: { lat: 20.5937, lng: 78.9629 },
+                                            zoom: 5,
+                                            mapTypeControl: false,
+                                            streetViewControl: false,
+                                            fullscreenControl: false,
+                                            zoomControl: true,
+                                        });
+                                        // Auto-locate on load
+                                        if (navigator.geolocation) {
+                                            navigator.geolocation.getCurrentPosition(function(position) {
+                                                const pos = {
+                                                    lat: position.coords.latitude,
+                                                    lng: position.coords.longitude
+                                                };
+                                                map.setCenter(pos);
+                                                map.setZoom(17);
+                                                placeMarker(pos, true);
+                                            });
+                                        }
+                                        // Add custom 'Locate Me' control (still in map for mobile, but also visible button above)
+                                        if (map && map.controls) {
+                                            const controlDiv = document.createElement('div');
+                                            controlDiv.style.margin = '10px';
+                                            controlDiv.style.background = 'none';
+                                            controlDiv.index = 1;
+                                            const controlUI = document.createElement('button');
+                                            controlUI.className = 'btn btn-primary btn-sm';
+                                            controlUI.style.borderRadius = '50%';
+                                            controlUI.style.width = '40px';
+                                            controlUI.style.height = '40px';
+                                            controlUI.style.display = 'flex';
+                                            controlUI.style.alignItems = 'center';
+                                            controlUI.style.justifyContent = 'center';
+                                            controlUI.title = 'Click to locate me';
+                                            controlUI.innerHTML = '<i class="fas fa-crosshairs"></i>';
+                                            controlDiv.appendChild(controlUI);
+                                            map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(controlDiv);
+                                            controlUI.addEventListener('click', locateMe);
+                                        }
+                                        // Add event for visible Locate Me button
+                                        document.getElementById('locateMeBtn').addEventListener('click', locateMe);
+                                        map.addListener('click', function(e) {
+                                            placeMarker(e.latLng, true);
+                                        });
+                                    }
+                                    function locateMe() {
+                                        if (navigator.geolocation) {
+                                            navigator.geolocation.getCurrentPosition(function(position) {
+                                                const pos = {
+                                                    lat: position.coords.latitude,
+                                                    lng: position.coords.longitude
+                                                };
+                                                map.setCenter(pos);
+                                                map.setZoom(17);
+                                                placeMarker(pos, true);
+                                            }, function() {
+                                                alert('Unable to retrieve your location.');
+                                            });
+                                        } else {
+                                            alert('Geolocation is not supported by this browser.');
+                                        }
+                                    }
+                                    function placeMarker(location, doReverseGeocode) {
+                                        if (marker) {
+                                            if (marker.setMap) marker.setMap(null);
+                                            else if (marker.map) marker.map = null;
+                                        }
+                                        if (google.maps.marker && google.maps.marker.AdvancedMarkerElement) {
+                                            marker = new google.maps.marker.AdvancedMarkerElement({
+                                                map: map,
+                                                position: location
+                                            });
+                                        } else {
+                                            marker = new google.maps.Marker({
+                                                position: location,
+                                                map: map
+                                            });
+                                        }
+                                        const lat = (typeof location.lat === 'function') ? location.lat() : location.lat;
+                                        const lng = (typeof location.lng === 'function') ? location.lng() : location.lng;
+                                        document.getElementById('latitude').value = lat;
+                                        document.getElementById('longitude').value = lng;
+                                        if (doReverseGeocode) {
+                                            const geocoder = new google.maps.Geocoder();
+                                            geocoder.geocode({ location: { lat: lat, lng: lng } }, function(results, status) {
+                                                if (status === 'OK' && results[0]) {
+                                                    fillAddressFields(results[0]);
+                                                }
+                                            });
+                                        }
+                                    }
+                                    function fillAddressFields(result) {
+                                        let door = '', street = '', area = '', city = '', state = '', pin = '';
+                                        for (const comp of result.address_components) {
+                                            if (comp.types.includes('street_number')) door = comp.long_name;
+                                            if (comp.types.includes('route')) street = comp.long_name;
+                                            if (comp.types.includes('sublocality') || comp.types.includes('sublocality_level_1')) area = comp.long_name;
+                                            if (comp.types.includes('locality')) city = comp.long_name;
+                                            if (comp.types.includes('administrative_area_level_1')) state = comp.long_name;
+                                            if (comp.types.includes('postal_code')) pin = comp.long_name;
+                                        }
+                                        document.getElementById('door_number').value = door;
+                                        document.getElementById('street').value = street;
+                                        document.getElementById('area').value = area;
+                                        document.getElementById('city').value = city;
+                                        document.getElementById('state').value = state;
+                                        document.getElementById('pin_code').value = pin;
+                                    }
+                                    window.initMap = initMap;
+                                    </script>
+                                    <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&callback=initMap&libraries=places"></script>
                                 </div>
 
                                 <div class="mb-4">
                                     <h6>Payment Method</h6>
                                     <div class="form-check mb-3">
                                         <input type="radio" name="payment_method" value="cash" id="cash" class="form-check-input" required>
+                                        <input type="radio" name="payment_method" value="cash" id="cash" class="form-check-input" required checked>
                                         <label for="cash" class="form-check-label">
                                             Cash on Delivery
                                         </label>
@@ -145,6 +314,30 @@
                                 <button type="submit" class="btn btn-gradient w-100 btn-lg">
                                     <i class="fas fa-check-circle"></i> Place Order
                                 </button>
+                            </form>
+                            <script>
+                            document.getElementById('checkoutForm').addEventListener('submit', function(e) {
+                                const deliveryType = document.querySelector('input[name="delivery_type"]:checked')?.value;
+                                if (deliveryType === 'home_delivery') {
+                                    // Combine address fields
+                                    const door = document.getElementById('door_number').value.trim();
+                                    const street = document.getElementById('street').value.trim();
+                                    const area = document.getElementById('area').value.trim();
+                                    const city = document.getElementById('city').value.trim();
+                                    const state = document.getElementById('state').value.trim();
+                                    const pin = document.getElementById('pin_code').value.trim();
+                                    let address = '';
+                                    if (door) address += door + ', ';
+                                    if (street) address += street + ', ';
+                                    if (area) address += area + ', ';
+                                    if (city) address += city + ', ';
+                                    if (state) address += state + ', ';
+                                    if (pin) address += pin;
+                                    address = address.replace(/, $/, '');
+                                    document.getElementById('delivery_address').value = address;
+                                }
+                            });
+                            </script>
                             </form>
                         </div>
                     </div>
@@ -207,15 +400,23 @@
 
         function toggleAddress() {
             const addressSection = document.getElementById('address_section');
+            const addressMapSection = document.getElementById('address_map_section');
             const deliveryType = document.querySelector('input[name="delivery_type"]:checked')?.value;
             if (deliveryType === 'home_delivery') {
                 addressSection.style.display = 'block';
+                if (addressMapSection) addressMapSection.style.display = 'block';
                 document.getElementById('delivery_address').required = true;
             } else {
                 addressSection.style.display = 'none';
+                if (addressMapSection) addressMapSection.style.display = 'none';
                 document.getElementById('delivery_address').required = false;
             }
         }
+        // Ensure Home Delivery is selected and address section is visible on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('home_delivery').checked = true;
+            toggleAddress();
+        });
 
         function validateCoupon() {
             const couponCode = document.getElementById('coupon_code').value.trim();

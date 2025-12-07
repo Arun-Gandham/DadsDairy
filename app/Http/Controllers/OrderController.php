@@ -97,6 +97,16 @@ class OrderController extends Controller
             'payment_method'   => 'required|in:cash,card',
             'delivery_type'    => 'required|in:home_delivery,pickup',
             'delivery_address' => 'required_if:delivery_type,home_delivery|string|max:500',
+            'door_number'      => 'nullable|string|max:20',
+            'street'           => 'nullable|string|max:50',
+            'area'             => 'nullable|string|max:50',
+            'city'             => 'nullable|string|max:50',
+            'state'            => 'nullable|string|max:50',
+            'pin_code'         => 'nullable|string|max:10',
+            'latitude'         => 'nullable|numeric',
+            'longitude'        => 'nullable|numeric',
+            'phone'            => 'required|string|max:20',
+            'email'            => 'required|email|max:100',
             'coupon_code'      => 'nullable|string',
         ]);
 
@@ -148,6 +158,16 @@ class OrderController extends Controller
             'payment_method'   => $validated['payment_method'],
             'delivery_type'    => $validated['delivery_type'],
             'delivery_address' => $validated['delivery_address'] ?? null,
+            'door_number'      => $validated['door_number'] ?? null,
+            'street'           => $validated['street'] ?? null,
+            'area'             => $validated['area'] ?? null,
+            'city'             => $validated['city'] ?? null,
+            'state'            => $validated['state'] ?? null,
+            'pin_code'         => $validated['pin_code'] ?? null,
+            'latitude'         => $validated['latitude'] ?? null,
+            'longitude'        => $validated['longitude'] ?? null,
+            'phone'            => $validated['phone'],
+            'email'            => $validated['email'],
         ]);
 
         // Create order items

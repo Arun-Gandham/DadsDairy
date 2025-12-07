@@ -143,13 +143,56 @@
                         </div>
 
                         <!-- Delivery Address -->
-                        @if ($order->delivery_address)
                         <div class="card mb-4">
                             <div class="card-header" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
-                                <h5 class="mb-0">Delivery Address</h5>
+                                <h5 class="mb-0">Delivery Address & Contact</h5>
                             </div>
                             <div class="card-body">
-                                <p>{{ $order->delivery_address }}</p>
+                                <p><strong>Full Address:</strong> {{ $order->delivery_address }}</p>
+                                <p><strong>Door Number:</strong> {{ $order->door_number }}</p>
+                                <p><strong>Street:</strong> {{ $order->street }}</p>
+                                <p><strong>Area:</strong> {{ $order->area }}</p>
+                                <p><strong>City:</strong> {{ $order->city }}</p>
+                                <p><strong>State:</strong> {{ $order->state }}</p>
+                                <p><strong>Pin Code:</strong> {{ $order->pin_code }}</p>
+                                <p><strong>Latitude:</strong> {{ $order->latitude }}</p>
+                                <p><strong>Longitude:</strong> {{ $order->longitude }}</p>
+                                <p><strong>Phone:</strong> {{ $order->phone ?? $order->user->phone ?? Auth::user()->phone }}</p>
+                                <p><strong>Email:</strong> {{ $order->email ?? $order->user->email ?? Auth::user()->email }}</p>
+                                @if ($order->latitude && $order->longitude)
+                                    <a href="https://www.google.com/maps/search/?api=1&query={{ $order->latitude }},{{ $order->longitude }}" target="_blank" class="btn btn-sm btn-outline-primary mb-2">
+                                        <i class="fas fa-map-marker-alt"></i> View on Google Maps
+                                    </a>
+                                    <div id="order-map" style="height: 220px; width: 100%; margin-bottom: 10px;"></div>
+                                    <script>
+                                    function initOrderMap() {
+                                        var lat = Number({{ $order->latitude }});
+                                        var lng = Number({{ $order->longitude }});
+                                        var map = new google.maps.Map(document.getElementById('order-map'), {
+                                            center: { lat: lat, lng: lng },
+                                            zoom: 17,
+                                            mapTypeControl: false,
+                                            streetViewControl: false,
+                                            fullscreenControl: false,
+                                            zoomControl: true,
+                                        });
+                                        var marker;
+                                        if (google.maps.marker && google.maps.marker.AdvancedMarkerElement) {
+                                            marker = new google.maps.marker.AdvancedMarkerElement({
+                                                map: map,
+                                                position: { lat: lat, lng: lng }
+                                            });
+                                        } else {
+                                            marker = new google.maps.Marker({
+                                                position: { lat: lat, lng: lng },
+                                                map: map
+                                            });
+                                        }
+                                    }
+                                    window.initOrderMap = initOrderMap;
+                                    </script>
+                                    <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&callback=initOrderMap&libraries=places"></script>
+                                @endif
                                 @if ($order->deliveryAgent)
                                     <p><strong>Delivery Agent:</strong> {{ $order->deliveryAgent->name }}</p>
                                 @endif
@@ -158,7 +201,6 @@
                                 @endif
                             </div>
                         </div>
-                        @endif
 
                         <!-- Order Items -->
                         <div class="card mb-4">
