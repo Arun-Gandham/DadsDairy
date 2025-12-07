@@ -28,9 +28,10 @@ class SubscriptionPlanController extends \App\Http\Controllers\Controller
             'name' => 'required|string|max:50',
             'duration_days' => 'required|integer|min:1',
             'price_per_unit' => 'required|numeric|min:0',
+            'total_price' => 'required|numeric|min:0',
+            'discounted_price' => 'required|numeric|min:0',
             'active' => 'boolean',
         ]);
-        
         SubscriptionPlan::create($validated);
         return redirect()->route('admin.subscription_plans.index')->with('success', 'Plan created');
     }
@@ -45,9 +46,13 @@ class SubscriptionPlanController extends \App\Http\Controllers\Controller
     public function update(Request $request, SubscriptionPlan $subscription_plan)
     {
         $validated = $request->validate([
+            'product_id' => 'required|integer|exists:products,id',
+            'ml' => 'required|string|max:20',
             'name' => 'required|string|max:50',
             'duration_days' => 'required|integer|min:1',
             'price_per_unit' => 'required|numeric|min:0',
+            'total_price' => 'required|numeric|min:0',
+            'discounted_price' => 'required|numeric|min:0',
             'active' => 'boolean',
         ]);
         $subscription_plan->update($validated);

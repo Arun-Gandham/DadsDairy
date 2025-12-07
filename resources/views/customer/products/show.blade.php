@@ -149,17 +149,25 @@
                                         <div class="row g-3">
                                             @foreach($subscriptionPlans as $plan)
                                                 <div class="col-md-6">
-                                                    <label for="plan_{{ $plan->id }}" class="w-100">
-                                                        <input class="form-check-input me-2" type="radio" name="subscription_plan_id" id="plan_{{ $plan->id }}" value="{{ $plan->id }}" required @if($loop->first) checked @endif>
-                                                        <div class="card h-100 mb-2 plan-card @if($loop->first) border-primary @endif" style="cursor:pointer;">
-                                                            <div class="card-body">
-                                                                <strong>{{ $plan->name }}</strong><br>
-                                                                <span>Duration: {{ $plan->duration_days }} days</span><br>
-                                                                <span>Quantity: {{ $plan->ml }}</span><br>
-                                                                <span>Price per unit: ₹{{ number_format($plan->price_per_unit, 2) }}</span>
-                                                            </div>
+                                                    <div class="card h-100 mb-2 plan-card @if($loop->first) border-primary @endif" style="cursor:pointer;" data-plan-id="{{ $plan->id }}">
+                                                        <input class="form-check-input d-none" type="radio" name="subscription_plan_id" id="plan_{{ $plan->id }}" value="{{ $plan->id }}" required @if($loop->first) checked @endif>
+                                                        <div class="card-body">
+                                                            <strong>{{ $plan->name }}</strong><br>
+                                                            <span>Duration: {{ $plan->duration_days }} days</span><br>
+                                                            <span>Quantity: {{ $plan->ml }}</span><br>
+                                                            <span>Price per unit: ₹{{ number_format($plan->price_per_unit, 2) }}</span><br>
+                                                            @php
+                                                                $totalPrice = $plan->total_price ?? ($plan->price_per_unit * $plan->ml * $plan->duration_days);
+                                                                $discountedPrice = $plan->discounted_price ?? $totalPrice;
+                                                                $discountPercent = $totalPrice > 0 ? round((($totalPrice - $discountedPrice) / $totalPrice) * 100) : 0;
+                                                            @endphp
+                                                            <span>Price: <s>₹{{ number_format($totalPrice, 2) }}</s></span><br>
+                                                            <span class="text-success fw-bold">Discounted: ₹{{ number_format($discountedPrice, 2) }}</span><br>
+                                                            @if($discountPercent > 0)
+                                                                <span class="badge bg-success">{{ $discountPercent }}% OFF</span>
+                                                            @endif
                                                         </div>
-                                                    </label>
+                                                    </div>
                                                 </div>
                                             @endforeach
                                         </div>
@@ -168,14 +176,16 @@
                                         </button>
                                     </form>
                                     <script>
-                                    // Highlight selected card
                                     document.querySelectorAll('.plan-card').forEach(function(card) {
                                         card.addEventListener('click', function() {
-                                            card.querySelector('input[type=radio]').checked = true;
+                                            // Uncheck all radios and remove highlight
                                             document.querySelectorAll('.plan-card').forEach(function(c) {
                                                 c.classList.remove('border-primary');
+                                                c.querySelector('input[type=radio]').checked = false;
                                             });
+                                            // Check this radio and highlight card
                                             card.classList.add('border-primary');
+                                            card.querySelector('input[type=radio]').checked = true;
                                         });
                                     });
                                     </script>

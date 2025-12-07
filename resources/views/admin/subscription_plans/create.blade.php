@@ -30,6 +30,14 @@
             <input type="number" step="0.01" name="price_per_unit" id="price_per_unit" class="form-control" required>
         </div>
         <div class="mb-3">
+            <label for="total_price" class="form-label">Total Price (before discount)</label>
+            <input type="number" step="0.01" name="total_price" id="total_price" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="discounted_price" class="form-label">Discounted Price (after discount)</label>
+            <input type="number" step="0.01" name="discounted_price" id="discounted_price" class="form-control" required>
+        </div>
+        <div class="mb-3">
             <label for="active" class="form-label">Active</label>
             <select name="active" id="active" class="form-select">
                 <option value="1">Active</option>

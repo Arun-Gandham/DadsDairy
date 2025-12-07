@@ -186,7 +186,16 @@
                                                 <strong>{{ $plan->name }}</strong><br>
                                                 Duration: {{ $plan->duration_days }} days<br>
                                                 Quantity: {{ $plan->ml }}<br>
-                                                Price per unit: ₹{{ number_format($plan->price_per_unit, 2) }}
+                                                @php
+                                                    $totalPrice = $plan->total_price ?? ($plan->price_per_unit * $plan->ml * $plan->duration_days);
+                                                    $discountedPrice = $plan->discounted_price ?? $totalPrice;
+                                                    $discountPercent = $totalPrice > 0 ? round((($totalPrice - $discountedPrice) / $totalPrice) * 100) : 0;
+                                                @endphp
+                                                <span>Price: <s>₹{{ number_format($totalPrice, 2) }}</s></span><br>
+                                                <span class="text-success fw-bold">Discounted: ₹{{ number_format($discountedPrice, 2) }}</span><br>
+                                                @if($discountPercent > 0)
+                                                    <span class="badge bg-success">{{ $discountPercent }}% OFF</span>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>

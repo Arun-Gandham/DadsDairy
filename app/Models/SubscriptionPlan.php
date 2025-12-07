@@ -11,6 +11,8 @@ class SubscriptionPlan extends Model
         'duration_days', // integer: 30, 60, 90, 180, 365
         'ml', // e.g. 500ml, 1L
         'price_per_unit', // price per milk unit for this plan
+        'total_price', // total price before discount
+        'discounted_price', // price after discount
         'active', // bool
     ];
 
