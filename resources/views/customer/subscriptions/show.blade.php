@@ -1,74 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Subscription Details - Dad's Dairy</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <style>
-        body { background: #f8f9fa; }
-        .navbar { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
-        .sidebar {
-            background: white;
-            min-height: calc(100vh - 60px);
-            padding: 20px 0;
-        }
-        .sidebar a {
-            color: #333;
-            padding: 15px 20px;
-            display: block;
-            text-decoration: none;
-            border-left: 4px solid transparent;
-        }
-        .sidebar a.active {
-            background: #f0f0f0;
-            border-left-color: #667eea;
-            color: #667eea;
-        }
-        .main-content { padding: 30px; }
-        .btn-gradient {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border: none;
-            color: white;
-        }
-        .btn-gradient:hover {
-            color: white;
-        }
-    </style>
-</head>
-<body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">🥛 Dad's Dairy</a>
-            <div class="ms-auto">
-                <span class="text-white">{{ Auth::user()->name }}</span>
-            </div>
-        </div>
-    </nav>
+@extends('customer.layouts.app')
 
-    <div class="row g-0">
-        <!-- Sidebar -->
-        <div class="col-md-2">
-            <div class="sidebar">
-                <a href="{{ route('customer.dashboard') }}">
-                    <i class="fas fa-home"></i> Dashboard
-                </a>
-                <a href="{{ route('customer.products') }}">
-                    <i class="fas fa-shopping-bag"></i> Shop
-                </a>
-                <a href="{{ route('customer.cart') }}">
-                    <i class="fas fa-shopping-cart"></i> Cart
-                </a>
-                <a href="{{ route('customer.orders') }}">
-                    <i class="fas fa-list"></i> Orders
-                </a>
-                <a href="{{ route('customer.subscriptions.index') }}" class="active">
-                    <i class="fas fa-sync"></i> Subscriptions
-                </a>
-            </div>
-        </div>
+@section('title', 'Subscription Details')
+
+@section('content')
 
         <!-- Main Content -->
         <div class="col-md-10">
@@ -121,6 +55,12 @@
                                                 <strong>Location Coordinates:</strong> <br>
                                                 Latitude: {{ $subscription->latitude }}<br>
                                                 Longitude: {{ $subscription->longitude }}
+                                                @if($subscription->latitude && $subscription->longitude)
+                                                    <br>
+                                                    <a href="https://www.google.com/maps/search/?api=1&query={{ $subscription->latitude }},{{ $subscription->longitude }}" target="_blank" class="btn btn-sm btn-outline-primary mt-2">
+                                                        <i class="fas fa-map-marker-alt"></i> View on Google Maps
+                                                    </a>
+                                                @endif
                                                 @if($subscription->latitude && $subscription->longitude)
                                                 <div id="map" style="height: 250px; width: 100%; margin-top: 10px;"></div>
                                                 <script>
@@ -289,7 +229,5 @@
             </div>
         </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+</div>
+@endsection
