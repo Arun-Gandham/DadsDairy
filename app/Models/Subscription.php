@@ -15,13 +15,16 @@ class Subscription extends Model
         'frequency',
         'status',
         'next_delivery_date',
-        'started_at',
+        'start_date',
+        'end_date',
+        'notes',
         'cancelled_at',
     ];
 
     protected $casts = [
         'next_delivery_date' => 'date',
-        'started_at'         => 'datetime',
+        'start_date'         => 'date',
+        'end_date'           => 'date',
         'cancelled_at'       => 'datetime',
     ];
 

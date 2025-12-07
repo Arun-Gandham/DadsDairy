@@ -134,7 +134,7 @@
                         </td></tr>
                         <tr><th>Favicon</th><td>
                             @if(!empty($setting->favicon))
-                                <img src="{{ asset('storage/' . $setting->favicon) }}" alt="Favicon" style="max-height:24px;">
+                                <img src="{{ asset($setting->favicon) }}" alt="Favicon" style="max-height:24px;">
                             @else
                                 -
                             @endif

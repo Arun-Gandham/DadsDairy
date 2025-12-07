@@ -11,11 +11,11 @@ return new class extends Migration {
             $table->foreignId('product_id')->constrained()->onDelete('cascade');
             $table->date('start_date');
             $table->date('end_date')->nullable();
-            $table->string('frequency'); // daily, weekly
+            $table->string('frequency'); // daily, weekly, monthly
             $table->string('status')->default('active'); // active, paused, cancelled
             $table->date('next_delivery_date')->nullable();
             $table->integer('quantity')->default(1);
-            $table->text('notes')->nullable();
+            $table->text('notes')->nullable(); // Reason for pause or other notes
             $table->timestamps();
         });
     }

@@ -128,7 +128,11 @@
                                     <div class="col-md-6">
                                         <p>
                                             <strong>Started On:</strong> <br>
-                                            {{ $subscription->started_at->format('d M Y') }}
+                                            @if ($subscription->started_at)
+                                                {{ $subscription->started_at->format('d M Y') }}
+                                            @else
+                                                <span class="text-muted">Not set</span>
+                                            @endif
                                         </p>
                                     </div>
                                     <div class="col-md-6">
@@ -183,6 +187,18 @@
                                 @if ($subscription->status === 'active')
                                     <form action="{{ route('customer.subscriptions.pause', $subscription) }}" method="POST" class="mb-2">
                                         @csrf
+                                        <div class="mb-2">
+                                            <label for="pause_start_date" class="form-label">Pause Start Date</label>
+                                            <input type="date" class="form-control" name="pause_start_date" id="pause_start_date" min="{{ $subscription->start_date ?? now()->toDateString() }}" required>
+                                        </div>
+                                        <div class="mb-2">
+                                            <label for="pause_end_date" class="form-label">Pause End Date</label>
+                                            <input type="date" class="form-control" name="pause_end_date" id="pause_end_date" min="{{ $subscription->start_date ?? now()->toDateString() }}" required>
+                                        </div>
+                                        <div class="mb-2">
+                                            <label for="pause_reason" class="form-label">Reason for Pause</label>
+                                            <textarea class="form-control" name="pause_reason" id="pause_reason" rows="2" maxlength="255" placeholder="Optional"></textarea>
+                                        </div>
                                         <button type="submit" class="btn btn-warning w-100">
                                             <i class="fas fa-pause"></i> Pause Subscription
                                         </button>

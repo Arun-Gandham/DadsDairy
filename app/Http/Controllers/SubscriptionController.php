@@ -52,8 +52,9 @@ class SubscriptionController extends Controller
             'frequency'          => $validated['frequency'],
             'next_delivery_date' => $validated['next_delivery_date'],
             'status'             => 'active',
+            'start_date'         => now(),
         ]);
-
+        
         return redirect()->route('customer.subscriptions.index')->with('success', 'Subscription created successfully');
     }
 
@@ -79,7 +80,19 @@ class SubscriptionController extends Controller
             abort(403);
         }
 
-        $subscription->update(['status' => 'paused']);
+        request()->validate([
+            'pause_start_date' => 'required|date|after_or_equal:' . $subscription->start_date,
+            'pause_end_date'   => 'required|date|after_or_equal:pause_start_date',
+            'pause_reason'     => 'nullable|string|max:255',
+        ]);
+
+       $data = $subscription->update([
+            'status'    => 'paused',
+            'start_date'=> request('pause_start_date'),
+            'end_date'  => request('pause_end_date'),
+            'notes'     => request('pause_reason'),
+        ]);
+        
         return redirect()->back()->with('success', 'Subscription paused');
     }
 
@@ -92,7 +105,22 @@ class SubscriptionController extends Controller
             abort(403);
         }
 
-        $subscription->update(['status' => 'active']);
+        // Automatically resume if pause_end_date has passed
+        if ($subscription->end_date && now()->greaterThanOrEqualTo($subscription->end_date)) {
+            $subscription->update([
+                'status'   => 'active',
+                'end_date' => null,
+                'notes'    => null,
+            ]);
+            return redirect()->back()->with('success', 'Subscription automatically resumed after pause period');
+        }
+
+        // Manual resume
+        $subscription->update([
+            'status'   => 'active',
+            'end_date' => null,
+            'notes'    => null,
+        ]);
         return redirect()->back()->with('success', 'Subscription resumed');
     }
 

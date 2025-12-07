@@ -120,8 +120,18 @@
                                     </div>
 
                                     <div class="mb-4">
+                                        <label for="start_date" class="form-label">Subscription Start Date</label>
+                                        <input 
+                                            type="date" 
+                                            class="form-control" 
+                                            id="start_date_display" 
+                                            value="{{ now()->format('Y-m-d') }}" 
+                                            disabled>
+                                    </div>
+
+                                    <div class="mb-4">
                                         <label for="next_delivery_date" class="form-label">First Delivery Date</label>
-                                        <input type="date" class="form-control" id="next_delivery_date" name="next_delivery_date" min="{{ date('Y-m-d') }}" required>
+                                        <input type="date" class="form-control" id="next_delivery_date" name="next_delivery_date" min="{{ \Carbon\Carbon::tomorrow()->format('Y-m-d') }}" required>
                                     </div>
 
                                     <button type="submit" class="btn btn-gradient btn-lg w-100">
