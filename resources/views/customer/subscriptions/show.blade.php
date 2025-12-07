@@ -121,22 +121,40 @@
                                                 <strong>Location Coordinates:</strong> <br>
                                                 Latitude: {{ $subscription->latitude }}<br>
                                                 Longitude: {{ $subscription->longitude }}
+                                                @if($subscription->latitude && $subscription->longitude)
+                                                <div id="map" style="height: 250px; width: 100%; margin-top: 10px;"></div>
+                                                <script>
+                                                    function initMap() {
+                                                        var lat = Number({{ $subscription->latitude }});
+                                                        var lng = Number({{ $subscription->longitude }});
+                                                        var map = new google.maps.Map(document.getElementById('map'), {
+                                                            center: { lat: lat, lng: lng },
+                                                            zoom: 17,
+                                                            mapTypeControl: false,
+                                                            streetViewControl: false,
+                                                            fullscreenControl: false,
+                                                            zoomControl: true,
+                                                        });
+                                                        var marker;
+                                                        if (google.maps.marker && google.maps.marker.AdvancedMarkerElement) {
+                                                            marker = new google.maps.marker.AdvancedMarkerElement({
+                                                                map: map,
+                                                                position: { lat: lat, lng: lng }
+                                                            });
+                                                        } else {
+                                                            marker = new google.maps.Marker({
+                                                                position: { lat: lat, lng: lng },
+                                                                map: map
+                                                            });
+                                                        }
+                                                    }
+                                                    window.initMap = initMap;
+                                                </script>
+                                                <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&callback=initMap&libraries=places"></script>
+                                                @endif
                                             </div>
                                         </div>
-                                        @if($subscription->subscription_plan_id && $subscription->subscriptionPlan)
-                                        <hr>
-                                        <div class="card mb-2">
-                                            <div class="card-header bg-primary text-white">
-                                                <strong>Subscription Plan Details</strong>
-                                            </div>
-                                            <div class="card-body">
-                                                <strong>{{ $subscription->subscriptionPlan->name }}</strong><br>
-                                                Duration: {{ $subscription->subscriptionPlan->duration_days }} days<br>
-                                                Quantity: {{ $subscription->subscriptionPlan->ml }}<br>
-                                                Price per unit: ₹{{ number_format($subscription->subscriptionPlan->price_per_unit, 2) }}
-                                            </div>
-                                        </div>
-                                        @endif
+                                       
                                     </div>
                                     <div class="col-md-6">
                                         <p>
@@ -151,6 +169,20 @@
                                             <strong>Next Delivery:</strong> <br>
                                             {{ $subscription->next_delivery_date->format('d M Y') }}
                                         </p>
+                                         @if($subscription->subscription_plan_id && $subscription->subscriptionPlan)
+                                        <hr>
+                                        <div class="card mb-2">
+                                            <div class="card-header bg-primary text-white">
+                                                <strong>Subscription Plan Details</strong>
+                                            </div>
+                                            <div class="card-body">
+                                                <strong>{{ $subscription->subscriptionPlan->name }}</strong><br>
+                                                Duration: {{ $subscription->subscriptionPlan->duration_days }} days<br>
+                                                Quantity: {{ $subscription->subscriptionPlan->ml }}<br>
+                                                Price per unit: ₹{{ number_format($subscription->subscriptionPlan->price_per_unit, 2) }}
+                                            </div>
+                                        </div>
+                                        @endif
                                     </div>
                                 </div>
 

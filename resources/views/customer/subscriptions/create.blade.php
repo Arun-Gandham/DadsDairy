@@ -126,7 +126,8 @@
                                             <input type="text" class="form-control" name="latitude" id="latitude" placeholder="Latitude" required readonly>
                                             <input type="text" class="form-control" name="longitude" id="longitude" placeholder="Longitude" required readonly>
                                         </div>
-                                        <small class="text-muted">Click on the map to select your delivery location.</small>
+                                        <input type="hidden" name="address" id="address" />
+                                        <small class="text-muted">Click on the map or use the map's blue location button to select your delivery location.</small>
                                     </div>
                                 </div>
                             </div>
@@ -200,30 +201,134 @@
                                 </div>
                             </div>
                         </form>
-                        <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY"></script>
                         <script>
                         let map, marker;
                         function initMap() {
                             map = new google.maps.Map(document.getElementById('map'), {
-                                center: { lat: 20.5937, lng: 78.9629 }, // Center on India
-                                zoom: 5
+                                center: { lat: 20.5937, lng: 78.9629 },
+                                zoom: 5,
+                                mapTypeControl: false,
+                                streetViewControl: false,
+                                fullscreenControl: false,
+                                zoomControl: true,
                             });
+                            // Auto-locate on load
+                            if (navigator.geolocation) {
+                                navigator.geolocation.getCurrentPosition(function(position) {
+                                    const pos = {
+                                        lat: position.coords.latitude,
+                                        lng: position.coords.longitude
+                                    };
+                                    map.setCenter(pos);
+                                    map.setZoom(17);
+                                    placeMarker(pos, true);
+                                }, function() {
+                                    // If denied or failed, do nothing (map stays at default)
+                                });
+                            }
+                            // Add custom 'Locate Me' control if map is initialized
+                            if (map && map.controls) {
+                                const controlDiv = document.createElement('div');
+                                controlDiv.style.margin = '10px';
+                                controlDiv.style.padding = '0';
+                                controlDiv.style.background = 'none';
+                                controlDiv.style.boxShadow = 'none';
+                                controlDiv.index = 1;
+                                const controlUI = document.createElement('button');
+                                controlUI.className = 'btn btn-primary btn-sm';
+                                controlUI.style.borderRadius = '50%';
+                                controlUI.style.width = '40px';
+                                controlUI.style.height = '40px';
+                                controlUI.style.display = 'flex';
+                                controlUI.style.alignItems = 'center';
+                                controlUI.style.justifyContent = 'center';
+                                controlUI.title = 'Click to locate me';
+                                controlUI.innerHTML = '<i class="fas fa-crosshairs"></i>';
+                                controlDiv.appendChild(controlUI);
+                                map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(controlDiv);
+                                controlUI.addEventListener('click', function() {
+                                    if (navigator.geolocation) {
+                                        navigator.geolocation.getCurrentPosition(function(position) {
+                                            const pos = {
+                                                lat: position.coords.latitude,
+                                                lng: position.coords.longitude
+                                            };
+                                            map.setCenter(pos);
+                                            map.setZoom(17);
+                                            placeMarker(pos, true);
+                                        }, function() {
+                                            alert('Unable to retrieve your location.');
+                                        });
+                                    } else {
+                                        alert('Geolocation is not supported by this browser.');
+                                    }
+                                });
+                            }
                             map.addListener('click', function(e) {
-                                placeMarker(e.latLng);
+                                placeMarker(e.latLng, true);
                             });
                         }
-                        function placeMarker(location) {
-                            if (marker) marker.setMap(null);
-                            marker = new google.maps.Marker({
-                                position: location,
-                                map: map
-                            });
-                            document.getElementById('latitude').value = location.lat();
-                            document.getElementById('longitude').value = location.lng();
+                        function placeMarker(location, doReverseGeocode) {
+                            if (marker) {
+                                if (marker.setMap) marker.setMap(null);
+                                else if (marker.map) marker.map = null;
+                            }
+                            // Use AdvancedMarkerElement if available, else fallback
+                            if (google.maps.marker && google.maps.marker.AdvancedMarkerElement) {
+                                marker = new google.maps.marker.AdvancedMarkerElement({
+                                    map: map,
+                                    position: location
+                                });
+                            } else {
+                                marker = new google.maps.Marker({
+                                    position: location,
+                                    map: map
+                                });
+                            }
+                            // Support both LatLng and LatLngLiteral
+                            const lat = (typeof location.lat === 'function') ? location.lat() : location.lat;
+                            const lng = (typeof location.lng === 'function') ? location.lng() : location.lng;
+                            document.getElementById('latitude').value = lat;
+                            document.getElementById('longitude').value = lng;
+                            if (doReverseGeocode) {
+                                const geocoder = new google.maps.Geocoder();
+                                geocoder.geocode({ location: { lat: lat, lng: lng } }, function(results, status) {
+                                    if (status === 'OK' && results[0]) {
+                                        fillAddressFields(results[0]);
+                                    }
+                                });
+                            }
+                        }
+                        function fillAddressFields(result) {
+                            let door = '', street = '', area = '', city = '', state = '', pin = '';
+                            for (const comp of result.address_components) {
+                                if (comp.types.includes('street_number')) door = comp.long_name;
+                                if (comp.types.includes('route')) street = comp.long_name;
+                                if (comp.types.includes('sublocality') || comp.types.includes('sublocality_level_1')) area = comp.long_name;
+                                if (comp.types.includes('locality')) city = comp.long_name;
+                                if (comp.types.includes('administrative_area_level_1')) state = comp.long_name;
+                                if (comp.types.includes('postal_code')) pin = comp.long_name;
+                            }
+                            document.getElementById('door_number').value = door;
+                            document.getElementById('street').value = street;
+                            document.getElementById('area').value = area;
+                            document.getElementById('city').value = city;
+                            document.getElementById('state').value = state;
+                            document.getElementById('pin_code').value = pin;
+                            // Compose a full address string for the hidden address field
+                            let address = '';
+                            if (door) address += door + ', ';
+                            if (street) address += street + ', ';
+                            if (area) address += area + ', ';
+                            if (city) address += city + ', ';
+                            if (state) address += state + ', ';
+                            if (pin) address += pin;
+                            address = address.replace(/, $/, '');
+                            document.getElementById('address').value = address;
                         }
                         window.initMap = initMap;
                         </script>
-                        <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&callback=initMap"></script>
+                        <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&callback=initMap&libraries=places"></script>
                     </div>
 
                     <div class="col-md-4">
