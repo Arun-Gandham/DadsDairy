@@ -14,6 +14,7 @@ $isNavbar = ($isNavbar ?? true);
 $isMenu = ($isMenu ?? true);
 $isFlex = ($isFlex ?? false);
 $isFooter = ($isFooter ?? true);
+$isContainerxxlRequried = ($isContainerxxlRequried ?? true);
 $customizerHidden = ($customizerHidden ?? '');
 
 /* HTML Classes */
@@ -27,8 +28,7 @@ $footerFixed = (isset($configData['footerFixed']) ? $configData['footerFixed'] :
 $menuCollapsed = (isset($configData['menuCollapsed']) ? $configData['menuCollapsed'] : '');
 
 /* Content classes */
-$container = (isset($configData['contentLayout']) && $configData['contentLayout'] === 'compact') ? 'container-xxl' : 'container-fluid';
-
+$container = (isset($configData['contentLayout']) && $configData['contentLayout'] === 'compact' && $isContainerxxlRequried) ? 'container-xxl' : 'container-fluid';
 @endphp
 
 @section('layoutContent')

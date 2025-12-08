@@ -11,6 +11,49 @@ use Illuminate\Support\Facades\Hash;
 class AuthController extends Controller
 {
     /**
+     * Logout for admin
+     */
+    public function logoutAdmin(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect()->route('admin.login');
+    }
+
+    /**
+     * Logout for customer
+     */
+    public function logoutCustomer(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect()->route('customer.login');
+    }
+
+    /**
+     * Logout for delivery
+     */
+    public function logoutDelivery(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect()->route('delivery.login');
+    }
+
+    /**
+     * Logout for user
+     */
+    public function logoutUser(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect()->route('user.login');
+    }
+    /**
      * Show login form
      */
     public function showLogin()
@@ -18,6 +61,16 @@ class AuthController extends Controller
         // Redirect if user is already logged in
         if (auth()->check()) {
             return redirect()->route('dashboard');
+        }
+        $route = request()->route()->getName();
+        if ($route === 'admin.login') {
+            return view('auth.login_admin');
+        } elseif ($route === 'customer.login') {
+            return view('auth.login_customer');
+        } elseif ($route === 'delivery.login') {
+            return view('auth.login_delivery');
+        } elseif ($route === 'user.login') {
+            return view('auth.login_user');
         }
         return view('auth.login');
     }
@@ -31,6 +84,25 @@ class AuthController extends Controller
             'email'    => 'required|email',
             'password' => 'required',
         ]);
+
+        $route = $request->route()->getName();
+        $roleSlug = null;
+        if ($route === 'admin.login') {
+            $roleSlug = 'admin';
+        } elseif ($route === 'customer.login') {
+            $roleSlug = 'customer';
+        } elseif ($route === 'delivery.login') {
+            $roleSlug = 'delivery_agent';
+        } elseif ($route === 'user.login') {
+            $roleSlug = 'user';
+        }
+
+        $user = \App\Models\User::where('email', $credentials['email'])->first();
+        if ($user && $roleSlug && !$user->hasRole($roleSlug)) {
+            return back()->withErrors([
+                'email' => 'You are not authorized to login from this portal.'
+            ]);
+        }
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();

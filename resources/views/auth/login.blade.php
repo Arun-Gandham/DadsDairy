@@ -64,7 +64,9 @@
 <body>
     <div class="login-container">
         <h1>🥛 Dad's Dairy</h1>
-        <h3 style="text-align: center; font-size: 18px; margin-bottom: 30px; color: #666;">Login</h3>
+        <h3 style="text-align: center; font-size: 18px; margin-bottom: 30px; color: #666;">
+            @yield('loginTitle', 'Login')
+        </h3>
 
         @if ($errors->any())
             <div class="alert alert-danger">
@@ -72,7 +74,7 @@
             </div>
         @endif
 
-        <form method="POST" action="{{ route('login') }}">
+        <form method="POST" action="@yield('loginFormAction', route('login'))">
             @csrf
 
             <input type="email" name="email" class="form-control" placeholder="Email" required value="{{ old('email') }}">

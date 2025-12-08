@@ -45,8 +45,22 @@ Route::middleware('guest')->group(function () {
     Route::post('/register', [AuthController::class, 'register']);
 });
 
+// Separate login routes for customer, admin, and user
+Route::get('/customer/login', [AuthController::class, 'showLogin'])->name('customer.login');
+Route::post('/customer/login', [AuthController::class, 'login']);
+Route::get('/admin/login', [AuthController::class, 'showLogin'])->name('admin.login');
+Route::post('/admin/login', [AuthController::class, 'login']);
+Route::get('/user/login', [AuthController::class, 'showLogin'])->name('user.login');
+Route::post('/user/login', [AuthController::class, 'login']);
+
+// Separate logout routes for each role
+Route::post('/admin/logout', [AuthController::class, 'logoutAdmin'])->name('admin.logout');
+Route::post('/customer/logout', [AuthController::class, 'logoutCustomer'])->name('customer.logout');
+Route::post('/delivery/logout', [AuthController::class, 'logoutDelivery'])->name('delivery.logout');
+// Route::post('/user/logout', [AuthController::class, 'logoutUser'])->name('user.logout');
+
 Route::post('/logout', [AuthController::class, 'logout'])
-    ->middleware('auth')
+->middleware('auth')
     ->name('logout');
 
 // Dashboard Route
