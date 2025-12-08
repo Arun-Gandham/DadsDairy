@@ -3,7 +3,7 @@
 @endphp
 @extends('admin.layouts.app')
 
-@section('title', 'Analytics')
+@section('title', 'Dashboard')
 
 @section('vendor-style')
 <link rel="stylesheet" href="{{asset('assets/vendor/libs/apex-charts/apex-charts.css')}}" />
@@ -171,7 +171,7 @@
           <small class="d-block mb-1 text-muted">Sales Overview</small>
           <p class="card-text text-success">+18.2%</p>
         </div>
-        <h4 class="card-title mb-1">$42.5k</h4>
+        <h4 class="card-title mb-1">₹42.5k</h4>
       </div>
       <div class="card-body">
         <div class="row">
@@ -250,7 +250,7 @@
         <div class="row">
           <div class="col-12 col-md-4 d-flex flex-column align-self-end">
             <div class="d-flex gap-2 align-items-center mb-2 pb-1 flex-wrap">
-              <h1 class="mb-0">$468</h1>
+              <h1 class="mb-0">₹468</h1>
               <div class="badge rounded bg-label-success">+4.2%</div>
             </div>
             <small>You informed of this week compared to last week</small>
@@ -263,10 +263,10 @@
           <div class="row gap-4 gap-sm-0">
             <div class="col-12 col-sm-4">
               <div class="d-flex gap-2 align-items-center">
-                <div class="badge rounded bg-label-primary p-1"><i class="ti ti-currency-dollar ti-sm"></i></div>
+                <div class="badge rounded bg-label-primary p-1"><i class="ti ti-currency-rupee ti-sm"></i></div>
                 <h6 class="mb-0">Earnings</h6>
               </div>
-              <h4 class="my-2 pt-1">$545.69</h4>
+              <h4 class="my-2 pt-1">₹545.69</h4>
               <div class="progress w-75" style="height:4px">
                 <div class="progress-bar" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
               </div>
@@ -276,7 +276,7 @@
                 <div class="badge rounded bg-label-info p-1"><i class="ti ti-chart-pie-2 ti-sm"></i></div>
                 <h6 class="mb-0">Profit</h6>
               </div>
-              <h4 class="my-2 pt-1">$256.34</h4>
+              <h4 class="my-2 pt-1">₹256.34</h4>
               <div class="progress w-75" style="height:4px">
                 <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
               </div>
@@ -286,7 +286,7 @@
                 <div class="badge rounded bg-label-danger p-1"><i class="ti ti-brand-paypal ti-sm"></i></div>
                 <h6 class="mb-0">Expense</h6>
               </div>
-              <h4 class="my-2 pt-1">$74.19</h4>
+              <h4 class="my-2 pt-1">₹74.19</h4>
               <div class="progress w-75" style="height:4px">
                 <div class="progress-bar bg-danger" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
               </div>
@@ -382,7 +382,7 @@
             <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
               <div class="me-2">
                 <div class="d-flex align-items-center">
-                  <h6 class="mb-0 me-1">$8,567k</h6>
+                  <h6 class="mb-0 me-1">₹8,567k</h6>
 
                 </div>
                 <small class="text-muted">United states</small>
@@ -400,7 +400,7 @@
             <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
               <div class="me-2">
                 <div class="d-flex align-items-center">
-                  <h6 class="mb-0 me-1">$2,415k</h6>
+                  <h6 class="mb-0 me-1">₹2,415k</h6>
                 </div>
                 <small class="text-muted">Brazil</small>
               </div>
@@ -417,7 +417,7 @@
             <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
               <div class="me-2">
                 <div class="d-flex align-items-center">
-                  <h6 class="mb-0 me-1">$865k</h6>
+                  <h6 class="mb-0 me-1">₹865k</h6>
                 </div>
                 <small class="text-muted">India</small>
               </div>
@@ -434,7 +434,7 @@
             <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
               <div class="me-2">
                 <div class="d-flex align-items-center">
-                  <h6 class="mb-0 me-1">$745k</h6>
+                  <h6 class="mb-0 me-1">₹745k</h6>
                 </div>
                 <small class="text-muted">Australia</small>
               </div>
@@ -451,7 +451,7 @@
             <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
               <div class="me-2">
                 <div class="d-flex align-items-center">
-                  <h6 class="mb-0 me-1">$45</h6>
+                  <h6 class="mb-0 me-1">₹45</h6>
                 </div>
                 <small class="text-muted">France</small>
               </div>
@@ -468,7 +468,7 @@
             <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
               <div class="me-2">
                 <div class="d-flex align-items-center">
-                  <h6 class="mb-0 me-1">$12k</h6>
+                  <h6 class="mb-0 me-1">₹12k</h6>
                 </div>
                 <small class="text-muted">China</small>
               </div>
@@ -509,13 +509,13 @@
         </div>
         <div id="totalEarningChart"></div>
         <div class="d-flex align-items-start my-4">
-          <div class="badge rounded bg-label-primary p-2 me-3 rounded"><i class="ti ti-currency-dollar ti-sm"></i></div>
+          <div class="badge rounded bg-label-primary p-2 me-3 rounded"><i class="ti ti-currency-rupee ti-sm"></i></div>
           <div class="d-flex justify-content-between w-100 gap-2 align-items-center">
             <div class="me-2">
               <h6 class="mb-0">Total Sales</h6>
               <small class="text-muted">Refund</small>
             </div>
-            <p class="mb-0 text-success">+$98</p>
+            <p class="mb-0 text-success">+₹98</p>
           </div>
         </div>
         <div class="d-flex align-items-start">
@@ -525,7 +525,7 @@
               <h6 class="mb-0">Total Revenue</h6>
               <small class="text-muted">Client Payment</small>
             </div>
-            <p class="mb-0 text-success">+$126</p>
+            <p class="mb-0 text-success">+₹126</p>
           </div>
         </div>
       </div>
@@ -738,7 +738,7 @@
   <!--/ Source Visit -->
 
   <!-- Projects table -->
-  <div class="col-12 col-xl-8 col-sm-12 order-1 order-lg-2 mb-4 mb-lg-0">
+  <!-- <div class="col-12 col-xl-8 col-sm-12 order-1 order-lg-2 mb-4 mb-lg-0">
     <div class="card">
       <div class="card-datatable table-responsive">
         <table class="datatables-projects table border-top">
@@ -756,7 +756,7 @@
         </table>
       </div>
     </div>
-  </div>
+  </div> -->
   <!--/ Projects table -->
 </div>
 
