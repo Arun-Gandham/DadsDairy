@@ -42,11 +42,11 @@ Route::middleware('guest')->group(function () {
 });
 
 // Separate login routes for customer, admin, and delivery
-Route::get('/login', [AuthController::class, 'showLogin'])->name('customer.login');
+Route::get('/login', [AuthController::class, 'showCustomerLogin'])->name('customer.login');
 Route::post('/login', [AuthController::class, 'loginCustomer'])->name('customer.login');
-Route::get('/admin/login', [AuthController::class, 'showLogin'])->name('admin.login');
+Route::get('/admin/login', [AuthController::class, 'showAdminLogin'])->name('admin.login');
 Route::post('/admin/login', [AuthController::class, 'loginAdmin'])->name('admin.login');
-Route::get('/delivery/login', [AuthController::class, 'showLogin'])->name('delivery.login');
+Route::get('/delivery/login', [AuthController::class, 'showDeliveryLogin'])->name('delivery.login');
 Route::post('/delivery/login', [AuthController::class, 'loginDelivery'])->name('delivery.login');
 
 // Separate logout routes for each role
@@ -58,7 +58,12 @@ Route::post('/delivery/logout', [AuthController::class, 'logoutDelivery'])->name
 Route::post('/logout', [AuthController::class, 'logout'])
 ->middleware('auth')
     ->name('logout');
-
+// Customer Profile Page
+Route::middleware(['auth'])->group(function () {
+    Route::get('/profile', function () {
+        return view('customer.profile');
+    })->name('customer.profile');
+});
 // Dashboard Route
 Route::get('/dashboard', function () {
     $user = auth()->user();

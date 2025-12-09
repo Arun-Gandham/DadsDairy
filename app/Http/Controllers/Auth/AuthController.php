@@ -56,7 +56,7 @@ class AuthController extends Controller
         }
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended(route('customer.dashboard'));
+            return redirect()->intended(route('customer.profile'));
         }
         return back()->withErrors(['email' => 'The provided credentials do not match our records.']);
     }
@@ -116,23 +116,41 @@ class AuthController extends Controller
     /**
      * Show login form
      */
-    public function showLogin()
+
+    // Show admin login form
+    public function showAdminLogin()
     {
-        // Redirect if user is already logged in
+        if (auth()->check()) {
+            return redirect()->route('admin.dashboard');
+        }
+        return view('auth.login_admin');
+    }
+
+    // Show customer login form
+    public function showCustomerLogin()
+    {
+        if (auth()->check()) {
+            return redirect()->route('customer.profile');
+        }
+        return view('auth.login_customer');
+    }
+
+    // Show delivery login form
+    public function showDeliveryLogin()
+    {
+        if (auth()->check()) {
+            return redirect()->route('delivery.dashboard');
+        }
+        return view('auth.login_delivery');
+    }
+
+    // Show user login form (optional, if needed)
+    public function showUserLogin()
+    {
         if (auth()->check()) {
             return redirect()->route('dashboard');
         }
-        $route = request()->route()->getName();
-        if ($route === 'admin.login') {
-            return view('auth.login_admin');
-        } elseif ($route === 'customer.login') {
-            return view('auth.login_customer');
-        } elseif ($route === 'delivery.login') {
-            return view('auth.login_delivery');
-        } elseif ($route === 'user.login') {
-            return view('auth.login_user');
-        }
-        return view('auth.login');
+        return view('auth.login_user');
     }
 
     /**
