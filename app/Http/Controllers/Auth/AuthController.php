@@ -22,6 +22,66 @@ class AuthController extends Controller
     }
 
     /**
+     * Handle admin login
+     */
+    public function loginAdmin(Request $request)
+    {
+        $credentials = $request->validate([
+            'email'    => 'required|email',
+            'password' => 'required',
+        ]);
+        $user = \App\Models\User::where('email', $credentials['email'])->first();
+        if ($user && !$user->hasRole('admin')) {
+            return back()->withErrors(['email' => 'You are not authorized to login as admin.']);
+        }
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+            return redirect()->intended(route('admin.dashboard'));
+        }
+        return back()->withErrors(['email' => 'The provided credentials do not match our records.']);
+    }
+
+    /**
+     * Handle customer login
+     */
+    public function loginCustomer(Request $request)
+    {
+        $credentials = $request->validate([
+            'email'    => 'required|email',
+            'password' => 'required',
+        ]);
+        $user = \App\Models\User::where('email', $credentials['email'])->first();
+        if ($user && !$user->hasRole('customer')) {
+            return back()->withErrors(['email' => 'You are not authorized to login as customer.']);
+        }
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+            return redirect()->intended(route('customer.dashboard'));
+        }
+        return back()->withErrors(['email' => 'The provided credentials do not match our records.']);
+    }
+
+    /**
+     * Handle delivery login
+     */
+    public function loginDelivery(Request $request)
+    {
+        $credentials = $request->validate([
+            'email'    => 'required|email',
+            'password' => 'required',
+        ]);
+        $user = \App\Models\User::where('email', $credentials['email'])->first();
+        if ($user && !$user->hasRole('delivery_agent')) {
+            return back()->withErrors(['email' => 'You are not authorized to login as delivery agent.']);
+        }
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+            return redirect()->intended(route('delivery.dashboard'));
+        }
+        return back()->withErrors(['email' => 'The provided credentials do not match our records.']);
+    }
+
+    /**
      * Logout for customer
      */
     public function logoutCustomer(Request $request)

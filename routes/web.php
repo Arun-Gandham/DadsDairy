@@ -30,11 +30,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    // Redirect authenticated users to their dashboard
-    if (auth()->check()) {
-        return redirect()->route('dashboard');
-    }
-    return view('welcome');
+    return view('customer.landing');
 });
 
 // Authentication Routes
@@ -45,13 +41,13 @@ Route::middleware('guest')->group(function () {
     Route::post('/register', [AuthController::class, 'register']);
 });
 
-// Separate login routes for customer, admin, and user
-Route::get('/customer/login', [AuthController::class, 'showLogin'])->name('customer.login');
-Route::post('/customer/login', [AuthController::class, 'login']);
+// Separate login routes for customer, admin, and delivery
+Route::get('/login', [AuthController::class, 'showLogin'])->name('customer.login');
+Route::post('/login', [AuthController::class, 'loginCustomer'])->name('customer.login');
 Route::get('/admin/login', [AuthController::class, 'showLogin'])->name('admin.login');
-Route::post('/admin/login', [AuthController::class, 'login']);
-Route::get('/user/login', [AuthController::class, 'showLogin'])->name('user.login');
-Route::post('/user/login', [AuthController::class, 'login']);
+Route::post('/admin/login', [AuthController::class, 'loginAdmin'])->name('admin.login');
+Route::get('/delivery/login', [AuthController::class, 'showLogin'])->name('delivery.login');
+Route::post('/delivery/login', [AuthController::class, 'loginDelivery'])->name('delivery.login');
 
 // Separate logout routes for each role
 Route::post('/admin/logout', [AuthController::class, 'logoutAdmin'])->name('admin.logout');
