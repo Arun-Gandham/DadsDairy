@@ -59,11 +59,7 @@ Route::post('/logout', [AuthController::class, 'logout'])
 ->middleware('auth')
     ->name('logout');
 // Customer Profile Page
-Route::middleware(['auth'])->group(function () {
-    Route::get('/profile', function () {
-        return view('customer.profile');
-    })->name('customer.profile');
-});
+Route::get('/profile', [\App\Http\Controllers\Customer\ProfileController::class, 'show'])->name('customer.profile');
 // Dashboard Route
 Route::get('/dashboard', function () {
     $user = auth()->user();

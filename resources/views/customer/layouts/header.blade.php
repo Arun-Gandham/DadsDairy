@@ -13,8 +13,27 @@
       </ul>
 
       <div class="col-md-3 text-end">
-        <a href="{{ route('customer.login') }}" class="nav-link px-2 link-dark"><button type="button" class="btn btn-outline-primary me-2">Login</button></a>
-        <a href="{{ route('customer.login') }}" class="nav-link px-2 link-dark"><button type="button" class="btn btn-primary">Sign-up</button></a>
+        @if(auth()->check())
+          <div class="dropdown d-inline-block">
+            <button class="btn btn-light dropdown-toggle d-flex align-items-center" type="button" id="accountDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-person-circle fs-4 me-1"></i>
+              <span class="d-none d-md-inline">Account</span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accountDropdown">
+              <li><a class="dropdown-item" href="{{ route('customer.profile') }}">Profile</a></li>
+              <li>
+                <form method="POST" action="{{ route('customer.logout') }}" class="d-inline">
+                  @csrf
+                  <button type="submit" class="dropdown-item">Logout</button>
+                </form>
+              </li>
+            </ul>
+          </div>
+        @else
+          <a href="{{ route('customer.login') }}" class="nav-link px-2 link-dark">
+            <button type="button" class="btn btn-outline-primary me-2">Login</button>
+          </a>
+        @endif
       </div>
     </header>
   </div>
