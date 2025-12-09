@@ -68,7 +68,7 @@
                             <li><a class="dropdown-item" href="{{ route('customer.orders') }}"><i class="fas fa-list"></i> My Orders</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li>
-                                <form method="POST" action="{{ route('logout') }}" style="display: inline;">
+                                <form method="POST" action="{{ route('customer.logout') }}" style="display: inline;">
                                     @csrf
                                     <button type="submit" class="dropdown-item text-danger"><i class="fas fa-sign-out-alt"></i> Logout</button>
                                 </form>

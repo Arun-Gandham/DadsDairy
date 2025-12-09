@@ -27,11 +27,10 @@ $customizerHidden = 'customizer-hide';
 @endsection
 
 @section('content')
-<div class="container-xxl">
-  <div class="authentication-wrapper authentication-basic container-p-y">
-    <div class="authentication-inner py-4">
-      <!-- Login -->
-      <div class="card">
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+  <div class="row w-100 justify-content-center">
+    <div class="col-md-6 col-lg-5">
+      <div class="card shadow">
         <div class="card-body">
           <!-- Logo -->
           <div class="app-brand justify-content-center mb-4 mt-2">
