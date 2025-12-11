@@ -28,6 +28,21 @@
     <meta name="twitter:image" content="/assets/images/gooshudh-og.jpg" />
 
     <link rel="canonical" href="{{ url()->current() }}" />
+    <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "Brand",
+    "name": "Goo Shudh",
+    "alternateName": ["Gooshudh", "Goo-Shudh", "Goo Shudh Dairy"],
+    "url": "https://gooshudh.com",
+    "logo": "https://gooshudh.com/assets/images/gooshudh-og.jpg",
+    "sameAs": [
+        "https://instagram.com/gooshudh",
+        "https://facebook.com/gooshudh"
+    ],
+    "description": "Goo Shudh (Gooshudh) delivers fresh milk, curd, eggs, ghee, butter and natural farm products."
+    }
+    </script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
