@@ -33,6 +33,10 @@ Route::get('/', function () {
     return view('customer.landing');
 })->name('landing');
 
+Route::get('/sitemap.xml', function () {
+    return response()->file(public_path('sitemap.xml'));
+});
+
 // Authentication Routes
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
