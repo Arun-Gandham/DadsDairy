@@ -56,7 +56,7 @@ class AuthController extends Controller
         }
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended(route('customer.profile'));
+            return redirect()->intended(route('customer.profile.show'));
         }
         return back()->withErrors(['email' => 'The provided credentials do not match our records.']);
     }
@@ -130,7 +130,7 @@ class AuthController extends Controller
     public function showCustomerLogin()
     {
         if (auth()->check()) {
-            return redirect()->route('customer.profile');
+            return redirect()->route('customer.profile.show');
         }
         return view('auth.login_customer');
     }

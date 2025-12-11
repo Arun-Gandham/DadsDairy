@@ -13,7 +13,7 @@
 
                     @if($user->hasRole('customer'))
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('customer.dashboard') }}">Dashboard</a>
+                            <a class="nav-link" href="{{ route('customer.profile.show') }}">Dashboard</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('customer.products') }}">Products</a>

@@ -1,162 +1,51 @@
-@extends('layouts.app')
+@extends('customer.layouts.app')
+
+@section('title', 'My Profile')
 
 @section('content')
-<div class="container-fluid py-4">
-    <div class="row">
-        <div class="col-md-3">
-            <div class="card shadow-sm mb-4">
-                <div class="card-body text-center">
-                    <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 50%; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center;">
-                        <i class="fas fa-user text-white" style="font-size: 2.5rem;"></i>
-                    </div>
-                    <h5>{{ Auth::user()->name }}</h5>
-                    <small class="text-muted">{{ Auth::user()->email }}</small>
-                    <div class="mt-3">
-                        <a href="{{ route('customer.profile.edit') }}" class="btn btn-primary btn-sm">
-                            <i class="fas fa-edit"></i> Edit Profile
-                        </a>
-                    </div>
-                </div>
-            </div>
-
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <h6 class="fw-bold mb-3">Quick Links</h6>
-                    <ul class="list-unstyled">
-                        <li class="mt-2"><a href="{{ route('customer.orders') }}" class="text-decoration-none"><i class="fas fa-list"></i> My Orders</a></li>
-                        <li class="mt-2"><a href="{{ route('customer.cart') }}" class="text-decoration-none"><i class="fas fa-shopping-cart"></i> Cart</a></li>
-                        <li class="mt-2"><a href="{{ route('customer.subscriptions.index') }}" class="text-decoration-none"><i class="fas fa-sync"></i> Subscriptions</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-9">
-            <div class="card shadow-sm">
-                <div class="card-header bg-light">
-                    <h5 class="mb-0"><i class="fas fa-user-circle"></i> My Profile</h5>
-                </div>
-                <div class="card-body">
-                    @if (session('success'))
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <i class="fas fa-check-circle"></i> {{ session('success') }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    <div class="row">
+                        <div class="col-md-2 col-4 border-end">
+                            <!-- Vertical Nav Pills -->
+                            <div class="nav flex-column nav-pills me-3 text-start" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                                <button class="nav-link active mb-2 text-start" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="true">Profile</button>
+                                <button class="nav-link mb-2 text-start" id="v-pills-orders-tab" data-bs-toggle="pill" data-bs-target="#v-pills-orders" type="button" role="tab" aria-controls="v-pills-orders" aria-selected="false">Orders</button>
+                                <button class="nav-link mb-2 text-start" id="v-pills-subscriptions-tab" data-bs-toggle="pill" data-bs-target="#v-pills-subscriptions" type="button" role="tab" aria-controls="v-pills-subscriptions" aria-selected="false">Subscriptions</button>
+                                <button class="nav-link text-start" id="v-pills-contact-tab" data-bs-toggle="pill" data-bs-target="#v-pills-contact" type="button" role="tab" aria-controls="v-pills-contact" aria-selected="false">Contact Us</button>
+                            </div>
                         </div>
-                    @endif
-
-                    <div class="row mb-4">
-                        <div class="col-md-6">
-                            <h6 class="fw-bold text-muted">Full Name</h6>
-                            <p class="fs-5">{{ Auth::user()->name }}</p>
-                        </div>
-                        <div class="col-md-6">
-                            <h6 class="fw-bold text-muted">Email Address</h6>
-                            <p class="fs-5">{{ Auth::user()->email }}</p>
-                        </div>
-                    </div>
-
-                    <div class="row mb-4">
-                        <div class="col-md-6">
-                            <h6 class="fw-bold text-muted">Phone Number</h6>
-                            <p class="fs-5">{{ Auth::user()->phone ?? 'Not provided' }}</p>
-                        </div>
-                        <div class="col-md-6">
-                            <h6 class="fw-bold text-muted">Account Role</h6>
-                            <p class="fs-5">
-                                <span class="badge bg-primary">{{ Auth::user()->roles()->first()->name ?? 'Customer' }}</span>
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="mb-4">
-                        <h6 class="fw-bold text-muted">Delivery Address</h6>
-                        <p class="fs-5">{{ Auth::user()->address ?? 'Not provided' }}</p>
-                    </div>
-
-                    <hr>
-
-                    <div class="row mt-4">
-                        <div class="col-md-3">
-                            <div class="card bg-light border-0">
-                                <div class="card-body text-center">
-                                    <h4 class="text-primary">
-                                        <i class="fas fa-box"></i>
-                                    </h4>
-                                    <h6>Total Orders</h6>
-                                    <p class="mb-0 h5">{{ Auth::user()->orders()->count() }}</p>
+                        <div class="col-md-9">
+                            <!-- Tab Content -->
+                            <div class="tab-content text-start" id="v-pills-tabContent">
+                                <div class="tab-pane fade show active" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                                    <h5>Profile Details</h5>
+                                    <p>Name: {{ auth()->user()->name }}</p>
+                                    <p>Email: {{ auth()->user()->email }}</p>
+                                    <!-- Add more profile fields as needed -->
+                                </div>
+                                <div class="tab-pane fade" id="v-pills-orders" role="tabpanel" aria-labelledby="v-pills-orders-tab">
+                                    <h5>My Orders</h5>
+                                    <p>Order history will be shown here.</p>
+                                </div>
+                                <div class="tab-pane fade" id="v-pills-subscriptions" role="tabpanel" aria-labelledby="v-pills-subscriptions-tab">
+                                    <h5>My Subscriptions</h5>
+                                    <p>Subscription details will be shown here.</p>
+                                </div>
+                                <div class="tab-pane fade" id="v-pills-contact" role="tabpanel" aria-labelledby="v-pills-contact-tab">
+                                    <h5>Contact Us</h5>
+                                    <p>Email: support@dadsdairy.com</p>
+                                    <p>Phone: 123-456-7890</p>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3">
-                            <div class="card bg-light border-0">
-                                <div class="card-body text-center">
-                                    <h4 class="text-success">
-                                        <i class="fas fa-check-circle"></i>
-                                    </h4>
-                                    <h6>Completed</h6>
-                                    <p class="mb-0 h5">{{ Auth::user()->orders()->where('status', 'delivered')->count() }}</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="card bg-light border-0">
-                                <div class="card-body text-center">
-                                    <h4 class="text-warning">
-                                        <i class="fas fa-sync"></i>
-                                    </h4>
-                                    <h6>Active Subscriptions</h6>
-                                    <p class="mb-0 h5">{{ Auth::user()->subscriptions()->where('status', 'active')->count() }}</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="card bg-light border-0">
-                                <div class="card-body text-center">
-                                    <h4 class="text-danger">
-                                        <i class="fas fa-clock"></i>
-                                    </h4>
-                                    <h6>Pending Orders</h6>
-                                    <p class="mb-0 h5">{{ Auth::user()->orders()->whereIn('status', ['pending', 'processing'])->count() }}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mt-4 pt-4 border-top">
-                        <a href="{{ route('customer.profile.edit') }}" class="btn btn-primary">
-                            <i class="fas fa-edit"></i> Edit Profile
-                        </a>
-                        <a href="{{ route('customer.products') }}" class="btn btn-secondary">
-                            <i class="fas fa-arrow-left"></i> Back to Products
-                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-<style>
-    .card {
-        border: none;
-        border-radius: 8px;
-    }
-
-    .btn-primary {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        border: none;
-    }
-
-    .btn-primary:hover {
-        background: linear-gradient(135deg, #5568d3 0%, #6a3a8a 100%);
-    }
-
-    a {
-        color: #667eea;
-    }
-
-    a:hover {
-        color: #764ba2;
-    }
-</style>
 @endsection

@@ -11,6 +11,6 @@ class ProfileController extends Controller
         if (!Auth::check()) {
             return redirect()->route('customer.login');
         }
-        return view('customer.profile');
+        return view('customer.profile.show');
     }
 }

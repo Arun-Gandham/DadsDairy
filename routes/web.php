@@ -31,7 +31,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('customer.landing');
-});
+})->name('landing');
 
 // Authentication Routes
 Route::middleware('guest')->group(function () {
@@ -59,7 +59,7 @@ Route::post('/logout', [AuthController::class, 'logout'])
 ->middleware('auth')
     ->name('logout');
 // Customer Profile Page
-Route::get('/profile', [\App\Http\Controllers\Customer\ProfileController::class, 'show'])->name('customer.profile');
+Route::get('/profile', [\App\Http\Controllers\Customer\ProfileController::class, 'show'])->name('customer.profile.show');
 // Dashboard Route
 Route::get('/dashboard', function () {
     $user = auth()->user();
@@ -158,7 +158,7 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
 });
 
 // Customer Routes
-Route::prefix('customer')->middleware(['auth', 'role:customer'])->group(function () {
+Route::prefix('')->middleware(['auth', 'role:customer'])->group(function () {
     // Route::get('/dashboard', [CustomerDashboardController::class, 'dashboard'])->name('customer.dashboard'); // Customer dashboard removed
 
     // Profile

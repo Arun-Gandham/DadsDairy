@@ -5,9 +5,9 @@
       </a>
 
       <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-        <li><a href="#" class="nav-link px-2 link-secondary">Home</a></li>
-        <li><a href="#" class="nav-link px-2 link-dark">Features</a></li>
-        <li><a href="#" class="nav-link px-2 link-dark">Pricing</a></li>
+        <li><a href="{{ route('landing') }}" class="nav-link px-2 link-secondary">Home</a></li>
+        <li><a href="{{ route('customer.products') }}" class="nav-link px-2 link-dark">Products</a></li>
+        <li><a href="{{ route('customer.cart') }}" class="nav-link px-2 link-dark">Cart</a></li>
         <li><a href="#" class="nav-link px-2 link-dark">FAQs</a></li>
         <li><a href="#" class="nav-link px-2 link-dark">About</a></li>
       </ul>
@@ -20,7 +20,7 @@
               <span class="d-none d-md-inline">Account</span>
             </button>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accountDropdown">
-              <li><a class="dropdown-item" href="{{ route('customer.profile') }}">Profile</a></li>
+              <li><a class="dropdown-item" href="{{ route('customer.profile.show') }}">Profile</a></li>
               <li>
                 <form method="POST" action="{{ route('customer.logout') }}" class="d-inline">
                   @csrf
