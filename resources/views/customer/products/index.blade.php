@@ -1,95 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Products - Dad's Dairy</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <style>
-        body {
-            background: #f8f9fa;
-        }
-        .navbar {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-        .sidebar {
-            background: white;
-            min-height: calc(100vh - 60px);
-            padding: 20px 0;
-        }
-        .sidebar a {
-            color: #333;
-            padding: 15px 20px;
-            display: block;
-            text-decoration: none;
-            border-left: 4px solid transparent;
-            transition: all 0.3s;
-        }
-        .sidebar a:hover {
-            background: #f8f9fa;
-            border-left-color: #667eea;
-            color: #667eea;
-        }
-        .main-content {
-            padding: 30px;
-        }
-        .product-card {
-            background: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            transition: all 0.3s;
-            height: 100%;
-        }
-        .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
-        }
-        .product-image {
-            height: 200px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 60px;
-        }
-        .product-info {
-            padding: 15px;
-        }
-        .product-name {
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 10px;
-        }
-        .product-price {
-            font-size: 24px;
-            font-weight: bold;
-            color: #667eea;
-            margin-bottom: 10px;
-        }
-        .btn-gradient {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border: none;
-            color: white;
-        }
-        .btn-gradient:hover {
-            color: white;
-        }
-    </style>
-</head>
-<body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">🥛 Dad's Dairy</a>
-            <div class="ms-auto">
-                <span class="text-white">{{ Auth::user()->name }}</span>
-            </div>
-        </div>
-    </nav>
+@extends('customer.layouts.app')
 
+@section('title', "Welcome to Dad's Dairy")
+@section('content')
     <div class="row g-0">
         <!-- Sidebar -->
         <div class="col-md-2">
@@ -163,7 +75,4 @@
             </div>
         </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+@endsection

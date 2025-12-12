@@ -79,6 +79,11 @@ Route::get('/dashboard', function () {
     return redirect()->route('customer.products');
 })->middleware('auth')->name('dashboard');
 
+
+    // Products
+    Route::get('/products', [CustomerDashboardController::class, 'products'])->name('customer.products');
+    Route::get('/products/{product}', [CustomerDashboardController::class, 'showProduct'])->name('customer.products.show');
+
 // Admin Routes
 Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
         // Roles
@@ -169,11 +174,6 @@ Route::prefix('')->middleware(['auth', 'role:customer'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'show'])->name('customer.profile.show');
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('customer.profile.edit');
     Route::put('/profile', [ProfileController::class, 'update'])->name('customer.profile.update');
-
-    // Products
-    Route::get('/products', [CustomerDashboardController::class, 'products'])->name('customer.products');
-    Route::get('/products/{product}', [CustomerDashboardController::class, 'showProduct'])->name('customer.products.show');
-
     // Orders
     Route::get('/orders', [CustomerDashboardController::class, 'orders'])->name('customer.orders');
     Route::get('/orders/{order}', [OrderController::class, 'show'])->name('customer.orders.show');
