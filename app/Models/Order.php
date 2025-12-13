@@ -5,43 +5,49 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
-{
-    use HasFactory;
-
-    protected $fillable = [
-        'order_number',
-        'user_id',
-        'coupon_id',
-        'total_amount',
-        'discount_amount',
-        'status',
-        'shipping_option',
-        'shipping_total',
-        'payment_method',
-        'delivery_type',
-        'delivery_address',
-        'door_number',
-        'street',
-        // 'area', // removed, no longer used
-        'city',
-        'state',
-        'pin_code',
-        'latitude',
-        'longitude',
-        'phone',
-        'email',
-        'delivery_agent_id',
-        'delivered_at',
-    ];
-
-    protected $casts = [
-        'total_amount'    => 'decimal:2',
-        'discount_amount' => 'decimal:2',
-        'delivered_at'    => 'datetime',
-        'created_at'      => 'datetime',
-        'updated_at'      => 'datetime',
-    ];
-
+    /**
+     * Get all timeline events for this order
+     */
+    {
+        use HasFactory;
+        
+        protected $fillable = [
+            'order_number',
+            'user_id',
+            'coupon_id',
+            'total_amount',
+            'discount_amount',
+            'status',
+            'shipping_option',
+            'shipping_total',
+            'payment_method',
+            'delivery_type',
+            'delivery_address',
+            'door_number',
+            'street',
+            'city',
+            'state',
+            'pin_code',
+            'latitude',
+            'longitude',
+            'phone',
+            'email',
+            'delivery_agent_id',
+            'delivered_at',
+        ];
+        
+        protected $casts = [
+            'total_amount'    => 'decimal:2',
+            'discount_amount' => 'decimal:2',
+            'delivered_at'    => 'datetime',
+            'created_at'      => 'datetime',
+            'updated_at'      => 'datetime',
+        ];
+        
+        public function timelines()
+        {
+            return $this->hasMany(OrderTimeline::class);
+        }
     /**
      * Get the coupon applied to this order
      */

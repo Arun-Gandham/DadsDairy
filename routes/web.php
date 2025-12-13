@@ -86,6 +86,11 @@ Route::get('/dashboard', function () {
 
 // Admin Routes
 Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
+
+    Route::delete('order-timelines/{timeline}', [\App\Http\Controllers\Admin\OrderTimelineController::class, 'destroy'])->name('admin.order-timelines.destroy');
+    Route::get('order-timelines/{timeline}/edit', [\App\Http\Controllers\Admin\OrderTimelineController::class, 'edit'])->name('admin.order-timelines.edit');
+    Route::put('order-timelines/{timeline}', [\App\Http\Controllers\Admin\OrderTimelineController::class, 'update'])->name('admin.order-timelines.update');
+
         // Roles
         Route::get('/roles', [\App\Http\Controllers\Admin\RoleController::class, 'index'])->name('admin.roles.index');
         Route::get('/roles/create', [\App\Http\Controllers\Admin\RoleController::class, 'create'])->name('admin.roles.create');

@@ -102,8 +102,12 @@
         <!-- Main Content -->
         <div class="col-md-10">
             <div class="main-content">
+
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h1>Order Details</h1>
+                    <div>
+                        <h1>Order Details</h1>
+                        <span class="text-muted">Order placed at: <strong>{{ $order->created_at->format('d M Y, h:i A') }}</strong></span>
+                    </div>
                     <a href="{{ route('customer.orders') }}" class="btn btn-outline-secondary">
                         <i class="fas fa-arrow-left"></i> Back to Orders
                     </a>
@@ -148,7 +152,6 @@
                                 <p><strong>Full Address:</strong> {{ $order->delivery_address }}</p>
                                 <p><strong>Door Number:</strong> {{ $order->door_number }}</p>
                                 <p><strong>Street:</strong> {{ $order->street }}</p>
-                                <p><strong>Area:</strong> {{ $order->area }}</p>
                                 <p><strong>City:</strong> {{ $order->city }}</p>
                                 <p><strong>State:</strong> {{ $order->state }}</p>
                                 <p><strong>Pin Code:</strong> {{ $order->pin_code }}</p>
@@ -243,8 +246,6 @@
                                 @php
                                     $subtotal = $order->items->sum('subtotal');
                                     $discount = $order->discount_amount;
-                                    $beforeTax = $subtotal - $discount;
-                                    $tax = $beforeTax * 0.18;
                                 @endphp
                                 <p>
                                     <strong>Subtotal:</strong>
@@ -256,10 +257,6 @@
                                     <span class="float-end">- ₹{{ number_format($discount, 2) }}</span>
                                 </p>
                                 @endif
-                                <p>
-                                    <strong>Tax (18%):</strong>
-                                    <span class="float-end">₹{{ number_format($tax, 2) }}</span>
-                                </p>
                                 <p>
                                     <strong>Shipping Type:</strong>
                                     <span class="float-end">{{ $order->shipping_option ?? 'N/A' }}</span>
@@ -298,29 +295,51 @@
                             </div>
                             <div class="card-body">
                                 <div class="timeline">
-                                    <p class="mb-2">
-                                        <i class="fas fa-check-circle text-success"></i> <strong>Order Placed</strong>
-                                        <br><small>{{ $order->created_at->format('d M Y') }}</small>
-                                    </p>
-                                    <p class="mb-2">
-                                        <i class="fas fa-{{ in_array($order->status, ['processing', 'shipped', 'delivered']) ? 'check-circle text-success' : 'circle text-muted' }}"></i>
-                                        <strong>Processing</strong>
-                                        <br><small>In progress...</small>
-                                    </p>
-                                    <p class="mb-2">
-                                        <i class="fas fa-{{ in_array($order->status, ['shipped', 'delivered']) ? 'check-circle text-success' : 'circle text-muted' }}"></i>
-                                        <strong>Shipped</strong>
-                                        <br><small>On the way...</small>
-                                    </p>
-                                    <p>
-                                        <i class="fas fa-{{ $order->status === 'delivered' ? 'check-circle text-success' : 'circle text-muted' }}"></i>
-                                        <strong>Delivered</strong>
-                                        @if ($order->delivered_at)
-                                            <br><small>{{ $order->delivered_at->format('d M Y') }}</small>
-                                        @else
-                                            <br><small>Pending...</small>
-                                        @endif
-                                    </p>
+                                    @php
+                                        $timelineEvents = $order->timelines()->orderBy('changed_at')->get();
+                                        $statusIcons = [
+                                            'pending' => 'clock',
+                                            'processing' => 'spinner',
+                                            'shipped' => 'truck',
+                                            'delivered' => 'box-open',
+                                            'completed' => 'check-circle',
+                                            'cancelled' => 'times-circle',
+                                        ];
+                                    @endphp
+                                    @foreach($timelineEvents as $event)
+                                        @php
+                                            $icon = $statusIcons[$event->status] ?? 'circle';
+                                        @endphp
+                                        <div class="d-flex align-items-center mb-2">
+                                            <div style="flex:1">
+                                                <i class="fas fa-{{ $icon }}
+                                                    @if($event->state === 'completed') text-success
+                                                    @elseif($event->state === 'cancelled') text-danger
+                                                    @else text-warning
+                                                    @endif
+                                                "></i>
+                                                <strong>{{ ucfirst(str_replace('_', ' ', $event->status)) }}</strong>
+                                                <span class="badge ms-2
+                                                    @if($event->state === 'completed') bg-success
+                                                    @elseif($event->state === 'cancelled') bg-danger
+                                                    @else bg-warning text-dark
+                                                    @endif
+                                                ">
+                                                    @if($event->state === 'completed')
+                                                        Completed
+                                                    @elseif($event->state === 'cancelled')
+                                                        Cancelled
+                                                    @else
+                                                        In Progress
+                                                    @endif
+                                                </span>
+                                                <br><small>{{ $event->changed_at ? $event->changed_at->format('d M Y') : $event->created_at->format('d M Y') }}</small>
+                                                @if($event->note && $event->note !== 'Status updated by admin')
+                                                    <br><span class="text-muted">{{ $event->note }}</span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>

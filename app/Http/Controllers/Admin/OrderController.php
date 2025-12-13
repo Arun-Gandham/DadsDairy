@@ -46,10 +46,27 @@ class OrderController extends Controller
     public function update(Request $request, Order $order)
     {
         $validated = $request->validate([
-            'status' => 'required|in:pending,processing,shipped,completed,cancelled',
+            'status' => 'required|in:pending,processing,shipped,delivered,completed,cancelled,refund_initiated,refunded',
         ]);
 
+
+        $oldStatus = $order->status;
         $order->update($validated);
+
+        // Add timeline entry if status changed
+        if ($oldStatus !== $validated['status']) {
+            // Remove any existing timeline event for this status and order
+            \App\Models\OrderTimeline::where('order_id', $order->id)
+                ->where('status', $validated['status'])
+                ->delete();
+
+            \App\Models\OrderTimeline::create([
+                'order_id' => $order->id,
+                'status' => $validated['status'],
+                'changed_at' => now(),
+                'note' => 'Status updated by admin',
+            ]);
+        }
 
         return redirect()->route('admin.orders.show', $order)->with('success', 'Order status updated successfully!');
     }

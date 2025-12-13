@@ -43,13 +43,36 @@ $contentLayout = (isset($container) ? (($container === 'container-xxl') ? "layou
 </head>
 
 <body>
-  
+
+
+  <!-- Toast for session messages (always at top of page, above header) -->
+  @if(session('success') || session('error') || session('message'))
+  <div style="position:fixed;top:0;left:0;width:100vw;z-index:2000;pointer-events:none;">
+    <div class="d-flex justify-content-end w-100">
+      <div class="toast align-items-center text-bg-{{ session('success') ? 'success' : (session('error') ? 'danger' : 'info') }} border-0 m-3 show" id="sessionToast" role="alert" aria-live="assertive" aria-atomic="true" style="min-width:300px;max-width:400px;pointer-events:auto;">
+        <div class="d-flex">
+          <div class="toast-body">
+            {{ session('success') ?? session('error') ?? session('message') }}
+          </div>
+          <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var toastEl = document.getElementById('sessionToast');
+      if (toastEl && window.bootstrap) {
+        var toast = new bootstrap.Toast(toastEl, { delay: 5000 });
+        toast.show();
+      }
+    });
+  </script>
+  @endif
 
   <!-- Layout Content -->
   @yield('layoutContent')
   <!--/ Layout Content -->
-
-  
 
   <!-- Include Scripts -->
   <!-- $isFront is used to append the front layout scripts only on the front layout otherwise the variable will be blank -->

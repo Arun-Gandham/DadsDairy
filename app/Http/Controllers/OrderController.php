@@ -172,6 +172,14 @@ class OrderController extends Controller
             'email'            => $validated['email'],
         ]);
 
+        // Create order timeline: pending
+        \App\Models\OrderTimeline::create([
+            'order_id' => $order->id,
+            'status' => 'pending',
+            'changed_at' => $order->created_at,
+            'note' => 'Order created and pending',
+        ]);
+
         // Create order items
         foreach ($cartItems as $cartItem) {
             OrderItem::create([
@@ -234,6 +242,13 @@ class OrderController extends Controller
             }
 
             $order->update(['status' => 'cancelled']);
+            \App\Models\OrderTimeline::create([
+                'order_id' => $order->id,
+                'status' => 'cancelled',
+                'changed_at' => now(),
+                'note' => 'Order cancelled by customer',
+            ]);
+            // Optionally, initiate refund logic here
             return redirect()->back()->with('success', 'Order cancelled successfully');
         }
 
