@@ -1,7 +1,7 @@
 <?php
 
 return [
-
+    
     /*
     |--------------------------------------------------------------------------
     | Third Party Services
@@ -13,14 +13,19 @@ return [
     | a conventional file to locate the various service credentials.
     |
     */
-
+    
     'mailgun' => [
         'domain' => env('MAILGUN_DOMAIN'),
         'secret' => env('MAILGUN_SECRET'),
         'endpoint' => env('MAILGUN_ENDPOINT', 'api.mailgun.net'),
         'scheme' => 'https',
     ],
-
+    'delhivery' => [
+        'token' => env('DELHIVERY_API_TOKEN'),
+        'base_url' => env('DELHIVERY_BASE_URL', 'https://staging-express.delhivery.com'),
+        'origin_pin' => env('DELHIVERY_ORIGIN_PIN', '533005'),
+    ],
+    
     'postmark' => [
         'token' => env('POSTMARK_TOKEN'),
     ],

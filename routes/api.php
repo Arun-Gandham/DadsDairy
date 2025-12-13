@@ -17,3 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+// Public API for Delhivery rates (no auth for checkout usage)
+Route::get('/delhivery/rates', [\App\Http\Controllers\DelhiveryController::class, 'getRates']);
+
+// API to get all available shipping options for checkout
+Route::get('/delhivery/shipping-options', [\App\Http\Controllers\DelhiveryController::class, 'getShippingOptions']);
