@@ -261,8 +261,12 @@
                                     <span class="float-end">₹{{ number_format($tax, 2) }}</span>
                                 </p>
                                 <p>
-                                    <strong>Shipping:</strong>
-                                    <span class="float-end">Free</span>
+                                    <strong>Shipping Type:</strong>
+                                    <span class="float-end">{{ $order->shipping_option ?? 'N/A' }}</span>
+                                </p>
+                                <p>
+                                    <strong>Shipping Total:</strong>
+                                    <span class="float-end">₹{{ number_format($order->shipping_total ?? 0, 2) }}</span>
                                 </p>
                                 <hr>
                                 <h5>

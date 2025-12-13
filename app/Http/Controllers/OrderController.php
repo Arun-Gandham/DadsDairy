@@ -95,19 +95,19 @@ class OrderController extends Controller
     {
         $validated = $request->validate([
             // 'payment_method'   => 'required|in:cash,card',
-            'delivery_type'    => 'required|in:home_delivery,pickup',
-            'delivery_address' => 'required_if:delivery_type,home_delivery|string|max:500',
-            'door_number'      => 'required|string|max:20',
-            'street'           => 'required|string|max:50',
-            'area'             => 'required|string|max:50',
-            'city'             => 'required|string|max:50',
-            'state'            => 'required|string|max:50',
-            'pin_code'         => 'required|string|max:10',
-            'latitude'         => 'nullable|numeric',
-            'longitude'        => 'nullable|numeric',
-            'phone'            => 'required|string|max:20',
-            'email'            => 'required|email|max:100',
-            'coupon_code'      => 'nullable|string',
+            // 'delivery_type'    => 'required|in:home_delivery,pickup',
+            'shipping_option'   => 'required|string',
+            'delivery_address'  => 'required|string|max:500',
+            'door_number'       => 'required|string|max:20',
+            'street'            => 'required|string|max:50',
+            'city'              => 'required|string|max:50',
+            'state'             => 'required|string|max:50',
+            'pin_code'          => 'required|string|max:10',
+            'latitude'          => 'nullable|numeric',
+            'longitude'         => 'nullable|numeric',
+            'phone'             => 'required|string|max:20',
+            'email'             => 'required|email|max:100',
+            'coupon_code'       => 'nullable|string',
         ]);
 
         $cartItems = Auth::user()->cartItems()->with('product')->get();
@@ -116,8 +116,8 @@ class OrderController extends Controller
             return redirect()->route('customer.cart')->with('error', 'Cart is empty');
         }
 
-        // Calculate order total
-        $totalAmount    = $cartItems->sum(fn($item) => $item->price * $item->quantity);
+        // Calculate order subtotal
+        $subtotal = $cartItems->sum(fn($item) => $item->price * $item->quantity);
         $discountAmount = 0;
         $coupon         = null;
 
@@ -130,7 +130,7 @@ class OrderController extends Controller
             }
 
             // Check minimum order value
-            if ($coupon->min_order_value && $totalAmount < $coupon->min_order_value) {
+            if ($coupon->min_order_value && $subtotal < $coupon->min_order_value) {
                 return redirect()->back()->with('error', 'Minimum order value of Rs. ' . $coupon->min_order_value . ' required.');
             }
 
@@ -142,11 +142,14 @@ class OrderController extends Controller
                 }
             }
 
-            $discountAmount = $coupon->calculateDiscount($totalAmount);
+            $discountAmount = $coupon->calculateDiscount($subtotal);
         }
 
-        // Create order
-        $finalAmount = max(0, $totalAmount - $discountAmount);
+        // Calculate shipping
+        $shippingType = $validated['shipping_option'];
+        $shippingTotal = (float) $request->input('shipping_price', 0);
+        // Final order total = subtotal - discount + shipping
+        $finalAmount = max(0, $subtotal - $discountAmount + $shippingTotal);
 
         $order = Order::create([
             'order_number'     => 'ORD-' . strtoupper(Str::random(10)),
@@ -155,12 +158,11 @@ class OrderController extends Controller
             'total_amount'     => $finalAmount,
             'discount_amount'  => $discountAmount,
             'status'           => 'pending',
-            'payment_method'   => $validated['payment_method'],
-            'delivery_type'    => $validated['delivery_type'],
+            'shipping_option'  => $shippingType,
+            'shipping_total'   => $shippingTotal,
             'delivery_address' => $validated['delivery_address'] ?? null,
             'door_number'      => $validated['door_number'] ?? null,
             'street'           => $validated['street'] ?? null,
-            'area'             => $validated['area'] ?? null,
             'city'             => $validated['city'] ?? null,
             'state'            => $validated['state'] ?? null,
             'pin_code'         => $validated['pin_code'] ?? null,

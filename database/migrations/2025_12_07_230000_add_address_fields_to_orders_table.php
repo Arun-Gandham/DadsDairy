@@ -8,8 +8,8 @@ return new class extends Migration {
         Schema::table('orders', function (Blueprint $table) {
             $table->string('door_number', 20)->nullable()->after('delivery_address');
             $table->string('street', 50)->nullable()->after('door_number');
-            $table->string('area', 50)->nullable()->after('street');
-            $table->string('city', 50)->nullable()->after('area');
+            // $table->string('area', 50)->nullable()->after('street'); // removed
+            $table->string('city', 50)->nullable()->after('street');
             $table->string('state', 50)->nullable()->after('city');
             $table->string('pin_code', 10)->nullable()->after('state');
             $table->decimal('latitude', 10, 7)->nullable()->after('pin_code');
@@ -18,7 +18,8 @@ return new class extends Migration {
     }
     public function down(): void {
         Schema::table('orders', function (Blueprint $table) {
-            $table->dropColumn(['door_number', 'street', 'area', 'city', 'state', 'pin_code', 'latitude', 'longitude']);
+            $table->dropColumn(['door_number', 'street', 'city', 'state', 'pin_code', 'latitude', 'longitude']);
+            // 'area' column is not dropped because it was never added
         });
     }
 };

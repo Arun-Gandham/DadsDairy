@@ -84,10 +84,8 @@
                                     <h5>Order Summary</h5>
                                     <hr>
                                     <p>Subtotal: <strong>₹{{ number_format($totalPrice, 2) }}</strong></p>
-                                    <p>Tax: <strong>₹{{ number_format($totalPrice * 0.18, 2) }}</strong></p>
-                                    <p>Shipping: <strong>Free</strong></p>
                                     <hr>
-                                    <h5>Total: <strong>₹{{ number_format($totalPrice * 1.18, 2) }}</strong></h5>
+                                    <h5>Total: <strong>₹{{ number_format($totalPrice, 2) }}</strong></h5>
                                     <a href="{{ route('customer.checkout') }}" class="btn btn-gradient w-100 mt-3">Proceed to Checkout</a>
                                     <a href="{{ route('customer.products') }}" class="btn btn-outline-secondary w-100 mt-2">Continue Shopping</a>
                                 </div>

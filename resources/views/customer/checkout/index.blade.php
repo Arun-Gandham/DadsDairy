@@ -14,15 +14,15 @@
 
                             <form action="{{ route('customer.orders.store') }}" method="POST" id="checkoutForm">
                                                                                                 <input type="hidden" name="delivery_address" id="delivery_address">
-                                                                @if ($errors->any())
-                                                                    <div class="alert alert-danger">
-                                                                        <ul class="mb-0">
-                                                                            @foreach ($errors->all() as $error)
-                                                                                <li>{{ $error }}</li>
-                                                                            @endforeach
-                                                                        </ul>
-                                                                    </div>
-                                                                @endif
+                                @if ($errors->any())
+                                    <div class="alert alert-danger">
+                                        <ul class="mb-0">
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
                                 @csrf
 
                                 <div class="row mb-3">
@@ -46,10 +46,6 @@
                                         <div class="col-md-6 mb-2">
                                             <label for="street" class="form-label">Street</label>
                                             <input type="text" class="form-control" id="street" name="street" maxlength="50" placeholder="Enter street">
-                                        </div>
-                                        <div class="col-md-6 mb-2">
-                                            <label for="area" class="form-label">Area</label>
-                                            <input type="text" class="form-control" id="area" name="area" maxlength="50" placeholder="Enter area">
                                         </div>
                                         <div class="col-md-6 mb-2">
                                             <label for="city" class="form-label">City</label>
@@ -100,52 +96,53 @@
                             </form>
                         </div>
                     </div>
-                </div>
+                
 
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <!-- Coupon Section -->
-                            <div class="coupon-section">
-                                <h6 class="mb-3">
-                                    <i class="fas fa-ticket-alt"></i> Apply Coupon
-                                </h6>
-                                <div class="input-group mb-2">
-                                    <input type="text" class="form-control" id="coupon_code" placeholder="Enter coupon code" maxlength="50">
-                                    <button class="btn btn-outline-primary" type="button" id="applyCouponBtn" onclick="validateCoupon()">
-                                        <i class="fas fa-check"></i> Apply
-                                    </button>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <!-- Coupon Section -->
+                                <div class="coupon-section">
+                                    <h6 class="mb-3">
+                                        <i class="fas fa-ticket-alt"></i> Apply Coupon
+                                    </h6>
+                                    <div class="input-group mb-2">
+                                        <input type="text" class="form-control" id="coupon_code" placeholder="Enter coupon code" maxlength="50">
+                                        <button class="btn btn-outline-primary" type="button" id="applyCouponBtn" onclick="validateCoupon()">
+                                            <i class="fas fa-check"></i> Apply
+                                        </button>
+                                    </div>
+                                    <div id="couponMessage"></div>
                                 </div>
-                                <div id="couponMessage"></div>
-                            </div>
 
-                            <!-- Order Summary -->
-                            <h5 class="card-title">Order Summary</h5>
-                            <hr>
-                            <div class="summary-row">
-                                <span>Subtotal</span>
-                                <span id="subtotal">₹{{ number_format($totalPrice, 2) }}</span>
-                            </div>
-                            <div class="summary-row" id="discountRow" style="display: none;">
-                                <span id="discountLabel">Discount</span>
-                                <span id="discountAmount"></span>
-                            </div>
-                            
-                            <div class="summary-row" id="shippingRow" style="display:none;">
-                                <span>Shipping</span>
-                                <span id="shippingCost"></span>
-                            </div>
-                            <div class="summary-row total">
-                                <span>Total</span>
-                                <span id="total">₹{{ number_format($totalPrice, 2) }}</span>
-                            </div>
+                                <!-- Order Summary -->
+                                <h5 class="card-title">Order Summary</h5>
+                                <hr>
+                                <div class="summary-row">
+                                    <span>Subtotal</span>
+                                    <span id="subtotal">₹{{ number_format($totalPrice, 2) }}</span>
+                                </div>
+                                <div class="summary-row" id="discountRow" style="display: none;">
+                                    <span id="discountLabel">Discount</span>
+                                    <span id="discountAmount"></span>
+                                </div>
+                                
+                                <div class="summary-row" id="shippingRow" style="display:none;">
+                                    <span>Shipping</span>
+                                    <span id="shippingCost"></span>
+                                </div>
+                                <div class="summary-row total">
+                                    <span>Total</span>
+                                    <span id="total">₹{{ number_format($totalPrice, 2) }}</span>
+                                </div>
 
-                            <!-- Hidden input for coupon code -->
-                            <input type="hidden" name="coupon_code" id="appliedCouponCode" form="checkoutForm">
+                                <!-- Hidden input for coupon code -->
+                                <input type="hidden" name="coupon_code" id="appliedCouponCode" form="checkoutForm">
 
-                            <button type="submit" id="orderButton" class="btn btn-gradient w-100 btn-lg mt-4" form="checkoutForm" disabled>
-                                <i class="fas fa-check-circle"></i> Pay Now
-                            </button>
+                                <button type="submit" id="orderButton" class="btn btn-gradient w-100 btn-lg mt-4" form="checkoutForm" disabled>
+                                    <i class="fas fa-check-circle"></i> Pay Now
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -157,16 +154,42 @@
     <script>
     // Combine address fields on form submit
     document.getElementById('checkoutForm').addEventListener('submit', function(e) {
+        // Remove previous error messages
+        document.querySelectorAll('.address-error').forEach(el => el.remove());
+        let hasError = false;
+        const fields = [
+            {id: 'door_number', label: 'Door Number'},
+            {id: 'street', label: 'Street'},
+            {id: 'city', label: 'City'},
+            {id: 'state', label: 'State'},
+            {id: 'pin_code', label: 'Pin Code'},
+            {id: 'phone', label: 'Phone'},
+            {id: 'email', label: 'Email'}
+        ];
+        fields.forEach(f => {
+            const el = document.getElementById(f.id);
+            if (!el.value.trim()) {
+                hasError = true;
+                const error = document.createElement('div');
+                error.className = 'text-danger address-error';
+                error.style.fontSize = '0.9em';
+                error.textContent = `Please enter ${f.label}`;
+                el.parentNode.appendChild(error);
+            }
+        });
+        if (hasError) {
+            e.preventDefault();
+            return false;
+        }
+        // Combine address fields
         const door = document.getElementById('door_number').value.trim();
         const street = document.getElementById('street').value.trim();
-        const area = document.getElementById('area').value.trim();
         const city = document.getElementById('city').value.trim();
         const state = document.getElementById('state').value.trim();
         const pin = document.getElementById('pin_code').value.trim();
         let address = '';
         if (door) address += door + ', ';
         if (street) address += street + ', ';
-        if (area) address += area + ', ';
         if (city) address += city + ', ';
         if (state) address += state + ', ';
         if (pin) address += pin;
@@ -231,12 +254,12 @@
         let total = subtotal + price;
         document.getElementById('total').textContent = '₹' + total.toFixed(2);
         // Update button text
-        if (selected.value.toLowerCase().includes('prepaid')) {
+        if (selected.value.toLowerCase().includes('cod')) {
             orderBtn.innerHTML = '<i class="fas fa-check-circle"></i> Pay Now';
         } else {
             orderBtn.innerHTML = '<i class="fas fa-check-circle"></i> Order Now';
         }
-        // Optionally, set a hidden input for backend
+        // Set hidden input for shipping_option
         let hidden = document.getElementById('selectedShippingType');
         if (!hidden) {
             hidden = document.createElement('input');
@@ -246,11 +269,21 @@
             document.getElementById('checkoutForm').appendChild(hidden);
         }
         hidden.value = selected.value;
+        // Set hidden input for shipping_price
+        let hiddenPrice = document.getElementById('selectedShippingPrice');
+        if (!hiddenPrice) {
+            hiddenPrice = document.createElement('input');
+            hiddenPrice.type = 'hidden';
+            hiddenPrice.name = 'shipping_price';
+            hiddenPrice.id = 'selectedShippingPrice';
+            document.getElementById('checkoutForm').appendChild(hiddenPrice);
+        }
+        hiddenPrice.value = price;
     }
 
     // Helper: check if all address fields are filled
     function allAddressFieldsFilled() {
-        const requiredFields = ['door_number','street','area','city','state','pin_code','phone','email'];
+        const requiredFields = ['door_number','street','city','state','pin_code','phone','email'];
         for (let id of requiredFields) {
             const el = document.getElementById(id);
             if (!el || !el.value.trim()) return false;

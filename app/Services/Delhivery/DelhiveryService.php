@@ -50,12 +50,16 @@ class DelhiveryService
             'estimated_delivery_date' => $eta,
             'cod_charge' => 0,
         ];
-        // Option 2: COD (customer pays standard shipping)
+        // Option 2: COD (customer pays standard shipping, rounded up)
+        $codShipping = $shippingCost;
+        if ($codShipping > 0 && $codShipping != round($codShipping)) {
+            $codShipping = ceil($codShipping);
+        }
         $options[] = [
             'service_type' => 'COD (Standard Shipping)',
-            'price' => $shippingCost,
+            'price' => $codShipping,
             'estimated_delivery_date' => $eta,
-            'cod_charge' => $shippingCost,
+            'cod_charge' => $codShipping,
         ];
         return $options;
     }
