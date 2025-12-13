@@ -94,15 +94,15 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'payment_method'   => 'required|in:cash,card',
+            // 'payment_method'   => 'required|in:cash,card',
             'delivery_type'    => 'required|in:home_delivery,pickup',
             'delivery_address' => 'required_if:delivery_type,home_delivery|string|max:500',
-            'door_number'      => 'nullable|string|max:20',
-            'street'           => 'nullable|string|max:50',
-            'area'             => 'nullable|string|max:50',
-            'city'             => 'nullable|string|max:50',
-            'state'            => 'nullable|string|max:50',
-            'pin_code'         => 'nullable|string|max:10',
+            'door_number'      => 'required|string|max:20',
+            'street'           => 'required|string|max:50',
+            'area'             => 'required|string|max:50',
+            'city'             => 'required|string|max:50',
+            'state'            => 'required|string|max:50',
+            'pin_code'         => 'required|string|max:10',
             'latitude'         => 'nullable|numeric',
             'longitude'        => 'nullable|numeric',
             'phone'            => 'required|string|max:20',

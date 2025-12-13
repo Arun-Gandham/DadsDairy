@@ -130,24 +130,21 @@
                                 <span id="discountLabel">Discount</span>
                                 <span id="discountAmount"></span>
                             </div>
-                            <div class="summary-row">
-                                <span>Tax (18%)</span>
-                                <span id="tax">₹{{ number_format($totalPrice * 0.18, 2) }}</span>
-                            </div>
-                            <div class="summary-row">
+                            
+                            <div class="summary-row" id="shippingRow" style="display:none;">
                                 <span>Shipping</span>
-                                <span>Free</span>
+                                <span id="shippingCost"></span>
                             </div>
                             <div class="summary-row total">
                                 <span>Total</span>
-                                <span id="total">₹{{ number_format($totalPrice * 1.18, 2) }}</span>
+                                <span id="total">₹{{ number_format($totalPrice, 2) }}</span>
                             </div>
 
                             <!-- Hidden input for coupon code -->
                             <input type="hidden" name="coupon_code" id="appliedCouponCode" form="checkoutForm">
 
-                            <button type="submit" class="btn btn-gradient w-100 btn-lg mt-4" form="checkoutForm">
-                                <i class="fas fa-check-circle"></i> Place Order
+                            <button type="submit" id="orderButton" class="btn btn-gradient w-100 btn-lg mt-4" form="checkoutForm" disabled>
+                                <i class="fas fa-check-circle"></i> Pay Now
                             </button>
                         </div>
                     </div>
@@ -182,6 +179,7 @@
         const d_pin = document.getElementById('pin_code').value.trim();
         if (!d_pin || d_pin.length !== 6 || !/^\d{6}$/.test(d_pin)) {
             document.getElementById('shippingOptionsDisplay').textContent = 'Fill the address to see the delivery options';
+            disableOrderButton();
             return;
         }
         document.getElementById('shippingOptionsDisplay').textContent = 'Checking...';
@@ -193,7 +191,7 @@
                     let html = '';
                     data.options.forEach((opt, idx) => {
                         html += `<div class='form-check mb-2'>` +
-                            `<input class='form-check-input' type='radio' name='shipping_option' id='shipping_option_${idx}' value='${opt.service_type}' data-price='${opt.price}' data-cod='${opt.cod_charge}' ${idx === 0 ? 'checked' : ''} onchange='updateShippingSummary()'>` +
+                            `<input class='form-check-input' type='radio' name='shipping_option' id='shipping_option_${idx}' value='${opt.service_type}' data-price='${opt.price}' data-cod='${opt.cod_charge}' ${idx === 0 ? 'checked' : ''} onchange='updateShippingSummary(); checkEnableOrderButton();'>` +
                             `<label class='form-check-label' for='shipping_option_${idx}'>` +
                                 `${opt.service_type} - ₹${opt.price} ` +
                                 (opt.estimated_delivery_date ? `| ETA: ${opt.estimated_delivery_date}` : '') +
@@ -202,25 +200,43 @@
                     });
                     document.getElementById('shippingOptionsDisplay').innerHTML = html;
                     updateShippingSummary();
+                    checkEnableOrderButton();
                 } else {
                     document.getElementById('shippingOptionsDisplay').textContent = 'We are not yet there. Please select another pincode to get the shipping options.';
+                    disableOrderButton();
                 }
             })
             .catch(err => {
                 document.getElementById('shippingOptionsDisplay').textContent = 'Error';
+                disableOrderButton();
             });
     }
 
     // Update shipping summary
     function updateShippingSummary() {
         const selected = document.querySelector('input[name="shipping_option"]:checked');
-        if (!selected) return;
+        const shippingRow = document.getElementById('shippingRow');
+        const orderBtn = document.getElementById('orderButton');
+        if (!selected) {
+            shippingRow.style.display = 'none';
+            orderBtn.disabled = true;
+            return;
+        }
         const price = parseFloat(selected.getAttribute('data-price')) || 0;
-        document.querySelector('.summary-row span:nth-child(2)').textContent = price === 0 ? 'Free' : `₹${price.toFixed(2)}`;
+        // Show and update shipping row
+        document.getElementById('shippingCost').textContent = price === 0 ? 'Free' : `₹${price.toFixed(2)}`;
+        shippingRow.style.display = '';
+        // Update total
         let subtotal = parseFloat(document.getElementById('subtotal').textContent.replace('₹',''));
-        let tax = parseFloat(document.getElementById('tax').textContent.replace('₹',''));
-        let total = subtotal + tax + price;
+        let total = subtotal + price;
         document.getElementById('total').textContent = '₹' + total.toFixed(2);
+        // Update button text
+        if (selected.value.toLowerCase().includes('prepaid')) {
+            orderBtn.innerHTML = '<i class="fas fa-check-circle"></i> Pay Now';
+        } else {
+            orderBtn.innerHTML = '<i class="fas fa-check-circle"></i> Order Now';
+        }
+        // Optionally, set a hidden input for backend
         let hidden = document.getElementById('selectedShippingType');
         if (!hidden) {
             hidden = document.createElement('input');
@@ -231,6 +247,46 @@
         }
         hidden.value = selected.value;
     }
+
+    // Helper: check if all address fields are filled
+    function allAddressFieldsFilled() {
+        const requiredFields = ['door_number','street','area','city','state','pin_code','phone','email'];
+        for (let id of requiredFields) {
+            const el = document.getElementById(id);
+            if (!el || !el.value.trim()) return false;
+        }
+        return true;
+    }
+
+    // Enable order button only if all address fields and shipping option are selected
+    function checkEnableOrderButton() {
+        const orderBtn = document.getElementById('orderButton');
+        const shippingSelected = document.querySelector('input[name="shipping_option"]:checked');
+        if (allAddressFieldsFilled() && shippingSelected) {
+            orderBtn.disabled = false;
+        } else {
+            orderBtn.disabled = true;
+        }
+    }
+
+    // Disable order button
+    function disableOrderButton() {
+        const orderBtn = document.getElementById('orderButton');
+        orderBtn.disabled = true;
+    }
+
+    // Attach input listeners to all address fields
+    window.addEventListener('DOMContentLoaded', function() {
+        const addressFields = ['door_number','street','area','city','state','pin_code','phone','email'];
+        for (let id of addressFields) {
+            const el = document.getElementById(id);
+            if (el) {
+                el.addEventListener('input', checkEnableOrderButton);
+            }
+        }
+        // Also check on page load
+        checkEnableOrderButton();
+    });
 
     // Coupon validation and total update
     let subtotal = {{ $totalPrice }};
@@ -287,11 +343,10 @@
     }
     function updateTotal() {
         const discountAmount = appliedCoupon ? appliedCoupon.discount_amount : 0;
-        const beforeTax = subtotal - discountAmount;
-        const tax = beforeTax * 0.18;
-        const total = beforeTax + tax;
+        const beforeDiscount = subtotal - discountAmount;
+        const shipping = parseFloat(document.getElementById('shippingCost').textContent.replace('₹','')) || 0;
+        const total = beforeDiscount + shipping;
         document.getElementById('subtotal').textContent = '₹' + subtotal.toFixed(2);
-        document.getElementById('tax').textContent = '₹' + tax.toFixed(2);
         document.getElementById('total').textContent = '₹' + total.toFixed(2);
     }
     document.getElementById('coupon_code').addEventListener('keypress', function(e) {
