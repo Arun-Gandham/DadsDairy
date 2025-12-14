@@ -1,39 +1,70 @@
-<div class="container-fluid p-0">
-    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-      <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
-        <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
-      </a>
 
-      <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-        <li><a href="{{ route('landing') }}" class="nav-link px-2 link-secondary">Home</a></li>
-        <li><a href="{{ route('customer.products') }}" class="nav-link px-2 link-dark">Products</a></li>
-        <li><a href="{{ route('customer.cart') }}" class="nav-link px-2 link-dark">Cart</a></li>
-        <li><a href="#" class="nav-link px-2 link-dark">FAQs</a></li>
-        <li><a href="#" class="nav-link px-2 link-dark">About</a></li>
-      </ul>
+    <div class="preloader">
+        <div class="loading-container">
+            <div class="loading"></div>
+            <div id="loading-icon"><img src="{{ asset('assets/customer/img/logo.png') }}" alt=""></div>
+        </div>
+    </div>
+	<header class="main-header">
+		<div class="header-sticky">
+			<nav class="navbar navbar-expand-lg">
+				<div class="container-fluid">
+                    <a class="navbar-brand" href="index.html">
+                        <img src="{{ asset('assets/customer/img/logo.png') }}" alt="Logo" width="80">
+                    </a>
+					<div class="collapse navbar-collapse main-menu">
+                        <div class="nav-menu-wrapper">
+                            <ul class="navbar-nav mr-auto" id="menu">
+                                  <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">About Us</a>
+                                <li class="nav-item"><a class="nav-link" href="#">Our Story</a></li>
+                               
+                                <li class="nav-item"><a class="nav-link" href="#">Contact Us</a></li>
+                                
 
-      <div class="col-md-3 text-end">
-        @if(auth()->check())
-          <div class="dropdown d-inline-block">
-            <button class="btn btn-light dropdown-toggle d-flex align-items-center" type="button" id="accountDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="bi bi-person-circle fs-4 me-1"></i>
-              <span class="d-none d-md-inline">Account</span>
-            </button>
-            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accountDropdown">
-              <li><a class="dropdown-item" href="{{ route('customer.profile.show') }}">Profile</a></li>
-              <li>
-                <form method="POST" action="{{ route('customer.logout') }}" class="d-inline">
-                  @csrf
-                  <button type="submit" class="dropdown-item">Logout</button>
-                </form>
-              </li>
-            </ul>
-          </div>
-        @else
-          <a href="{{ route('customer.login') }}" class="nav-link px-2 link-dark">
-            <button type="button" class="btn btn-outline-primary me-2">Login</button>
-          </a>
-        @endif
-      </div>
-    </header>
-  </div>
+                            </ul>
+                        </div>
+                        <div class="header-btn">
+                            <a href="#" class="btn-default">Login</a>
+                        </div>
+                       <div class="header-profile">
+    <a href="#" class="profile-btn">
+        <i class="fa-solid fa-user"></i>
+    </a>
+
+    <div class="profile-dropdown">
+        <a href="#">
+            <i class="fa-solid fa-user"></i> My Profile
+        </a>
+        <!-- <a href="#">
+            <i class="fa-solid fa-gear"></i> Settings
+        </a> -->
+        <a href="#" class="logout">
+            <i class="fa-solid fa-right-from-bracket"></i> Logout
+        </a>
+    </div>
+</div>
+
+</div>
+
+					<!-- <div class="navbar-toggle"></div> -->
+				</div>
+			</nav>
+			<!-- <div class="responsive-menu"></div> -->
+<!-- Toggle Button -->
+<button class="menu-btn d-lg-none d-xl-none d-xxl-none d-block" onclick="toggleSidebar()">☰</button>
+
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+    <span class="close-btn" onclick="toggleSidebar()">×</span>
+    <ul>
+        <li class="nav-item"><a href="#">Home</a></li>
+    <li class="nav-item"><a href="#">About Us</a></li>
+    <li class="nav-item"><a href="#">Our Story</a></li>
+    <li class="nav-item"><a href="#">Contact Us</a></li>
+    <li class="nav-item"><a class="nav-link" href="#">Login</a></li>
+    <li class="nav-item"><a class="nav-link" href="#">My Profile</a></li>
+    </ul>
+</div>
+		</div>
+	</header>
