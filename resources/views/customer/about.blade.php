@@ -19,14 +19,15 @@
 <link href="{{ asset('assets/customer/css/animate.css') }}" rel="stylesheet">
 <link rel="stylesheet" href="{{ asset('assets/customer/css/magnific-popup.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/customer/css/mousecursor.css') }}">
-<link href="{{ asset('assets/customer/css/custom.css') }}" rel="stylesheet" media="screen">
+
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" />
-<link rel="stylesheet" type="text/css" href="css/main.css">
-<link rel="stylesheet" type="text/css" href="css/hizoom.min.css">
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/customer/css/main.css') }}">
+
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/customer/css/hizoom.min.css') }}">
 
 @endsection
 @section('content')
@@ -41,39 +42,7 @@
         </div>
     </div>
 </div>
-<div class="our-scrolling-ticker">
-    <div class="scrolling-ticker-box">
-        <div class="scrolling-content">
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">Sustainable Farming</span>
 
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">Grass-Fed Cows</span>
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">Planet-Conscious Practices</span>
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">Nutrient-Rich Milk</span>
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">Ethical Animal Care</span>
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">Sustainable Farming</span>
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">Sustainable Farming</span>
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">Grass-Fed Cows</span>
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">Planet-Conscious Practices</span>
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">Nutrient-Rich Milk</span>
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">Ethical Animal Care</span>
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">Sustainable Farming</span>
-        </div>
-        <div class="scrolling-content">
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">Sustainable Farming</span>
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">Grass-Fed Cows</span>
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">Planet-Conscious Practices</span>
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">Nutrient-Rich Milk</span>
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">Ethical Animal Care</span>
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">Sustainable Farming</span>
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">Sustainable Farming</span>
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">Grass-Fed Cows</span>
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">Planet-Conscious Practices</span>
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">Nutrient-Rich Milk</span>
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">Ethical Animal Care</span>
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">Sustainable Farming</span>
-        </div>
-    </div>
-</div>
 <div class="about-us">
     <div class="container">
         <div class="row align-items-center">
