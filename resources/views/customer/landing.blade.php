@@ -94,38 +94,7 @@
     <div class="swiper-button-next"></div>
     <div class="swiper-button-prev"></div>
 </div>
-<div class="our-scrolling-ticker">
-    <div class="scrolling-ticker-box">
-        <div class="scrolling-content">
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">Milk</span>
 
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">pot curd</span>
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">country egg</span>
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">cow ghee</span>
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">buff
-                <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">pot curd</span>
-                <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">country egg</span>
-                <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">cow ghee</span>
-                <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">buffalo ghee</span>
-                <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">Milk</span>
-                <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">pot curd</span>
-        </div>
-        <div class="scrolling-content">
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">Milk</span>
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">pot curd</span>
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">country egg</span>
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">cow ghee</span>
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">buffalo ghee</span>
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">Milk</span>
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">pot curd</span>
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">country egg</span>
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">cow ghee</span>
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">buffalo ghee</span>
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">Milk</span>
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">pot curd</span>
-        </div>
-    </div>
-</div>
 <div class="our-product">
     <div class="container-fluid">
         <div class="row section-row align-items-center">

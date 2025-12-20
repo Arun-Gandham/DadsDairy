@@ -35,42 +35,6 @@
         </div>
     </div>
 </div>
-<!-- Scrolling Ticker Section Start -->
-<div class="our-scrolling-ticker">
-    <!-- Scrolling Ticker Start -->
-    <div class="scrolling-ticker-box">
-        <div class="scrolling-content">
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">Sustainable Farming</span>
-
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">Grass-Fed Cows</span>
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">Planet-Conscious Practices</span>
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">Nutrient-Rich Milk</span>
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">Ethical Animal Care</span>
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">Sustainable Farming</span>
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">Sustainable Farming</span>
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">Grass-Fed Cows</span>
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">Planet-Conscious Practices</span>
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">Nutrient-Rich Milk</span>
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">Ethical Animal Care</span>
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">Sustainable Farming</span>
-        </div>
-        <div class="scrolling-content">
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">Sustainable Farming</span>
-
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">Grass-Fed Cows</span>
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">Planet-Conscious Practices</span>
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">Nutrient-Rich Milk</span>
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">Ethical Animal Care</span>
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">Sustainable Farming</span>
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">Sustainable Farming</span>
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">Grass-Fed Cows</span>
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">Planet-Conscious Practices</span>
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">Nutrient-Rich Milk</span>
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">Ethical Animal Care</span>
-            <span><img src="{{ asset('assets/customer/img/icon-sparkle.svg') }}" alt="">Sustainable Farming</span>
-        </div>
-    </div>
-</div>
 <div class="page-product our-products">
     <div class="container">
         <div class="row justify-content-end ">
