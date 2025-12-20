@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\Customer\CustomerDashboardController;
+use App\Http\Controllers\Customer\BasicController;
 use App\Http\Controllers\Delivery\DeliveryController;
 use App\Http\Controllers\Delivery\DeliveryDashboardController;
 use App\Http\Controllers\OrderController;
@@ -29,13 +30,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('customer.landing');
-})->name('customer.landing');
-
-Route::get('/sitemap.xml', function () {
-    return response()->file(public_path('sitemap.xml'));
-});
+Route::get('/', [BasicController::class, 'landing'])->name('customer.landing');
+Route::get('/about-us', [BasicController::class, 'about'])->name('customer.aboutus');
 
 // Authentication Routes
 Route::middleware('guest')->group(function () {

@@ -17,7 +17,7 @@
                     <div class="nav-menu-wrapper">
                         <ul class="navbar-nav mr-auto" id="menu">
                             <li class="nav-item"><a class="nav-link" href="{{ route('customer.landing') }}">Home</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{{ route('customer.about') }}">About Us</a>
+                            <li class="nav-item"><a class="nav-link" href="{{ route('customer.aboutus') }}">About Us</a>
                             <li class="nav-item"><a class="nav-link" href="{{ route('customer.products') }}">Products</a>
                             <li class="nav-item"><a class="nav-link" href="#">Our Story</a></li>
                             <li class="nav-item"><a class="nav-link" href="#">Contact Us</a></li>
