@@ -31,7 +31,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('customer.landing');
-})->name('landing');
+})->name('customer.landing');
 
 Route::get('/sitemap.xml', function () {
     return response()->file(public_path('sitemap.xml'));
