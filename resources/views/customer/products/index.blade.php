@@ -71,7 +71,7 @@
                             </div>
                             <div class="product-item-body">
                                 <div class="product-item-content">
-                                    <h2><a href="milk-product.html">Milk</a></h2>
+                                    <h2><a href="{{ url('products/1') }}">Milk</a></h2>
                                     <h3 class="product-price">$25.0 <span>$35.00</span></h3>
                                     <p>Our milk is sourced fresh every day from healthy, well-cared-for cows and delivered in its purest form.</p>
                                     <a href="#" class="add-to-cart-btn">
@@ -102,7 +102,7 @@
                             </div>
                             <div class="product-item-body">
                                 <div class="product-item-content">
-                                    <h2><a href="milk-product.html"> Pot curd</a></h2>
+                                    <h2><a href="{{ url('products/1') }}"> Pot curd</a></h2>
                                     <h3 class="product-price">$25.0 <span>$15.00</span></h3>
                                     <p>Our milk is sourced fresh every day from healthy, well-cared-for cows and delivered in its purest form.</p>
                                     <a href="#" class="add-to-cart-btn">
@@ -131,7 +131,7 @@
                             </div>
                             <div class="product-item-body">
                                 <div class="product-item-content">
-                                    <h2><a href="milk-product.html">Country Egg</a></h2>
+                                    <h2><a href="{{ url('products/1') }}">Country Egg</a></h2>
                                     <h3 class="product-price">$25.0 <span>$35.00</span></h3>
                                     <p>Our milk is sourced fresh every day from healthy, well-cared-for cows and delivered in its purest form.</p>
                                     <a href="#" class="add-to-cart-btn">
@@ -160,7 +160,7 @@
                             </div>
                             <div class="product-item-body">
                                 <div class="product-item-content">
-                                    <h2><a href="milk-product.html">Cow ghee</a></h2>
+                                    <h2><a href="{{ url('products/1') }}">Cow ghee</a></h2>
                                     <h3 class="product-price">$25.0 <span>$35.00</span></h3>
                                     <p>Our milk is sourced fresh every day from healthy, well-cared-for cows and delivered in its purest form.</p>
                                     <a href="#" class="add-to-cart-btn">
@@ -189,7 +189,7 @@
                             </div>
                             <div class="product-item-body">
                                 <div class="product-item-content">
-                                    <h2><a href="milk-product.html">Buffalo ghee</a></h2>
+                                    <h2><a href="{{ url('products/1') }}">Buffalo ghee</a></h2>
                                     <h3 class="product-price">$25.0 <span>$35.00</span></h3>
                                     <p>Our milk is sourced fresh every day from healthy, well-cared-for cows and delivered in its purest form.</p>
                                     <a href="#" class="add-to-cart-btn">
@@ -220,7 +220,7 @@
                             </div>
                             <div class="product-item-body">
                                 <div class="product-item-content">
-                                    <h2><a href="milk-product.html">Milk</a></h2>
+                                    <h2><a href="{{ url('products/1') }}">Milk</a></h2>
                                     <h3 class="product-price">$25.0 <span>$35.00</span></h3>
                                     <p>Our milk is sourced fresh every day from healthy, well-cared-for cows and delivered in its purest form.</p>
                                     <a href="#" class="add-to-cart-btn">
@@ -251,7 +251,7 @@
                             </div>
                             <div class="product-item-body">
                                 <div class="product-item-content">
-                                    <h2><a href="milk-product.html"> Pot curd</a></h2>
+                                    <h2><a href="{{ url('products/1') }}"> Pot curd</a></h2>
                                     <h3 class="product-price">$25.0 <span>$15.00</span></h3>
                                     <p>Our milk is sourced fresh every day from healthy, well-cared-for cows and delivered in its purest form.</p>
                                     <a href="#" class="add-to-cart-btn">
@@ -280,7 +280,7 @@
                             </div>
                             <div class="product-item-body">
                                 <div class="product-item-content">
-                                    <h2><a href="milk-product.html">Country Egg</a></h2>
+                                    <h2><a href="{{ url('products/1') }}">Country Egg</a></h2>
                                     <h3 class="product-price">$25.0 <span>$35.00</span></h3>
                                     <p>Our milk is sourced fresh every day from healthy, well-cared-for cows and delivered in its purest form.</p>
                                     <a href="#" class="add-to-cart-btn">
@@ -309,7 +309,7 @@
                             </div>
                             <div class="product-item-body">
                                 <div class="product-item-content">
-                                    <h2><a href="milk-product.html">Cow ghee</a></h2>
+                                    <h2><a href="{{ url('products/1') }}">Cow ghee</a></h2>
                                     <h3 class="product-price">$25.0 <span>$35.00</span></h3>
                                     <p>Our milk is sourced fresh every day from healthy, well-cared-for cows and delivered in its purest form.</p>
                                     <a href="#" class="add-to-cart-btn">
@@ -338,7 +338,7 @@
                             </div>
                             <div class="product-item-body">
                                 <div class="product-item-content">
-                                    <h2><a href="milk-product.html">Buffalo ghee</a></h2>
+                                    <h2><a href="{{ url('products/1') }}">Buffalo ghee</a></h2>
                                     <h3 class="product-price">$25.0 <span>$35.00</span></h3>
                                     <p>Our milk is sourced fresh every day from healthy, well-cared-for cows and delivered in its purest form.</p>
                                     <a href="#" class="add-to-cart-btn">
@@ -369,7 +369,7 @@
                             </div>
                             <div class="product-item-body">
                                 <div class="product-item-content">
-                                    <h2><a href="milk-product.html">Milk</a></h2>
+                                    <h2><a href="{{ url('products/1') }}">Milk</a></h2>
                                     <h3 class="product-price">$25.0 <span>$35.00</span></h3>
                                     <p>Our milk is sourced fresh every day from healthy, well-cared-for cows and delivered in its purest form.</p>
                                     <a href="#" class="add-to-cart-btn">
@@ -400,7 +400,7 @@
                             </div>
                             <div class="product-item-body">
                                 <div class="product-item-content">
-                                    <h2><a href="milk-product.html"> Pot curd</a></h2>
+                                    <h2><a href="{{ url('products/1') }}"> Pot curd</a></h2>
                                     <h3 class="product-price">$25.0 <span>$15.00</span></h3>
                                     <p>Our milk is sourced fresh every day from healthy, well-cared-for cows and delivered in its purest form.</p>
                                     <a href="#" class="add-to-cart-btn">
@@ -429,7 +429,7 @@
                             </div>
                             <div class="product-item-body">
                                 <div class="product-item-content">
-                                    <h2><a href="milk-product.html">Country Egg</a></h2>
+                                    <h2><a href="{{ url('products/1') }}">Country Egg</a></h2>
                                     <h3 class="product-price">$25.0 <span>$35.00</span></h3>
                                     <p>Our milk is sourced fresh every day from healthy, well-cared-for cows and delivered in its purest form.</p>
                                     <a href="#" class="add-to-cart-btn">
@@ -458,7 +458,7 @@
                             </div>
                             <div class="product-item-body">
                                 <div class="product-item-content">
-                                    <h2><a href="milk-product.html">Cow ghee</a></h2>
+                                    <h2><a href="{{ url('products/1') }}">Cow ghee</a></h2>
                                     <h3 class="product-price">$25.0 <span>$35.00</span></h3>
                                     <p>Our milk is sourced fresh every day from healthy, well-cared-for cows and delivered in its purest form.</p>
                                     <a href="#" class="add-to-cart-btn">
@@ -487,7 +487,7 @@
                             </div>
                             <div class="product-item-body">
                                 <div class="product-item-content">
-                                    <h2><a href="milk-product.html">Buffalo ghee</a></h2>
+                                    <h2><a href="{{ url('products/1') }}">Buffalo ghee</a></h2>
                                     <h3 class="product-price">$25.0 <span>$35.00</span></h3>
                                     <p>Our milk is sourced fresh every day from healthy, well-cared-for cows and delivered in its purest form.</p>
                                     <a href="#" class="add-to-cart-btn">
@@ -517,7 +517,7 @@
                             </div>
                             <div class="product-item-body">
                                 <div class="product-item-content">
-                                    <h2><a href="milk-product.html">Milk</a></h2>
+                                    <h2><a href="{{ url('products/1') }}">Milk</a></h2>
                                     <h3 class="product-price">$25.0 <span>$35.00</span></h3>
                                     <p>Our milk is sourced fresh every day from healthy, well-cared-for cows and delivered in its purest form.</p>
                                     <a href="#" class="add-to-cart-btn">
@@ -548,7 +548,7 @@
                             </div>
                             <div class="product-item-body">
                                 <div class="product-item-content">
-                                    <h2><a href="milk-product.html"> Pot curd</a></h2>
+                                    <h2><a href="{{ url('products/1') }}"> Pot curd</a></h2>
                                     <h3 class="product-price">$25.0 <span>$15.00</span></h3>
                                     <p>Our milk is sourced fresh every day from healthy, well-cared-for cows and delivered in its purest form.</p>
                                     <a href="#" class="add-to-cart-btn">
@@ -577,7 +577,7 @@
                             </div>
                             <div class="product-item-body">
                                 <div class="product-item-content">
-                                    <h2><a href="milk-product.html">Country Egg</a></h2>
+                                    <h2><a href="{{ url('products/1') }}">Country Egg</a></h2>
                                     <h3 class="product-price">$25.0 <span>$35.00</span></h3>
                                     <p>Our milk is sourced fresh every day from healthy, well-cared-for cows and delivered in its purest form.</p>
                                     <a href="#" class="add-to-cart-btn">
@@ -606,7 +606,7 @@
                             </div>
                             <div class="product-item-body">
                                 <div class="product-item-content">
-                                    <h2><a href="milk-product.html">Cow ghee</a></h2>
+                                    <h2><a href="{{ url('products/1') }}">Cow ghee</a></h2>
                                     <h3 class="product-price">$25.0 <span>$35.00</span></h3>
                                     <p>Our milk is sourced fresh every day from healthy, well-cared-for cows and delivered in its purest form.</p>
                                     <a href="#" class="add-to-cart-btn">
@@ -635,7 +635,7 @@
                             </div>
                             <div class="product-item-body">
                                 <div class="product-item-content">
-                                    <h2><a href="milk-product.html">Buffalo ghee</a></h2>
+                                    <h2><a href="{{ url('products/1') }}">Buffalo ghee</a></h2>
                                     <h3 class="product-price">$25.0 <span>$35.00</span></h3>
                                     <p>Our milk is sourced fresh every day from healthy, well-cared-for cows and delivered in its purest form.</p>
                                     <a href="#" class="add-to-cart-btn">
@@ -666,7 +666,7 @@
                             </div>
                             <div class="product-item-body">
                                 <div class="product-item-content">
-                                    <h2><a href="milk-product.html">Milk</a></h2>
+                                    <h2><a href="{{ url('products/1') }}">Milk</a></h2>
                                     <h3 class="product-price">$25.0 <span>$35.00</span></h3>
                                     <p>Our milk is sourced fresh every day from healthy, well-cared-for cows and delivered in its purest form.</p>
                                     <a href="#" class="add-to-cart-btn">
@@ -697,7 +697,7 @@
                             </div>
                             <div class="product-item-body">
                                 <div class="product-item-content">
-                                    <h2><a href="milk-product.html"> Pot curd</a></h2>
+                                    <h2><a href="{{ url('products/1') }}"> Pot curd</a></h2>
                                     <h3 class="product-price">$25.0 <span>$15.00</span></h3>
                                     <p>Our milk is sourced fresh every day from healthy, well-cared-for cows and delivered in its purest form.</p>
                                     <a href="#" class="add-to-cart-btn">
@@ -726,7 +726,7 @@
                             </div>
                             <div class="product-item-body">
                                 <div class="product-item-content">
-                                    <h2><a href="milk-product.html">Country Egg</a></h2>
+                                    <h2><a href="{{ url('products/1') }}">Country Egg</a></h2>
                                     <h3 class="product-price">$25.0 <span>$35.00</span></h3>
                                     <p>Our milk is sourced fresh every day from healthy, well-cared-for cows and delivered in its purest form.</p>
                                     <a href="#" class="add-to-cart-btn">
@@ -755,7 +755,7 @@
                             </div>
                             <div class="product-item-body">
                                 <div class="product-item-content">
-                                    <h2><a href="milk-product.html">Cow ghee</a></h2>
+                                    <h2><a href="{{ url('products/1') }}">Cow ghee</a></h2>
                                     <h3 class="product-price">$25.0 <span>$35.00</span></h3>
                                     <p>Our milk is sourced fresh every day from healthy, well-cared-for cows and delivered in its purest form.</p>
                                     <a href="#" class="add-to-cart-btn">
@@ -784,7 +784,7 @@
                             </div>
                             <div class="product-item-body">
                                 <div class="product-item-content">
-                                    <h2><a href="milk-product.html">Buffalo ghee</a></h2>
+                                    <h2><a href="{{ url('products/1') }}">Buffalo ghee</a></h2>
                                     <h3 class="product-price">$25.0 <span>$35.00</span></h3>
                                     <p>Our milk is sourced fresh every day from healthy, well-cared-for cows and delivered in its purest form.</p>
                                     <a href="#" class="add-to-cart-btn">
@@ -814,7 +814,7 @@
                             </div>
                             <div class="product-item-body">
                                 <div class="product-item-content">
-                                    <h2><a href="milk-product.html">Milk</a></h2>
+                                    <h2><a href="{{ url('products/1') }}">Milk</a></h2>
                                     <h3 class="product-price">$25.0 <span>$35.00</span></h3>
                                     <p>Our milk is sourced fresh every day from healthy, well-cared-for cows and delivered in its purest form.</p>
                                     <a href="#" class="add-to-cart-btn">
@@ -845,7 +845,7 @@
                             </div>
                             <div class="product-item-body">
                                 <div class="product-item-content">
-                                    <h2><a href="milk-product.html"> Pot curd</a></h2>
+                                    <h2><a href="{{ url('products/1') }}"> Pot curd</a></h2>
                                     <h3 class="product-price">$25.0 <span>$15.00</span></h3>
                                     <p>Our milk is sourced fresh every day from healthy, well-cared-for cows and delivered in its purest form.</p>
                                     <a href="#" class="add-to-cart-btn">
@@ -874,7 +874,7 @@
                             </div>
                             <div class="product-item-body">
                                 <div class="product-item-content">
-                                    <h2><a href="milk-product.html">Country Egg</a></h2>
+                                    <h2><a href="{{ url('products/1') }}">Country Egg</a></h2>
                                     <h3 class="product-price">$25.0 <span>$35.00</span></h3>
                                     <p>Our milk is sourced fresh every day from healthy, well-cared-for cows and delivered in its purest form.</p>
                                     <a href="#" class="add-to-cart-btn">
@@ -903,7 +903,7 @@
                             </div>
                             <div class="product-item-body">
                                 <div class="product-item-content">
-                                    <h2><a href="milk-product.html">Cow ghee</a></h2>
+                                    <h2><a href="{{ url('products/1') }}">Cow ghee</a></h2>
                                     <h3 class="product-price">$25.0 <span>$35.00</span></h3>
                                     <p>Our milk is sourced fresh every day from healthy, well-cared-for cows and delivered in its purest form.</p>
                                     <a href="#" class="add-to-cart-btn">
@@ -932,7 +932,7 @@
                             </div>
                             <div class="product-item-body">
                                 <div class="product-item-content">
-                                    <h2><a href="milk-product.html">Buffalo ghee</a></h2>
+                                    <h2><a href="{{ url('products/1') }}">Buffalo ghee</a></h2>
                                     <h3 class="product-price">$25.0 <span>$35.00</span></h3>
                                     <p>Our milk is sourced fresh every day from healthy, well-cared-for cows and delivered in its purest form.</p>
                                     <a href="#" class="add-to-cart-btn">
@@ -962,7 +962,7 @@
                             </div>
                             <div class="product-item-body">
                                 <div class="product-item-content">
-                                    <h2><a href="milk-product.html">Milk</a></h2>
+                                    <h2><a href="{{ url('products/1') }}">Milk</a></h2>
                                     <h3 class="product-price">$25.0 <span>$35.00</span></h3>
                                     <p>Our milk is sourced fresh every day from healthy, well-cared-for cows and delivered in its purest form.</p>
                                     <a href="#" class="add-to-cart-btn">
@@ -993,7 +993,7 @@
                             </div>
                             <div class="product-item-body">
                                 <div class="product-item-content">
-                                    <h2><a href="milk-product.html"> Pot curd</a></h2>
+                                    <h2><a href="{{ url('products/1') }}"> Pot curd</a></h2>
                                     <h3 class="product-price">$25.0 <span>$15.00</span></h3>
                                     <p>Our milk is sourced fresh every day from healthy, well-cared-for cows and delivered in its purest form.</p>
                                     <a href="#" class="add-to-cart-btn">
@@ -1022,7 +1022,7 @@
                             </div>
                             <div class="product-item-body">
                                 <div class="product-item-content">
-                                    <h2><a href="milk-product.html">Country Egg</a></h2>
+                                    <h2><a href="{{ url('products/1') }}">Country Egg</a></h2>
                                     <h3 class="product-price">$25.0 <span>$35.00</span></h3>
                                     <p>Our milk is sourced fresh every day from healthy, well-cared-for cows and delivered in its purest form.</p>
                                     <a href="#" class="add-to-cart-btn">
@@ -1051,7 +1051,7 @@
                             </div>
                             <div class="product-item-body">
                                 <div class="product-item-content">
-                                    <h2><a href="milk-product.html">Cow ghee</a></h2>
+                                    <h2><a href="{{ url('products/1') }}">Cow ghee</a></h2>
                                     <h3 class="product-price">$25.0 <span>$35.00</span></h3>
                                     <p>Our milk is sourced fresh every day from healthy, well-cared-for cows and delivered in its purest form.</p>
                                     <a href="#" class="add-to-cart-btn">
@@ -1080,7 +1080,7 @@
                             </div>
                             <div class="product-item-body">
                                 <div class="product-item-content">
-                                    <h2><a href="milk-product.html">Buffalo ghee</a></h2>
+                                    <h2><a href="{{ url('products/1') }}">Buffalo ghee</a></h2>
                                     <h3 class="product-price">$25.0 <span>$35.00</span></h3>
                                     <p>Our milk is sourced fresh every day from healthy, well-cared-for cows and delivered in its purest form.</p>
                                     <a href="#" class="add-to-cart-btn">
@@ -1110,7 +1110,7 @@
                             </div>
                             <div class="product-item-body">
                                 <div class="product-item-content">
-                                    <h2><a href="milk-product.html">Milk</a></h2>
+                                    <h2><a href="{{ url('products/1') }}">Milk</a></h2>
                                     <h3 class="product-price">$25.0 <span>$35.00</span></h3>
                                     <p>Our milk is sourced fresh every day from healthy, well-cared-for cows and delivered in its purest form.</p>
                                     <a href="#" class="add-to-cart-btn">
@@ -1141,7 +1141,7 @@
                             </div>
                             <div class="product-item-body">
                                 <div class="product-item-content">
-                                    <h2><a href="milk-product.html"> Pot curd</a></h2>
+                                    <h2><a href="{{ url('products/1') }}"> Pot curd</a></h2>
                                     <h3 class="product-price">$25.0 <span>$15.00</span></h3>
                                     <p>Our milk is sourced fresh every day from healthy, well-cared-for cows and delivered in its purest form.</p>
                                     <a href="#" class="add-to-cart-btn">
@@ -1170,7 +1170,7 @@
                             </div>
                             <div class="product-item-body">
                                 <div class="product-item-content">
-                                    <h2><a href="milk-product.html">Country Egg</a></h2>
+                                    <h2><a href="{{ url('products/1') }}">Country Egg</a></h2>
                                     <h3 class="product-price">$25.0 <span>$35.00</span></h3>
                                     <p>Our milk is sourced fresh every day from healthy, well-cared-for cows and delivered in its purest form.</p>
                                     <a href="#" class="add-to-cart-btn">
@@ -1199,7 +1199,7 @@
                             </div>
                             <div class="product-item-body">
                                 <div class="product-item-content">
-                                    <h2><a href="milk-product.html">Cow ghee</a></h2>
+                                    <h2><a href="{{ url('products/1') }}">Cow ghee</a></h2>
                                     <h3 class="product-price">$25.0 <span>$35.00</span></h3>
                                     <p>Our milk is sourced fresh every day from healthy, well-cared-for cows and delivered in its purest form.</p>
                                     <a href="#" class="add-to-cart-btn">
@@ -1228,7 +1228,7 @@
                             </div>
                             <div class="product-item-body">
                                 <div class="product-item-content">
-                                    <h2><a href="milk-product.html">Buffalo ghee</a></h2>
+                                    <h2><a href="{{ url('products/1') }}">Buffalo ghee</a></h2>
                                     <h3 class="product-price">$25.0 <span>$35.00</span></h3>
                                     <p>Our milk is sourced fresh every day from healthy, well-cared-for cows and delivered in its purest form.</p>
                                     <a href="#" class="add-to-cart-btn">
