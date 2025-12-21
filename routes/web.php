@@ -32,6 +32,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [BasicController::class, 'landing'])->name('customer.landing');
 Route::get('/about-us', [BasicController::class, 'about'])->name('customer.aboutus');
+Route::get('/contact-us', [BasicController::class, 'contactUs'])->name('customer.contactus');
 
 // Authentication Routes
 Route::middleware('guest')->group(function () {

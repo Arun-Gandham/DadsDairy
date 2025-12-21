@@ -16,4 +16,9 @@ class BasicController extends Controller
     {
         return view('customer.about');
     }
+
+    public function contactUs()
+    {
+        return view('customer.contact-us');
+    }
 }

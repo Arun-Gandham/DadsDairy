@@ -18,26 +18,33 @@
                             <li class="nav-item"><a class="nav-link" href="{{ route('customer.aboutus') }}">About Us</a>
                             <li class="nav-item"><a class="nav-link" href="{{ route('customer.products') }}">Products</a>
                             <li class="nav-item"><a class="nav-link" href="#">Our Story</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#">Contact Us</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ route('customer.contactus') }}">Contact Us</a></li>
 
                         </ul>
                     </div>
+                    @guest
                     <div class="header-btn">
-                        <a href="#" class="btn-default">Login</a>
+                        <a href="{{ route('customer.login') }}" class="btn-default">Login</a>
                     </div>
+                    @endguest
+                    @auth
                     <div class="header-profile">
                         <a href="#" class="profile-btn">
                             <i class="fa-solid fa-user"></i>
                         </a>
                         <div class="profile-dropdown">
-                            <a href="#">
+                            <a href="{{ route('customer.profile.show') }}" class="profile-link">
                                 <i class="fa-solid fa-user"></i> My Profile
                             </a>
-                            <a href="#" class="logout">
+                            <a href="{{ route('customer.logout') }}" class="logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 <i class="fa-solid fa-right-from-bracket"></i> Logout
                             </a>
+                            <form id="logout-form" method="POST" action="{{ route('customer.logout') }}" class="d-none">
+                                @csrf
+                            </form>
                         </div>
                     </div>
+                    @endauth
                 </div>
             </div>
         </nav>
@@ -53,7 +60,7 @@
                 <li class="nav-item"><a href="our-story.html">Our Story</a></li>
                 <li class="nav-item"><a href="{{ route('customer.products') }}">Products</a></li>
 
-                <li class="nav-item"><a href="contact-us.html">Contact Us</a></li>
+                <li class="nav-item"><a href="{{ route('customer.contactus') }}">Contact Us</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Login</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">My Profile</a></li>
             </ul>
