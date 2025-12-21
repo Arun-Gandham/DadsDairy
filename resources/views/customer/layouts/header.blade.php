@@ -2,16 +2,14 @@
     <div class="loading-container">
         <div class="loading"></div>
         <div id="loading-icon"><img src="{{ asset('assets/customer/img/logo.png') }}" alt="Logo"></div>
-
     </div>
 </div>
 <header class="main-header">
     <div class="header-sticky">
         <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
-                <a class="navbar-brand" href="index.html">
+                <a class="navbar-brand" href="{{ route('customer.landing') }}">
                     <img src="{{ asset('assets/customer/img/logo.png') }}" alt="Logo" width="80">
-
                 </a>
                 <div class="collapse navbar-collapse main-menu">
                     <div class="nav-menu-wrapper">
@@ -48,10 +46,13 @@
         <div class="sidebar" id="sidebar">
             <span class="close-btn" onclick="toggleSidebar()">×</span>
             <ul>
-                <li class="nav-item"><a href="index.html">Home</a></li>
-                <li class="nav-item"><a href="about-us.html">About Us</a></li>
+                <li class="nav-item"><a href="{{ route('customer.landing') }}">Home</a></li>
+
+                <li class="nav-item"><a href="{{ route('customer.aboutus') }}">About Us</a></li>
+
                 <li class="nav-item"><a href="our-story.html">Our Story</a></li>
-                <li class="nav-item"><a href="products.html">Products</a></li>
+                <li class="nav-item"><a href="{{ route('customer.products') }}">Products</a></li>
+
                 <li class="nav-item"><a href="contact-us.html">Contact Us</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Login</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">My Profile</a></li>
