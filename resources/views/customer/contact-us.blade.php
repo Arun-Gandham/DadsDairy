@@ -22,8 +22,6 @@
 
 <link rel="stylesheet" href="{{ asset('assets/customer/css/magnific-popup.css') }}">
 
-<link rel="stylesheet" href="{{ asset('assets/customer/css/mousecursor.css') }}">
-
 <link href="{{ asset('assets/customer/css/custom.css') }}" rel="stylesheet" media="screen">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />

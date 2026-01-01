@@ -332,14 +332,12 @@ font-size: 70px;
 font-weight: 700;
 line-height: 1.1em;
 margin-bottom: 0;
-cursor: none;
 }
 .section-title h2{
 font-size: 50px;
 font-weight: 700;
 line-height: 1.1em;
 margin-bottom: 0;
-cursor: none;
 }
 .section-title p{
 margin-top: 20px;
@@ -2440,7 +2438,6 @@ margin-bottom: 30px;
 overflow: hidden;
 }
 .post-featured-image a{
-cursor: none;
 display: block;
 overflow: hidden;
 }
@@ -2700,7 +2697,6 @@ font-weight: 700;
 line-height: 1.1em;
 color: var(--white-color);
 margin-bottom: 10px;
-cursor: none;
 }
 .page-header-box ol{
 position: relative;
@@ -2990,7 +2986,6 @@ margin-bottom: 20px;
 .team-image a,
 .team-image figure{
 display: block;
-cursor: none;
 border-radius: 20px;
 overflow: hidden;
 }
